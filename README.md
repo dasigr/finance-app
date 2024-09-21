@@ -48,3 +48,10 @@ Run the container.
 ```bash
 docker run -d --name elexlabs-app -p 3000:3000 elexlabs/elexlabs-app
 ```
+
+Using Docker Compose.
+
+```bash
+docker compose build
+docker compose up -d
+```
