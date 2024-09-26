@@ -1,4 +1,6 @@
-# Elex Labs App
+# Finance App
+
+Manage your expenses using this [Finance](https://finance.a5project.com).
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
@@ -50,13 +52,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 Build a Docker image.
 
 ```bash
-docker build -t elexlabs/elexlabs-app .
+docker build -t dasigr/finance-app .
 ```
 
 Run the container.
 
 ```bash
-docker run -d --name elexlabs-app -p 3000:3000 elexlabs/elexlabs-app
+docker run -d --name finance-app -p 3000:3000 dasigr/finance-app
 ```
 
 Using Docker Compose.
