@@ -1,8 +1,18 @@
+# Elex Labs App
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+Set Node Version to use.
+
+```bash
+nvm use
+```
+
+At the time of this writing, we are using Node v20.17.0.
+
+Run the development server:
 
 ```bash
 npm run dev
