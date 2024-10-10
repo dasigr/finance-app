@@ -109,7 +109,7 @@ export async function authenticate(_currentState: unknown, formData: FormData) {
   try {
     await signIn('credentials', formData)
   } catch (error) {
-    if (error) {
+    if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
           return 'Invalid credentials.'
