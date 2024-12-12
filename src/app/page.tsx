@@ -6,10 +6,10 @@ import { redirect } from 'next/navigation'
 
 export default function Page() {
   // Logic to determine if a redirect is needed
-  const accessDenied = true
-  if (accessDenied) {
-    redirect('/login')
-  }
+  // const accessDenied = true
+  // if (accessDenied) {
+  //   redirect('/login')
+  // }
 
   return (
     <main className="flex min-h-screen flex-col p-6">
