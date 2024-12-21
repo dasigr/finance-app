@@ -3,8 +3,8 @@ import '@/app/ui/global.css';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Acme',
-    default: 'Acme Dashboard'
+    template: '%s | Finance',
+    default: 'Finance'
   },
   description: 'The official Next.js Course Dashboard, built with App Router.',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
