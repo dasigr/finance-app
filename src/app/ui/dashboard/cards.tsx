@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { fetchCardData } from '@/app/lib/data';
 import {
   BanknotesIcon,
@@ -16,8 +17,6 @@ const iconMap = {
 
 export default async function CardWrapper() {
   const {
-    numberOfInvoices,
-    numberOfCustomers,
     totalPaidInvoices,
     totalPendingInvoices
   } = await fetchCardData()
@@ -26,8 +25,8 @@ export default async function CardWrapper() {
     <>
       <Card title="Income" value={totalPaidInvoices} type="income" />
       <Card title="Expenses" value={totalPendingInvoices} type="expenses" />
-      <Card title="Account" value={numberOfInvoices} type="account" />
-      <Card title="Budget" value={numberOfCustomers} type="budget" />
+      <Card title="Account" value={totalPendingInvoices} type="account" />
+      <Card title="Budget" value={totalPendingInvoices} type="budget" />
     </>
   );
 }
@@ -45,13 +44,15 @@ export function Card({
 
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
-      <div className="flex p-4">
-        {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
-      </div>
-      <p className={`${lusitana.className} truncate rounded-xl bg-white px-4 py-2 text-center text-2xl`}>
-        {value}
-      </p>
+      <Link href={`/dashboard/${type}`} className="">
+        <div className="flex p-4">
+          {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
+          <h3 className="ml-2 text-sm font-medium">{title}</h3>
+        </div>
+        <p className={`${lusitana.className} truncate rounded-xl bg-white px-4 py-2 text-center text-2xl`}>
+          {value}
+        </p>
+      </Link>
     </div>
   );
 }
