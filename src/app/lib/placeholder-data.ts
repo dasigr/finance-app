@@ -331,4 +331,97 @@ const budgets = [
   },
 ];
 
-export { users, customers, invoices, revenue, expenseCategories, budgets };
+const accounts = [
+  {
+    name: 'Wallet',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'GCash',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'UB',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'BPI',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'MCC',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'BCC',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'Maya',
+    balance: 0,
+    status: 0
+  },
+  {
+    name: 'Wise',
+    balance: 0,
+    status: 0
+  },
+  {
+    name: 'Emergency Fund',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'DJ Internet Cafe',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'Trading 212',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'IBKR',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'Gotrade',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'IG',
+    balance: 0,
+    status: 0
+  },
+  {
+    name: 'PDAX',
+    balance: 0,
+    status: 1
+  },
+  {
+    name: 'eToro',
+    balance: 0,
+    status: 0
+  },
+  {
+    name: 'Skrill',
+    balance: 0,
+    status: 0
+  },
+  {
+    name: 'GCrypto',
+    balance: 0,
+    status: 0
+  }
+];
+
+export { users, customers, invoices, revenue, expenseCategories, budgets, accounts };
