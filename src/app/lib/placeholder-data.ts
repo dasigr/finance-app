@@ -144,4 +144,27 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-export { users, customers, invoices, revenue };
+const expenseCategories = [
+  { name: 'Automobile' },
+  { name: 'Business' },
+  { name: 'Crypto' },
+  { name: 'Education' },
+  { name: 'Electricity' },
+  { name: 'Entertainment' },
+  { name: 'Family' },
+  { name: 'Food & Drinks' },
+  { name: 'Gasoline' },
+  { name: 'Gifts & Donations' },
+  { name: 'Groceries' },
+  { name: 'Health & Fitness' },
+  { name: 'Housing' },
+  { name: 'Internet' },
+  { name: 'Medical' },
+  { name: 'Other' },
+  { name: 'Parking' },
+  { name: 'Shopping' },
+  { name: 'Utilities' },
+  { name: 'Water' },
+];
+
+export { users, customers, invoices, revenue, expenseCategories };
