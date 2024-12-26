@@ -1,13 +1,13 @@
 import Form from '@/app/ui/budget/edit-form';
 import Breadcrumbs from '@/app/ui/budget/breadcrumbs';
-import { fetchBudgetById, fetchExpenseCategoryPages } from '@/app/lib/data';
+import { fetchBudgetById, fetchExpenseCategories } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
   const [budget, expenseCategories] = await Promise.all([
     fetchBudgetById(id),
-    fetchExpenseCategoryPages()
+    fetchExpenseCategories()
   ]);
 
   if (!budget) {
