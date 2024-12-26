@@ -14,13 +14,13 @@ export default function AccountStatus({ status }: { status: boolean }) {
     >
       {status === false ? (
         <>
-          Pending
+          Disabled
           <ClockIcon className="ml-1 w-4 text-gray-500" />
         </>
       ) : null}
       {status === true ? (
         <>
-          Paid
+          Enabled
           <CheckIcon className="ml-1 w-4 text-white" />
         </>
       ) : null}

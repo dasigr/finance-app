@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Pagination from '@/app/ui/account/pagination';
 import Table from '@/app/ui/account/table';
-import { CreateInvoice } from '@/app/ui/account/buttons';
+import { CreateAccount } from '@/app/ui/account/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { AccountTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
@@ -28,7 +28,7 @@ export default async function Page({
     <div className="w-full">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Account</h1>
-        <CreateInvoice />
+        <CreateAccount />
       </div>
       <Suspense key={query + currentPage} fallback={<AccountTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />

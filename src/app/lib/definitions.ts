@@ -126,3 +126,10 @@ export type BudgetForm = {
   category_id: string;
   amount: number;
 };
+
+export type AccountForm = {
+  id: string;
+  name: string;
+  balance: number;
+  status: boolean;
+};

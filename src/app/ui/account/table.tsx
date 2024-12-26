@@ -1,10 +1,9 @@
-import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/account/buttons';
+import { UpdateAccount, DeleteAccount } from '@/app/ui/account/buttons';
 import AccountStatus from '@/app/ui/account/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+import { formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredAccounts } from '@/app/lib/data';
 
-export default async function InvoicesTable({
+export default async function AccountsTable({
   query,
   currentPage,
 }: {
@@ -23,7 +22,7 @@ export default async function InvoicesTable({
                 key={account.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <div className="flex items-center justify-between border-b pb-4">
+                <div className="flex items-center justify-between border-b pb-2">
                   <div>
                     <div className="mb-2 flex items-center">
                       <p>{account.name}</p>
@@ -31,15 +30,15 @@ export default async function InvoicesTable({
                   </div>
                   <AccountStatus status={account.status} />
                 </div>
-                <div className="flex w-full items-center justify-between pt-4">
+                <div className="flex w-full items-center justify-between pt-2">
                   <div>
                     <p className="text-xl font-medium">
                       {formatCurrency(account.balance)}
                     </p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={account.id} />
-                    <DeleteInvoice id={account.id} />
+                    <UpdateAccount id={account.id} />
+                    <DeleteAccount id={account.id} />
                   </div>
                 </div>
               </div>
@@ -81,8 +80,8 @@ export default async function InvoicesTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={account.id} />
-                      <DeleteInvoice id={account.id} />
+                      <UpdateAccount id={account.id} />
+                      <DeleteAccount id={account.id} />
                     </div>
                   </td>
                 </tr>

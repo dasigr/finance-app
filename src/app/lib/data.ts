@@ -9,6 +9,7 @@ import {
   BudgetTable,
   ExpenseCategoryForm,
   ExpenseCategoryTable,
+  AccountForm,
   AccountsTable,
   Revenue,
 } from './definitions';
@@ -389,10 +390,10 @@ export async function fetchFilteredAccounts(
       SELECT
         account.id,
         account.name,
-        account.amount,
+        account.balance,
         account.status
       FROM account
-      ORDER BY account.name ASC
+      ORDER BY account.status DESC, account.name ASC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
@@ -414,6 +415,31 @@ export async function fetchAccountPages(query: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of accounts.');
+  }
+}
+
+export async function fetchAccountById(id: string) {
+  try {
+    const data = await sql<AccountForm>`
+      SELECT
+        account.id,
+        account.name,
+        account.balance,
+        account.status
+      FROM account
+      WHERE account.id = ${id};
+    `;
+
+    const account = data.rows.map((account) => ({
+      ...account,
+      // Convert amount from cents to dollars
+      balance: account.balance / 100,
+    }));
+
+    return account[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch account.');
   }
 }
 
