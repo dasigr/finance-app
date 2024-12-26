@@ -75,25 +75,47 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
+    const incomeStatusPromise = sql`SELECT
+        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        FROM income`;
+    const expenseStatusPromise = sql`SELECT
+        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        FROM expense`;
+    const accountStatusPromise = sql`SELECT
+        SUM(balance) AS "balance"
+        FROM account`;
+    const budgetStatusPromise = sql`SELECT
+        SUM(amount) AS "amount"
+        FROM budget`;
 
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
-      invoiceStatusPromise,
+      // invoiceStatusPromise,
+      // incomeStatusPromise,
+      // expenseStatusPromise,
+      accountStatusPromise,
+      budgetStatusPromise,
     ]);
 
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
-    const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+    // const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
+    // const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
+    // const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
+    // const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+    const totalIncomeAmount = Number(data[0].rows[0].count ?? '0');
+    const totalExpensesAmount = Number(data[1].rows[0].count ?? '0');
+    const totalAccountBalance = formatCurrency(data[2].rows[0].balance ?? '0');
+    const totalBudgetAmount = formatCurrency(data[3].rows[0].amount ?? '0');
 
     // console.log('Data fetch completed after 3 seconds.');
 
     return {
-      numberOfCustomers,
-      numberOfInvoices,
-      totalPaidInvoices,
-      totalPendingInvoices,
+      totalIncomeAmount,
+      totalExpensesAmount,
+      totalAccountBalance,
+      totalBudgetAmount,
     };
   } catch (error) {
     console.error('Database Error:', error);

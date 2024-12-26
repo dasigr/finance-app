@@ -334,22 +334,22 @@ const budgets = [
 const accounts = [
   {
     name: 'Wallet',
-    balance: 0,
+    balance: 634900,
     status: 1
   },
   {
     name: 'GCash',
-    balance: 0,
+    balance: 725838,
     status: 1
   },
   {
     name: 'UB',
-    balance: 0,
+    balance: 16698750,
     status: 1
   },
   {
     name: 'BPI',
-    balance: 0,
+    balance: 2120175,
     status: 1
   },
   {
