@@ -1,15 +1,15 @@
 import { Metadata } from 'next';
+import { lusitana } from '@/app/ui/fonts';
+import { CreateCategory } from '@/app/ui/expense-category/buttons';
+import { Suspense } from 'react';
+import Table from '@/app/ui/expense-category/table';
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
-import Table from '@/app/ui/invoices/table';
-import { CreateInvoice } from '@/app/ui/invoices/buttons';
-import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
-import { Suspense } from 'react';
-import { fetchInvoicesPages } from '@/app/lib/data';
- 
+import { fetchExpenseCategoryPages } from '@/app/lib/data';
+
 export const metadata: Metadata = {
-  title: 'Invoices',
+  title: 'Settings',
 };
 
 export default async function Page({
@@ -23,16 +23,16 @@ export default async function Page({
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
-  const totalPages = await fetchInvoicesPages(query);
+  const totalPages = await fetchExpenseCategoryPages(query);
 
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
-        <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
+        <h1 className={`${lusitana.className} text-2xl`}>Settings</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Search invoices..." />
-        <CreateInvoice />
+        <Search placeholder="Search settings..." />
+        <CreateCategory />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />

@@ -55,6 +55,12 @@ export type InvoicesTable = {
   status: 'pending' | 'paid';
 };
 
+export type ExpenseCategoryTable = {
+  id: string;
+  name: string;
+  image_url: string;
+};
+
 export type BudgetTable = {
   id: string;
   customer_id: string;
@@ -90,6 +96,11 @@ export type CustomerField = {
   name: string;
 };
 
+export type ExpenseCategoryField = {
+  id: string;
+  name: string;
+};
+
 export type InvoiceForm = {
   id: string;
   customer_id: string;
@@ -97,8 +108,14 @@ export type InvoiceForm = {
   status: 'pending' | 'paid';
 };
 
+export type ExpenseCategoryForm = {
+  id: string;
+  name: string;
+  image_url: string;
+};
+
 export type BudgetForm = {
   id: string;
-  customer_id: string;
+  category_id: string;
   amount: number;
 };

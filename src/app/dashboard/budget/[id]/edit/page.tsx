@@ -1,16 +1,16 @@
 import Form from '@/app/ui/budget/edit-form';
 import Breadcrumbs from '@/app/ui/budget/breadcrumbs';
-import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
+import { fetchBudgetById, fetchExpenseCategoryPages } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
+  const [budget, expenseCategories] = await Promise.all([
+    fetchBudgetById(id),
+    fetchExpenseCategoryPages()
   ]);
 
-  if (!invoice) {
+  if (!budget) {
     notFound();
   }
 
@@ -26,7 +26,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <Form budget={budget} expenseCategories={expenseCategories}/>
     </main>
   );
 }

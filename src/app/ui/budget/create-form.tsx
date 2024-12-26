@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField } from '@/app/lib/definitions';
+import { ExpenseCategoryField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
   CheckIcon,
@@ -12,7 +12,7 @@ import { Button } from '@/app/ui/button';
 import { createBudget, State } from '@/app/lib/actions/budget';
 import { useFormState } from 'react-dom';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function Form({ expenseCategories }: { expenseCategories: ExpenseCategoryField[] }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useFormState(createBudget, initialState);
 
@@ -26,26 +26,25 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </label>
           <div className="relative">
             <select
-              id="customer"
-              name="customerId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              id="expense-category"
+              name="expenseCategoryId"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
               aria-describedby="customer-error"
             >
               <option value="" disabled>
                 Select a category
               </option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
+              {expenseCategories.map((expenseCategory) => (
+                <option key={expenseCategory.id} value={expenseCategory.id}>
+                  {expenseCategory.name}
                 </option>
               ))}
             </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.customerId &&
-              state.errors.customerId.map((error: string) => (
+          <div id="expense-category-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.expenseCategoryId &&
+              state.errors.expenseCategoryId.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key="error">
                   {error}
                 </p>
