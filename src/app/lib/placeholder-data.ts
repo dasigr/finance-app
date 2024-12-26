@@ -251,83 +251,83 @@ const expenseCategories = [
 const budgets = [
   {
     category_id: expenseCategories[0].id,
-    amount: 200
+    amount: 20000,
   },
   {
     category_id: expenseCategories[1].id,
-    amount: 15000
+    amount: 1500000,
   },
   { 
     category_id: expenseCategories[2].id,
-    amount: 0
+    amount: 0,
   },
   { 
     category_id: expenseCategories[3].id,
-    amount: 0
+    amount: 0,
   },
   { 
     category_id: expenseCategories[4].id,
-    amount: 0
+    amount: 0,
   },
   { 
     category_id: expenseCategories[5].id,
-    amount: 1000
+    amount: 100000,
   },
   { 
     category_id: expenseCategories[6].id,
-    amount: 1000
+    amount: 100000,
   },
   { 
     category_id: expenseCategories[7].id,
-    amount: 4000
+    amount: 400000,
   },
   { 
     category_id: expenseCategories[8].id,
-    amount: 1000
+    amount: 100000,
   },
   { 
     category_id: expenseCategories[9].id,
-    amount: 1000
+    amount: 100000,
   },
   { 
     category_id: expenseCategories[10].id,
-    amount: 6000
+    amount: 600000,
   },
   { 
     category_id: expenseCategories[11].id,
-    amount: 500
+    amount: 50000,
   },
   { 
     category_id: expenseCategories[12].id,
-    amount: 10427.43
+    amount: 1050000,
   },
   { 
     category_id: expenseCategories[13].id,
-    amount: 4200
+    amount: 420000,
   },
   { 
     category_id: expenseCategories[14].id,
-    amount: 0
+    amount: 0,
   },
   { 
     category_id: expenseCategories[15].id,
-    amount: 1000
+    amount: 100000,
   },
   { 
     category_id: expenseCategories[16].id,
-    amount: 0
+    amount: 0,
   },
   { 
     category_id: expenseCategories[17].id,
-    amount: 1000
+    amount: 100000,
   },
   { 
     category_id: expenseCategories[18].id,
-    amount: 11000
+    amount: 1100000,
   },
   { 
     category_id: expenseCategories[19].id,
-    amount: 200
+    amount: 20000,
   },
 ];
 
