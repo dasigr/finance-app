@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import { ExpenseCategoryForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -9,19 +9,17 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { updateInvoice } from '@/app/lib/actions/invoice';
+import { updateExpenseCategory } from '@/app/lib/actions/expense-category';
 
-export default function EditInvoiceForm({
-  invoice,
-  customers,
+export default function EditExpenseCategoryForm({
+  expenseCategory,
 }: {
-  invoice: InvoiceForm;
-  customers: CustomerField[];
+  expenseCategory: ExpenseCategoryForm;
 }) {
-  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+  const updateExpenseCategoryWithId = updateExpenseCategory.bind(null, expenseCategory.id);
 
   return (
-    <form action={updateInvoiceWithId}>
+    <form action={updateExpenseCategoryWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
@@ -30,9 +28,8 @@ export default function EditInvoiceForm({
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="amount"
-                name="amount"
-                defaultValue={invoice.amount}
+                id="name"
+                defaultValue={expenseCategory.name}
                 placeholder="Enter expense category"
                 className="peer block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
               />

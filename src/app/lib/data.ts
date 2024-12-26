@@ -7,6 +7,8 @@ import {
   LatestInvoiceRaw,
   BudgetForm,
   BudgetTable,
+  ExpenseCategoryForm,
+  ExpenseCategoryTable,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -297,6 +299,52 @@ export async function fetchExpenseCategoryPages(query: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+export async function fetchExpenseCategoryById(id: string) {
+  try {
+    const data = await sql<ExpenseCategoryForm>`
+      SELECT
+        expense_category.id,
+        expense_category.name,
+        expense_category.image_url
+      FROM expense_category
+      WHERE expense_category.id = ${id};
+    `;
+
+    const expense_category = data.rows;
+
+    return expense_category[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.');
+  }
+}
+
+export async function fetchFilteredExpenseCategory(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const expenseCategories = await sql<ExpenseCategoryTable>`
+      SELECT
+        expense_category.id,
+        expense_category.name,
+        expense_category.image_url
+      FROM expense_category
+      WHERE
+        expense_category.name ILIKE ${`%${query}%`}
+      ORDER BY expense_category.name ASC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return expenseCategories.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch expense categories.');
   }
 }
 

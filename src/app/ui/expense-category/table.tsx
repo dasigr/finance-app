@@ -1,16 +1,15 @@
 import Image from 'next/image';
 import { UpdateExpenseCategory, DeleteExpenseCategory } from '@/app/ui/expense-category/buttons';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredBudget } from '@/app/lib/data';
+import { fetchFilteredExpenseCategory } from '@/app/lib/data';
 
-export default async function BudgetTable({
+export default async function ExpenseCategoryTable({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const invoices = await fetchFilteredBudget(query, currentPage);
+  const invoices = await fetchFilteredExpenseCategory(query, currentPage);
 
   return (
     <div className="mt-6 flow-root">
@@ -49,9 +48,6 @@ export default async function BudgetTable({
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Expense Category
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Amount
-                </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
                 </th>
@@ -74,9 +70,6 @@ export default async function BudgetTable({
                       />
                       <p>{invoice.name}</p>
                     </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(invoice.amount)}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">

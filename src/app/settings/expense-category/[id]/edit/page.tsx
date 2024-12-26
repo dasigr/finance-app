@@ -1,16 +1,15 @@
 import Form from '@/app/ui/expense-category/edit-form';
 import Breadcrumbs from '@/app/ui/expense-category/breadcrumbs';
-import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
+import { fetchExpenseCategoryById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
+  const [expenseCategory] = await Promise.all([
+    fetchExpenseCategoryById(id),
   ]);
 
-  if (!invoice) {
+  if (!expenseCategory) {
     notFound();
   }
 
@@ -26,7 +25,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <Form expenseCategory={expenseCategory} />
     </main>
   );
 }
