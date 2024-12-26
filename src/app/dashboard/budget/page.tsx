@@ -3,7 +3,7 @@ import Pagination from '@/app/ui/budget/pagination';
 import Table from '@/app/ui/budget/table';
 import { CreateBudget } from '@/app/ui/budget/buttons';
 import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { BudgetTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchBudgetPages } from '@/app/lib/data';
  
@@ -30,7 +30,7 @@ export default async function Page({
         <h1 className={`${lusitana.className} text-2xl`}>Budget</h1>
         <CreateBudget />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+      <Suspense key={query + currentPage} fallback={<BudgetTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">

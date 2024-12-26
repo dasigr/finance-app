@@ -96,6 +96,11 @@ export type CustomerField = {
   name: string;
 };
 
+export type ExpenseCategoryField = {
+  id: string;
+  name: string;
+};
+
 export type InvoiceForm = {
   id: string;
   customer_id: string;
@@ -111,6 +116,6 @@ export type ExpenseCategoryForm = {
 
 export type BudgetForm = {
   id: string;
-  customer_id: string;
+  category_id: string;
   amount: number;
 };
