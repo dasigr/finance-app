@@ -108,16 +108,15 @@ async function seedExpenseCategory() {
     CREATE TABLE IF NOT EXISTS expense_category (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      image_url VARCHAR(255) NOT NULL,
-      amount INT NOT NULL
+      image_url VARCHAR(255) NOT NULL
     );
   `;
 
   const insertedExpenseCategories = await Promise.all(
     expenseCategories.map(
-      (category) => client.sql`
-        INSERT INTO expense_category (name, image_url)
-        VALUES (${category.name}, ${category.image_url}})
+      (expenseCategory) => client.sql`
+        INSERT INTO expense_category (id, name, image_url)
+        VALUES (${expenseCategory.id},${expenseCategory.name}, ${expenseCategory.image_url})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -140,8 +139,8 @@ async function seedBudget() {
   const insertedBudget = await Promise.all(
     budgets.map(
       (budget) => client.sql`
-        INSERT INTO expense_category (category_id, amount)
-        VALUES (${budget.category_id}, ${budget.amount}})
+        INSERT INTO budget (category_id, amount)
+        VALUES (${budget.category_id}, ${budget.amount})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -161,7 +160,7 @@ export async function GET() {
     // await seedCustomers();
     // await seedInvoices();
     // await seedRevenue();
-    await seedExpenseCategory();
+    // await seedExpenseCategory();
     await seedBudget();
     await client.sql`COMMIT`;
 
