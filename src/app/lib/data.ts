@@ -375,6 +375,22 @@ export async function fetchFilteredExpenseCategory(
   }
 }
 
+/* Account */
+
+export async function fetchAccountPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM account
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of accounts.');
+  }
+}
+
 /* Customers */
 
 export async function fetchCustomers() {
