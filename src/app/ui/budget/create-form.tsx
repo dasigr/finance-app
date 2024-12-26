@@ -43,8 +43,8 @@ export default function Form({ expenseCategories }: { expenseCategories: Expense
             </select>
           </div>
           <div id="expense-category-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.expenseCategoryId &&
-              state.errors.expenseCategoryId.map((error: string) => (
+            {state.errors?.customerId &&
+              state.errors.customerId.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key="error">
                   {error}
                 </p>
