@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
-import { invoices, customers, revenue, users, expenseCategories } from '../lib/placeholder-data';
+import { invoices, customers, revenue, users, expenseCategories, budgets } from '../lib/placeholder-data';
 
 const client = await db.connect();
 
@@ -107,15 +107,17 @@ async function seedExpenseCategory() {
   await client.sql`
     CREATE TABLE IF NOT EXISTS expense_category (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      name VARCHAR(255) NOT NULL
+      name VARCHAR(255) NOT NULL,
+      image_url VARCHAR(255) NOT NULL,
+      amount INT NOT NULL
     );
   `;
 
   const insertedExpenseCategories = await Promise.all(
     expenseCategories.map(
-      (expenseCategory) => client.sql`
-        INSERT INTO expense_category (name)
-        VALUES (${expenseCategory.name})
+      (category) => client.sql`
+        INSERT INTO expense_category (name, image_url)
+        VALUES (${category.name}, ${category.image_url}})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -124,18 +126,43 @@ async function seedExpenseCategory() {
   return insertedExpenseCategories;
 }
 
+async function seedBudget() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS budget (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      category_id UUID NOT NULL,
+      amount INT NOT NULL
+    );
+  `;
+
+  const insertedBudget = await Promise.all(
+    budgets.map(
+      (budget) => client.sql`
+        INSERT INTO expense_category (category_id, amount)
+        VALUES (${budget.category_id}, ${budget.amount}})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+  return insertedBudget;
+}
+
 export async function GET() {
-  return Response.json({
-    message:
-      'Uncomment this file and remove this line. You can delete this file when you are finished.',
-  });
+  // return Response.json({
+  //   message:
+  //     'Uncomment this file and remove this line. You can delete this file when you are finished.',
+  // });
   try {
     await client.sql`BEGIN`;
     // await seedUsers();
     // await seedCustomers();
     // await seedInvoices();
     // await seedRevenue();
-    // await seedExpenseCategory();
+    await seedExpenseCategory();
+    await seedBudget();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
