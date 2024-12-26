@@ -1,4 +1,4 @@
-import Header from '@/app/ui/dashboard/header';
+import Header from '@/app/ui/header';
 import SideNav from '@/app/ui/dashboard/sidenav';
  
 export default function Layout({ children }: { children: React.ReactNode }) {

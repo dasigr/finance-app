@@ -1,4 +1,4 @@
-import Header from '@/app/ui/dashboard/header';
+import Header from '@/app/ui/header';
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
