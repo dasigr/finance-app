@@ -1,6 +1,6 @@
 'use client';
 
-import { ExpenseCategoryField, BudgetForm } from '@/app/lib/definitions';
+import { CustomerField, BudgetForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -12,35 +12,35 @@ import { Button } from '@/app/ui/button';
 import { updateBudget } from '@/app/lib/actions/budget';
 
 export default function EditBudgetForm({
-  budget,
-  expenseCategories,
+  invoice,
+  customers,
 }: {
-  budget: BudgetForm;
-  expenseCategories: ExpenseCategoryField[];
+  invoice: BudgetForm;
+  customers: CustomerField[];
 }) {
-  const updateBudgetWithId = updateBudget.bind(null, budget.id);
+  const updateBudgetWithId = updateBudget.bind(null, invoice.id);
 
   return (
     <form action={updateBudgetWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Expense Category */}
+        {/* Customer Name */}
         <div className="mb-4">
-          <label htmlFor="expenseCategory" className="mb-2 block text-sm font-medium">
+          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
             Category
           </label>
           <div className="relative">
             <select
-              id="expenseCategory"
-              name="expenseCategoryId"
+              id="customer"
+              name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={budget.category_id}
+              defaultValue={invoice.customer_id}
             >
               <option value="" disabled>
                 Select a category
               </option>
-              {expenseCategories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
+              {customers.map((customer) => (
+                <option key={customer.id} value={customer.id}>
+                  {customer.name}
                 </option>
               ))}
             </select>
@@ -48,7 +48,7 @@ export default function EditBudgetForm({
           </div>
         </div>
 
-        {/* Budget Amount */}
+        {/* Invoice Amount */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Amount
@@ -60,7 +60,7 @@ export default function EditBudgetForm({
                 name="amount"
                 type="number"
                 step="0.01"
-                defaultValue={budget.amount}
+                defaultValue={invoice.amount}
                 placeholder="Enter the amount"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />

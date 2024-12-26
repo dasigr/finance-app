@@ -1,9 +1,9 @@
 import Form from '@/app/ui/budget/create-form';
 import Breadcrumbs from '@/app/ui/budget/breadcrumbs';
-import { fetchCustomers } from '@/app/lib/data';
+import { fetchExpenseCategories } from '@/app/lib/data';
  
 export default async function Page() {
-  const customers = await fetchCustomers();
+  const expenseCategories = await fetchExpenseCategories();
  
   return (
     <main>
@@ -17,7 +17,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form customers={customers} />
+      <Form expenseCategories={expenseCategories} />
     </main>
   );
 }

@@ -209,29 +209,37 @@ export async function fetchFilteredBudget(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<BudgetTable>`
+    const budget = await sql<BudgetTable>`
       SELECT
-        invoices.id,
-        invoices.amount,
-        invoices.date,
-        customers.name,
-        customers.email,
-        customers.image_url
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
-      WHERE
-        customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`} OR
-        invoices.amount::text ILIKE ${`%${query}%`} OR
-        invoices.date::text ILIKE ${`%${query}%`}
-      ORDER BY invoices.date DESC
+        budget.id,
+        budget.amount,
+        expense_category.name,
+        expense_category.image_url
+      FROM budget
+      JOIN expense_category ON budget.category_id = expense_category.id
+      ORDER BY expense_category.name ASC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    return invoices.rows;
+    // const budget = await sql<BudgetTable>`
+    //   SELECT
+    //     budget.id,
+    //     budget.amount,
+    //     expense_category.name,
+    //     expense_category.image_url
+    //   FROM budget
+    //   JOIN expense_category ON budget.category_id = expense_category.id
+    //   WHERE
+    //     expense_category.name ILIKE ${`%${query}%`} OR
+    //     budget.amount ILIKE ${`%${query}%`}
+    //   ORDER BY expense_category.name ASC
+    //   LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    // `;
+
+    return budget.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoices.');
+    throw new Error('Failed to fetch budgets.');
   }
 }
 
@@ -280,6 +288,25 @@ export async function fetchBudgetById(id: string) {
 }
 
 /* Expense Category */
+
+export async function fetchExpenseCategories() {
+  try {
+    const data = await sql<CustomerField>`
+      SELECT
+        id,
+        name,
+        image_url
+      FROM expense_category
+      ORDER BY name ASC
+    `;
+
+    const expenseCategories = data.rows;
+    return expenseCategories;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all expense categories.');
+  }
+}
 
 export async function fetchExpenseCategoryPages(query: string) {
   try {
