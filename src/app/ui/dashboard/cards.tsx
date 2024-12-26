@@ -17,16 +17,18 @@ const iconMap = {
 
 export default async function CardWrapper() {
   const {
-    totalPaidInvoices,
-    totalPendingInvoices
+    totalIncomeAmount,
+    totalExpensesAmount,
+    totalAccountBalance,
+    totalBudgetAmount
   } = await fetchCardData()
 
   return (
     <>
-      <Card title="Income" value={totalPaidInvoices} type="income" />
-      <Card title="Expenses" value={totalPendingInvoices} type="expenses" />
-      <Card title="Account" value={totalPendingInvoices} type="account" />
-      <Card title="Budget" value={totalPendingInvoices} type="budget" />
+      <Card title="Income" value={totalIncomeAmount} type="income" />
+      <Card title="Expenses" value={totalExpensesAmount} type="expenses" />
+      <Card title="Account" value={totalAccountBalance} type="account" />
+      <Card title="Budget" value={totalBudgetAmount} type="budget" />
     </>
   );
 }
