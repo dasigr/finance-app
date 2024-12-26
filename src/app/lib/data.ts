@@ -9,6 +9,8 @@ import {
   BudgetTable,
   ExpenseCategoryForm,
   ExpenseCategoryTable,
+  AccountForm,
+  AccountsTable,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -73,25 +75,47 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
+    const incomeStatusPromise = sql`SELECT
+        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        FROM income`;
+    const expenseStatusPromise = sql`SELECT
+        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        FROM expense`;
+    const accountStatusPromise = sql`SELECT
+        SUM(balance) AS "balance"
+        FROM account`;
+    const budgetStatusPromise = sql`SELECT
+        SUM(amount) AS "amount"
+        FROM budget`;
 
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
-      invoiceStatusPromise,
+      // invoiceStatusPromise,
+      // incomeStatusPromise,
+      // expenseStatusPromise,
+      accountStatusPromise,
+      budgetStatusPromise,
     ]);
 
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
-    const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+    // const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
+    // const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
+    // const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
+    // const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+    const totalIncomeAmount = Number(data[0].rows[0].count ?? '0');
+    const totalExpensesAmount = Number(data[1].rows[0].count ?? '0');
+    const totalAccountBalance = formatCurrency(data[2].rows[0].balance ?? '0');
+    const totalBudgetAmount = formatCurrency(data[3].rows[0].amount ?? '0');
 
     // console.log('Data fetch completed after 3 seconds.');
 
     return {
-      numberOfCustomers,
-      numberOfInvoices,
-      totalPaidInvoices,
-      totalPendingInvoices,
+      totalIncomeAmount,
+      totalExpensesAmount,
+      totalAccountBalance,
+      totalBudgetAmount,
     };
   } catch (error) {
     console.error('Database Error:', error);
@@ -372,6 +396,72 @@ export async function fetchFilteredExpenseCategory(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch expense categories.');
+  }
+}
+
+/* Account */
+
+export async function fetchFilteredAccounts(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const accounts = await sql<AccountsTable>`
+      SELECT
+        account.id,
+        account.name,
+        account.balance,
+        account.status
+      FROM account
+      ORDER BY account.status DESC, account.name ASC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return accounts.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch accounts.');
+  }
+}
+
+export async function fetchAccountPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM account
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of accounts.');
+  }
+}
+
+export async function fetchAccountById(id: string) {
+  try {
+    const data = await sql<AccountForm>`
+      SELECT
+        account.id,
+        account.name,
+        account.balance,
+        account.status
+      FROM account
+      WHERE account.id = ${id};
+    `;
+
+    const account = data.rows.map((account) => ({
+      ...account,
+      // Convert amount from cents to dollars
+      balance: account.balance / 100,
+    }));
+
+    return account[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch account.');
   }
 }
 
