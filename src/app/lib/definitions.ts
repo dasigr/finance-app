@@ -71,6 +71,13 @@ export type BudgetTable = {
   amount: number;
 };
 
+export type AccountsTable = {
+  id: string;
+  name: string;
+  balance: number;
+  status: boolean;
+};
+
 export type CustomersTableType = {
   id: string;
   name: string;

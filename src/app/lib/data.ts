@@ -9,6 +9,7 @@ import {
   BudgetTable,
   ExpenseCategoryForm,
   ExpenseCategoryTable,
+  AccountsTable,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -376,6 +377,31 @@ export async function fetchFilteredExpenseCategory(
 }
 
 /* Account */
+
+export async function fetchFilteredAccounts(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const accounts = await sql<AccountsTable>`
+      SELECT
+        account.id,
+        account.name,
+        account.amount,
+        account.status
+      FROM account
+      ORDER BY account.name ASC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return accounts.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch accounts.');
+  }
+}
 
 export async function fetchAccountPages(query: string) {
   try {

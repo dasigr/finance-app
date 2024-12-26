@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
-import Pagination from '@/app/ui/income/pagination';
-import Table from '@/app/ui/income/table';
-import { CreateInvoice } from '@/app/ui/income/buttons';
+import Pagination from '@/app/ui/account/pagination';
+import Table from '@/app/ui/account/table';
+import { CreateInvoice } from '@/app/ui/account/buttons';
 import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { AccountTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchAccountPages } from '@/app/lib/data';
  
@@ -30,7 +30,7 @@ export default async function Page({
         <h1 className={`${lusitana.className} text-2xl`}>Account</h1>
         <CreateInvoice />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+      <Suspense key={query + currentPage} fallback={<AccountTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
