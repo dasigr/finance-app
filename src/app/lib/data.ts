@@ -7,11 +7,13 @@ import {
   LatestInvoiceRaw,
   BudgetForm,
   BudgetTable,
+  ExpenseCategoryForm,
+  ExpenseCategoryTable,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 10;
 
 /* Revenue */
 
@@ -59,8 +61,8 @@ export async function fetchCardData() {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
-    console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // console.log('Fetching revenue data...');
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
@@ -83,7 +85,7 @@ export async function fetchCardData() {
     const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
 
-    console.log('Data fetch completed after 3 seconds.');
+    // console.log('Data fetch completed after 3 seconds.');
 
     return {
       numberOfCustomers,
@@ -274,6 +276,75 @@ export async function fetchBudgetById(id: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');
+  }
+}
+
+/* Expense Category */
+
+export async function fetchExpenseCategoryPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM invoices
+    JOIN customers ON invoices.customer_id = customers.id
+    WHERE
+      customers.name ILIKE ${`%${query}%`} OR
+      customers.email ILIKE ${`%${query}%`} OR
+      invoices.amount::text ILIKE ${`%${query}%`} OR
+      invoices.date::text ILIKE ${`%${query}%`} OR
+      invoices.status ILIKE ${`%${query}%`}
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+export async function fetchExpenseCategoryById(id: string) {
+  try {
+    const data = await sql<ExpenseCategoryForm>`
+      SELECT
+        expense_category.id,
+        expense_category.name,
+        expense_category.image_url
+      FROM expense_category
+      WHERE expense_category.id = ${id};
+    `;
+
+    const expense_category = data.rows;
+
+    return expense_category[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.');
+  }
+}
+
+export async function fetchFilteredExpenseCategory(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const expenseCategories = await sql<ExpenseCategoryTable>`
+      SELECT
+        expense_category.id,
+        expense_category.name,
+        expense_category.image_url
+      FROM expense_category
+      WHERE
+        expense_category.name ILIKE ${`%${query}%`}
+      ORDER BY expense_category.name ASC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return expenseCategories.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch expense categories.');
   }
 }
 
