@@ -164,8 +164,8 @@ export type AccountForm = {
 export type ExpenseForm = {
   id: string;
   date: string;
-  category_id: number;
-  account_id: number;
+  category_id: string;
+  account_id: string;
   amount: number;
   notes: string;
   status: boolean;

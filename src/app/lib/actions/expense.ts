@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { formatDateToLocal } from '../utils';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -93,11 +94,13 @@ export async function updateExpense(id: string, formData: FormData) {
   });
  
   const amountInCents = amount * 100;
+  const formattedDate = formatDateToLocal(date);
+  const statusOverride = true;
 
   try {
     await sql`
       UPDATE expense
-      SET date = ${date}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
+      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${statusOverride}
       WHERE id = ${id}
     `;
   } catch (error) {

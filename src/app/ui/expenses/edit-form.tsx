@@ -1,6 +1,7 @@
 'use client';
 
 import { ExpenseCategoryField, AccountField, ExpenseForm } from '@/app/lib/definitions';
+import { formatDateForInput } from '@/app/lib/utils';
 import {
   CheckIcon,
   ClockIcon,
@@ -36,7 +37,7 @@ export default function EditExpenseForm({
                 id="date"
                 name="date"
                 type="date"
-                defaultValue={expense.date}
+                defaultValue={formatDateForInput(expense.date)}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -108,6 +109,24 @@ export default function EditExpenseForm({
                 step="0.01"
                 defaultValue={expense.amount}
                 placeholder="Enter USD amount"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+        {/* Notes */}
+        <div className="mb-4">
+          <label htmlFor="notes" className="mb-2 block text-sm font-medium">
+            Notes
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="notes"
+                name="notes"
+                defaultValue={expense.notes}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />

@@ -21,6 +21,16 @@ export const formatDateToLocal = (
   return formatter.format(date);
 };
 
+export const formatDateForInput = (
+  dateStr: string
+) => {
+  const date = new Date(dateStr);
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
+
 export const generateYAxis = (revenue: Revenue[]) => {
   // Calculate what labels we need to display on the y-axis
   // based on highest record and in 1000s

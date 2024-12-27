@@ -546,8 +546,12 @@ export async function fetchExpenseById(id: string) {
         expense.date,
         expense.amount,
         expense.notes,
-        expense.status
+        expense.status,
+        expense_category.id AS "category_id",
+        account.id AS "account_id"
       FROM expense
+      JOIN expense_category ON expense.category_id = expense_category.id
+      JOIN account ON expense.account_id = account.id
       WHERE expense.id = ${id};
     `;
 
