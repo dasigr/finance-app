@@ -79,10 +79,12 @@ export async function fetchCardData() {
          FROM invoices`;
     const incomeStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
-        FROM income`;
+        FROM income
+        WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)`;
     const expenseStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
-        FROM expense`;
+        FROM expense
+        WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)`;
     const accountStatusPromise = sql`SELECT
         SUM(balance) AS "balance"
         FROM account`;
