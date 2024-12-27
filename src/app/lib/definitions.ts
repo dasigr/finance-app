@@ -130,6 +130,11 @@ export type ExpenseCategoryField = {
   name: string;
 };
 
+export type AccountField = {
+  id: string;
+  name: string;
+};
+
 export type InvoiceForm = {
   id: string;
   customer_id: string;
@@ -153,5 +158,25 @@ export type AccountForm = {
   id: string;
   name: string;
   balance: number;
+  status: boolean;
+};
+
+export type ExpenseForm = {
+  id: string;
+  date: string;
+  category_id: number;
+  account_id: number;
+  amount: number;
+  notes: string;
+  status: boolean;
+};
+
+export type IncomeForm = {
+  id: string;
+  date: string;
+  category_id: number;
+  account_id: number;
+  amount: number;
+  notes: string;
   status: boolean;
 };

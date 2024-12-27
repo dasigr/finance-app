@@ -11,7 +11,9 @@ import {
   ExpenseCategoryTable,
   AccountForm,
   AccountsTable,
+  ExpenseForm,
   ExpensesTable,
+  IncomeForm,
   IncomesTable,
   Revenue,
 } from './definitions';
@@ -403,6 +405,24 @@ export async function fetchFilteredExpenseCategory(
 
 /* Account */
 
+export async function fetchAccounts() {
+  try {
+    const data = await sql<CustomerField>`
+      SELECT
+        id,
+        name
+      FROM account
+      ORDER BY name ASC
+    `;
+
+    const account = data.rows;
+    return account;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all accounts.');
+  }
+}
+
 export async function fetchFilteredAccounts(
   query: string,
   currentPage: number,
@@ -520,7 +540,7 @@ export async function fetchExpensesPages(query: string) {
 
 export async function fetchExpenseById(id: string) {
   try {
-    const data = await sql<InvoiceForm>`
+    const data = await sql<ExpenseForm>`
       SELECT
         expense.id,
         expense.date,
