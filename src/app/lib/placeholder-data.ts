@@ -565,4 +565,237 @@ const expenses = [
   }
 ];
 
-export { users, customers, invoices, revenue, expenseCategories, budgets, accounts, expenses };
+const incomeCategories = [
+  {
+    id: 'd768daf9-0db1-41d1-810a-86a9db58bf84',
+    name: 'Salary',
+    image_url: '/income-category/amy-burns.png'
+  },
+  {
+    id: '40fbf367-c43b-43a5-943f-e1d2ed19317f',
+    name: 'Part-time Work',
+    image_url: '/income-category/balazs-orban.png'
+  },
+  {
+    id: '403a4e53-d848-470f-80d5-534acbb4bf69',
+    name: 'Personal Savings',
+    image_url: '/income-category/delba-de-oliveira.png'
+  },
+  {
+    id: '8ef0effc-9d58-451c-b51a-c7e588d90858',
+    name: 'Rents and Royalties',
+    image_url: '/income-category/evil-rabbit.png'
+  },
+  {
+    id: '71972ed6-ddcc-4efb-8f37-d38ebb3e030c',
+    name: 'Investments',
+    image_url: '/income-category/lee-robinson.png'
+  },
+  {
+    id: 'e7f842a5-d907-44f0-ba1d-933d2aef674f',
+    name: 'Business',
+    image_url: '/income-category/michael-novotny.png'
+  },
+  {
+    id: '6e1cef31-4987-4d42-a0d1-079375085646',
+    name: 'Other',
+    image_url: '/income-category/balazs-orban.png'
+  }
+];
+
+const incomes = [
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-01-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-01-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-02-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-02-28',
+    amount: 7000000,
+    notes: '28th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-03-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-03-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-04-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-04-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-05-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-05-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-06-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-06-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-07-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-07-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-08-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-08-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-09-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-09-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-10-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-10-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-11-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-11-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-12-15',
+    amount: 8000000,
+    notes: '15th Salary',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[0].id,
+    date: '2024-12-30',
+    amount: 7000000,
+    notes: '30th Salary',
+    status: 1
+  }
+];
+
+export { users, customers, invoices, revenue, expenseCategories, budgets, accounts, expenses, incomeCategories, incomes };
