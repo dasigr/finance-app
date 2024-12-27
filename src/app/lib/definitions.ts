@@ -78,6 +78,17 @@ export type AccountsTable = {
   status: boolean;
 };
 
+export type ExpensesTable = {
+  id: string;
+  date: string;
+  category_name: string;
+  category_image_url: string;
+  account_name: string;
+  notes: string;
+  amount: number;
+  status: boolean;
+};
+
 export type CustomersTableType = {
   id: string;
   name: string;

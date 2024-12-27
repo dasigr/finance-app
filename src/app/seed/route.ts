@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
-import { invoices, customers, revenue, users, expenseCategories, budgets, accounts } from '../lib/placeholder-data';
+import { invoices, customers, revenue, users, expenseCategories, budgets, accounts, expenses } from '../lib/placeholder-data';
 
 const client = await db.connect();
 
@@ -164,14 +164,42 @@ async function seedAccounts() {
   const insertedAccounts = await Promise.all(
     accounts.map(
       (account) => client.sql`
-        INSERT INTO account (name, balance, status)
-        VALUES (${account.name}, ${account.balance}, ${account.status})
+        INSERT INTO account (id, name, balance, status)
+        VALUES (${account.id}, ${account.name}, ${account.balance}, ${account.status})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
   );
 
   return insertedAccounts;
+}
+
+async function seedExpenses() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS expense (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      category_id UUID NOT NULL,
+      account_id UUID NOT NULL,
+      date DATE NOT NULL,
+      amount INT NOT NULL,
+      notes VARCHAR(255),
+      status BOOLEAN DEFAULT TRUE
+    );
+  `;
+
+  const insertedExpenses = await Promise.all(
+    expenses.map(
+      (expense) => client.sql`
+        INSERT INTO expense (category_id, account_id, date, amount, notes, status)
+        VALUES (${expense.category_id}, ${expense.account_id}, ${expense.date}, ${expense.amount}, ${expense.notes}, ${expense.status})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+  return insertedExpenses;
 }
 
 export async function GET() {
@@ -187,7 +215,8 @@ export async function GET() {
     // await seedRevenue();
     // await seedExpenseCategory();
     // await seedBudget();
-    await seedAccounts();
+    // await seedAccounts();
+    await seedExpenses();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });

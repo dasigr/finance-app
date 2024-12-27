@@ -333,95 +333,236 @@ const budgets = [
 
 const accounts = [
   {
+    id: 'af9fdbca-312e-496e-a922-7958f918d13d',
     name: 'Wallet',
     balance: 634900,
     status: 1
   },
   {
+    id: '2e7924b0-535f-4af2-812f-a2ba6fbf6ad2',
     name: 'GCash',
     balance: 725838,
     status: 1
   },
   {
+    id: '0ae2153f-c11d-42b0-aff6-d5e5f39cce97',
     name: 'UB',
     balance: 16698750,
     status: 1
   },
   {
+    id: '7e5f95c2-9298-4361-b4d0-a4be007f6911',
     name: 'BPI',
     balance: 2120175,
     status: 1
   },
   {
+    id: '5f0c5a94-5ff8-4380-b030-128e0f59aab2',
     name: 'MCC',
     balance: 0,
     status: 1
   },
   {
+    id: '4b9aaade-ad4b-48b6-b690-c0558c885d71',
     name: 'BCC',
     balance: 0,
     status: 1
   },
   {
+    id: 'd5900b6c-58db-4788-a754-a55c5ea54990',
     name: 'Maya',
     balance: 0,
     status: 0
   },
   {
+    id: '3dc459ee-7569-43cb-94ba-24e3e27d892f',
     name: 'Wise',
     balance: 0,
     status: 0
   },
   {
+    id: '83ce7484-577f-4492-9bba-e6dbe4f76b77',
     name: 'Emergency Fund',
     balance: 0,
     status: 1
   },
   {
+    id: 'ecae60b7-a21b-43b9-85b9-1b41d3b13517',
     name: 'DJ Internet Cafe',
     balance: 0,
     status: 1
   },
   {
+    id: 'b7ce4e1a-68ab-40ad-8138-4ad63dea8b01',
     name: 'Trading 212',
     balance: 0,
     status: 1
   },
   {
+    id: 'bd110ad3-f723-4fc5-8b56-c4f5ac3b6728',
     name: 'IBKR',
     balance: 0,
     status: 1
   },
   {
+    id: '018dd564-dd44-4b52-967a-97620c6b057c',
     name: 'Gotrade',
     balance: 0,
     status: 1
   },
   {
+    id: 'bfb223c7-094e-4316-9c9b-b73cc84b0e1e',
     name: 'IG',
     balance: 0,
     status: 0
   },
   {
+    id: 'e8a381d0-8540-494b-b797-893353f6c877',
     name: 'PDAX',
     balance: 0,
     status: 1
   },
   {
+    id: '65f4a83a-7609-489b-8d4f-41d417349519',
     name: 'eToro',
     balance: 0,
     status: 0
   },
   {
+    id: 'cba302e0-cf70-4506-92fe-2a060f16485a',
     name: 'Skrill',
     balance: 0,
     status: 0
   },
   {
+    id: '0e9b5f63-bfe5-4e33-8181-e79086cfba48',
     name: 'GCrypto',
     balance: 0,
     status: 0
   }
 ];
 
-export { users, customers, invoices, revenue, expenseCategories, budgets, accounts };
+const expenses = [
+  {
+    category_id: expenseCategories[0].id,
+    account_id: accounts[0].id,
+    date: '2024-12-01',
+    amount: 200000,
+    notes: 'Item A',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[1].id,
+    account_id: accounts[1].id,
+    date: '2024-12-02',
+    amount: 200000,
+    notes: 'Item B',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[2].id,
+    date: '2024-12-03',
+    amount: 200000,
+    notes: 'Item C',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[3].id,
+    account_id: accounts[3].id,
+    date: '2024-12-04',
+    amount: 200000,
+    notes: 'Item D',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[4].id,
+    account_id: accounts[4].id,
+    date: '2024-12-05',
+    amount: 200000,
+    notes: 'Item E',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[0].id,
+    account_id: accounts[0].id,
+    date: '2024-12-06',
+    amount: 200000,
+    notes: 'Item F',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[5].id,
+    account_id: accounts[5].id,
+    date: '2024-12-07',
+    amount: 200000,
+    notes: 'Item G',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[6].id,
+    account_id: accounts[6].id,
+    date: '2024-12-01',
+    amount: 200000,
+    notes: 'Item H',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[7].id,
+    account_id: accounts[7].id,
+    date: '2024-12-02',
+    amount: 200000,
+    notes: 'Item I',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[8].id,
+    account_id: accounts[8].id,
+    date: '2024-12-03',
+    amount: 200000,
+    notes: 'Item J',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[9].id,
+    account_id: accounts[9].id,
+    date: '2024-12-04',
+    amount: 200000,
+    notes: 'Item K',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[10].id,
+    account_id: accounts[10].id,
+    date: '2024-12-01',
+    amount: 200000,
+    notes: 'Item L',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[0].id,
+    account_id: accounts[0].id,
+    date: '2024-12-02',
+    amount: 200000,
+    notes: 'Item M',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[1].id,
+    account_id: accounts[1].id,
+    date: '2024-12-03',
+    amount: 200000,
+    notes: 'Item N',
+    status: 1
+  },
+  {
+    category_id: expenseCategories[2].id,
+    account_id: accounts[2].id,
+    date: '2024-12-06',
+    amount: 200000,
+    notes: 'Item 0',
+    status: 1
+  }
+];
+
+export { users, customers, invoices, revenue, expenseCategories, budgets, accounts, expenses };
