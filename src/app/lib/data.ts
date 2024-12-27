@@ -11,6 +11,7 @@ import {
   ExpenseCategoryTable,
   AccountForm,
   AccountsTable,
+  ExpensesTable,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -80,8 +81,7 @@ export async function fetchCardData() {
         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
         FROM income`;
     const expenseStatusPromise = sql`SELECT
-        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        SUM(amount) AS "amount"
         FROM expense`;
     const accountStatusPromise = sql`SELECT
         SUM(balance) AS "balance"
@@ -92,10 +92,10 @@ export async function fetchCardData() {
 
     const data = await Promise.all([
       invoiceCountPromise,
-      customerCountPromise,
+      // customerCountPromise,
       // invoiceStatusPromise,
       // incomeStatusPromise,
-      // expenseStatusPromise,
+      expenseStatusPromise,
       accountStatusPromise,
       budgetStatusPromise,
     ]);
@@ -105,7 +105,7 @@ export async function fetchCardData() {
     // const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     // const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
     const totalIncomeAmount = Number(data[0].rows[0].count ?? '0');
-    const totalExpensesAmount = Number(data[1].rows[0].count ?? '0');
+    const totalExpensesAmount = formatCurrency(data[1].rows[0].amount ?? '0');
     const totalAccountBalance = formatCurrency(data[2].rows[0].balance ?? '0');
     const totalBudgetAmount = formatCurrency(data[3].rows[0].amount ?? '0');
 
@@ -462,6 +462,80 @@ export async function fetchAccountById(id: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch account.');
+  }
+}
+
+/* Expenses */
+
+export async function fetchFilteredExpenses(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const expenses = await sql<ExpensesTable>`
+      SELECT
+        expense.id,
+        expense.date,
+        expense.amount,
+        expense.notes,
+        expense.status,
+        expense_category.name AS "category_name",
+        expense_category.image_url AS "category_image_url",
+        account.name AS "account_name"
+      FROM expense
+      JOIN expense_category ON expense.category_id = expense_category.id
+      JOIN account ON expense.account_id = account.id
+      ORDER BY expense.date DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return expenses.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch expenses.');
+  }
+}
+
+export async function fetchExpensesPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM expense
+    JOIN expense_category ON expense.category_id = expense_category.id
+    JOIN account ON expense.account_id = account.id
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of expenses.');
+  }
+}
+
+export async function fetchExpenseById(id: string) {
+  try {
+    const data = await sql<InvoiceForm>`
+      SELECT
+        invoices.id,
+        invoices.customer_id,
+        invoices.amount,
+        invoices.status
+      FROM invoices
+      WHERE invoices.id = ${id};
+    `;
+
+    const invoice = data.rows.map((invoice) => ({
+      ...invoice,
+      // Convert amount from cents to dollars
+      amount: invoice.amount / 100,
+    }));
+
+    return invoice[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.');
   }
 }
 
