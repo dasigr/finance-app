@@ -1,16 +1,17 @@
-import Form from '@/app/ui/invoices/edit-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
+import Form from '@/app/ui/expenses/edit-form';
+import Breadcrumbs from '@/app/ui/expenses/breadcrumbs';
+import { fetchExpenseById, fetchExpenseCategories, fetchAccounts } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
+  const [expense, expenseCategories, accounts] = await Promise.all([
+    fetchExpenseById(id),
+    fetchExpenseCategories(),
+    fetchAccounts(),
   ]);
 
-  if (!invoice) {
+  if (!expense) {
     notFound();
   }
 
@@ -18,15 +19,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
+          { label: 'Expenses', href: '/dashboard/expenses' },
           {
-            label: 'Edit Invoice',
-            href: `/dashboard/invoices/${id}/edit`,
+            label: 'Edit Expense',
+            href: `/dashboard/expenses/${id}/edit`,
             active: true,
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <Form expense={expense} expenseCategories={expenseCategories} accounts={accounts} />
     </main>
   );
 }
