@@ -270,7 +270,7 @@ export async function GET() {
     // await seedAccounts();
     // await seedExpenses();
     // await seedIncomeCategories();
-    // await seedIncomes();
+    await seedIncomes();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });

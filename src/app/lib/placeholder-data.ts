@@ -605,192 +605,192 @@ const incomeCategories = [
 
 const incomes = [
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-01-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-01-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-02-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-02-28',
     amount: 7000000,
     notes: '28th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-03-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-03-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-04-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-04-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-05-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-05-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-06-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-06-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-07-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-07-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-08-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-08-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-09-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-09-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-10-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-10-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-11-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-11-30',
     amount: 7000000,
     notes: '30th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-12-15',
     amount: 8000000,
     notes: '15th Salary',
     status: 1
   },
   {
-    category_id: expenseCategories[2].id,
-    account_id: accounts[0].id,
+    category_id: incomeCategories[0].id,
+    account_id: accounts[2].id,
     date: '2024-12-30',
     amount: 7000000,
     notes: '30th Salary',

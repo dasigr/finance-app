@@ -12,6 +12,7 @@ import {
   AccountForm,
   AccountsTable,
   ExpensesTable,
+  IncomesTable,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -77,8 +78,7 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
     const incomeStatusPromise = sql`SELECT
-        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        SUM(amount) AS "amount"
         FROM income`;
     const expenseStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
@@ -91,10 +91,10 @@ export async function fetchCardData() {
         FROM budget`;
 
     const data = await Promise.all([
-      invoiceCountPromise,
+      // invoiceCountPromise,
       // customerCountPromise,
       // invoiceStatusPromise,
-      // incomeStatusPromise,
+      incomeStatusPromise,
       expenseStatusPromise,
       accountStatusPromise,
       budgetStatusPromise,
@@ -104,7 +104,7 @@ export async function fetchCardData() {
     // const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
     // const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     // const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
-    const totalIncomeAmount = Number(data[0].rows[0].count ?? '0');
+    const totalIncomeAmount = formatCurrency(data[0].rows[0].amount ?? '0');
     const totalExpensesAmount = formatCurrency(data[1].rows[0].amount ?? '0');
     const totalAccountBalance = formatCurrency(data[2].rows[0].balance ?? '0');
     const totalBudgetAmount = formatCurrency(data[3].rows[0].amount ?? '0');
@@ -549,7 +549,7 @@ export async function fetchFilteredIncomes(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const incomes = await sql<ExpensesTable>`
+    const incomes = await sql<IncomesTable>`
       SELECT
         income.id,
         income.date,

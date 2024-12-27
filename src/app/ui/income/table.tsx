@@ -1,17 +1,17 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/expenses/buttons';
-import ExpenseStatus from '@/app/ui/expenses/status';
+import { UpdateInvoice, DeleteInvoice } from '@/app/ui/income/buttons';
+import ExpenseStatus from '@/app/ui/income/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredExpenses } from '@/app/lib/data';
+import { fetchFilteredIncomes } from '@/app/lib/data';
 
-export default async function ExpensesTable({
+export default async function IncomesTable({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const expenses = await fetchFilteredExpenses(query, currentPage);
+  const expenses = await fetchFilteredIncomes(query, currentPage);
 
   return (
     <div className="mt-6 flow-root">
