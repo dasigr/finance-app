@@ -489,6 +489,7 @@ export async function fetchFilteredExpenses(
       FROM expense
       JOIN expense_category ON expense.category_id = expense_category.id
       JOIN account ON expense.account_id = account.id
+      WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
       ORDER BY expense.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -506,6 +507,7 @@ export async function fetchExpensesPages(query: string) {
     FROM expense
     JOIN expense_category ON expense.category_id = expense_category.id
     JOIN account ON expense.account_id = account.id
+    WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
@@ -564,6 +566,7 @@ export async function fetchFilteredIncomes(
       FROM income
       JOIN income_category ON income.category_id = income_category.id
       JOIN account ON income.account_id = account.id
+      WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)
       ORDER BY income.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -581,6 +584,7 @@ export async function fetchIncomesPages(query: string) {
     FROM income
     JOIN income_category ON income.category_id = income_category.id
     JOIN account ON income.account_id = account.id
+    WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
