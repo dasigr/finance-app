@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/income/buttons';
 import ExpenseStatus from '@/app/ui/income/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
@@ -23,34 +24,29 @@ export default async function IncomesTable({
                 key={expense.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={expense.category_image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={expense.category_name}
-                      />
-                      <p>{expense.category_name}</p>
+                <Link href={`/dashboard/income/${expense.id}/edit`}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-500 pb-2">{formatDateToLocal(expense.date)}</p>
+                      <div className="flex items-center">
+                        <Image
+                          src={expense.category_image_url}
+                          className="mr-2 rounded-full"
+                          width={28}
+                          height={28}
+                          alt={expense.category_name}
+                        />
+                        <div>
+                          <p>{expense.category_name}</p>
+                          <p className="text-sm text-gray-500">{expense.notes}</p>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-500">{expense.notes}</p>
-                  </div>
-                  <ExpenseStatus status={expense.status} />
-                </div>
-                <div className="flex w-full items-center justify-between pt-4">
-                  <div>
                     <p className="text-xl font-medium">
                       {formatCurrency(expense.amount)}
                     </p>
-                    <p>{formatDateToLocal(expense.date)}</p>
                   </div>
-                  <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={expense.id} />
-                    <DeleteInvoice id={expense.id} />
-                  </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>

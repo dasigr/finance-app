@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
+import { DeleteExpense } from '@/app/ui/expenses/buttons';
 import { updateExpense } from '@/app/lib/actions/expense';
 
 export default function EditExpenseForm({
@@ -177,14 +178,17 @@ export default function EditExpenseForm({
           </div>
         </fieldset>
       </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/expenses"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
-        <Button type="submit">Edit Expense</Button>
+      <div className="mt-6 flex justify-between">
+        <DeleteExpense id={expense.id} />
+        <div className="flex justify-end gap-4">
+          <Link
+            href="/dashboard/expenses"
+            className="flex h-10 items-center rounded-lg bg-white px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-white"
+          >
+            Cancel
+          </Link>
+          <Button type="submit">Edit Expense</Button>
+        </div>
       </div>
     </form>
   );
