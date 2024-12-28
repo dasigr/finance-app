@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import Image from 'next/image';
-import { UpdateBudget, DeleteBudget } from '@/app/ui/budget/buttons';
+import { UpdateBudget } from '@/app/ui/budget/buttons';
 import { formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredBudget } from '@/app/lib/data';
 
@@ -22,34 +23,30 @@ export default async function BudgetTable({
                 key={budget.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <div className="flex items-center justify-between border-b pb-2">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={budget.image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${budget.name}'s profile picture`}
-                      />
-                      <p>{budget.name}</p>
+                <Link href={`/dashboard/expenses/${budget.id}/edit`}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center">
+                        <Image
+                          src={budget.image_url}
+                          className="mr-2 rounded-full"
+                          width={28}
+                          height={28}
+                          alt={`${budget.name}'s profile picture`}
+                        />
+                        <div>
+                          <p>{budget.name}</p>
+                          <p className="text-sm text-gray-500">Monthly</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xl font-medium">
+                        {formatCurrency(budget.amount)}
+                      </p>
                     </div>
                   </div>
-                  <div>
-                    <p className="text-xl font-medium">
-                      {formatCurrency(budget.amount)}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex w-full items-center justify-between pt-2">
-                  <div>
-                    <p className="text-sm text-gray-500">Monthly</p>
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <UpdateBudget id={budget.id} />
-                    <DeleteBudget id={budget.id} />
-                  </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>
@@ -91,7 +88,6 @@ export default async function BudgetTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
                       <UpdateBudget id={budget.id} />
-                      <DeleteBudget id={budget.id} />
                     </div>
                   </td>
                 </tr>
