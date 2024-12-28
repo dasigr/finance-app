@@ -1,4 +1,5 @@
-import { UpdateAccount, DeleteAccount } from '@/app/ui/account/buttons';
+import Link from 'next/link';
+import { UpdateAccount } from '@/app/ui/account/buttons';
 import AccountStatus from '@/app/ui/account/status';
 import { formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredAccounts } from '@/app/lib/data';
@@ -22,25 +23,18 @@ export default async function AccountsTable({
                 key={account.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <div className="flex items-center justify-between border-b pb-2">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <p>{account.name}</p>
+                <Link href={`/dashboard/expenses/${account.id}/edit`}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="mb-2 flex items-center">
+                        <p>{account.name}</p>
+                      </div>
                     </div>
-                  </div>
-                  <AccountStatus status={account.status} />
-                </div>
-                <div className="flex w-full items-center justify-between pt-2">
-                  <div>
                     <p className="text-xl font-medium">
                       {formatCurrency(account.balance)}
                     </p>
                   </div>
-                  <div className="flex justify-end gap-2">
-                    <UpdateAccount id={account.id} />
-                    <DeleteAccount id={account.id} />
-                  </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>
@@ -81,7 +75,6 @@ export default async function AccountsTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
                       <UpdateAccount id={account.id} />
-                      <DeleteAccount id={account.id} />
                     </div>
                   </td>
                 </tr>

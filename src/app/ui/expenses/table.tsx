@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { UpdateExpense, DeleteExpense } from '@/app/ui/expenses/buttons';
+import Link from 'next/link';
+import { UpdateExpense } from '@/app/ui/expenses/buttons';
 import ExpenseStatus from '@/app/ui/expenses/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredExpenses } from '@/app/lib/data';
@@ -23,34 +24,29 @@ export default async function ExpensesTable({
                 key={expense.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={expense.category_image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={expense.category_name}
-                      />
-                      <p>{expense.category_name}</p>
+                <Link href={`/dashboard/expenses/${expense.id}/edit`}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-500 pb-2">{formatDateToLocal(expense.date)}</p>
+                      <div className="flex items-center">
+                        <Image
+                          src={expense.category_image_url}
+                          className="mr-2 rounded-full"
+                          width={28}
+                          height={28}
+                          alt={expense.category_name}
+                        />
+                        <div>
+                          <p>{expense.category_name}</p>
+                          <p className="text-sm text-gray-500">{expense.notes}</p>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-500">{expense.notes}</p>
-                  </div>
-                  <ExpenseStatus status={expense.status} />
-                </div>
-                <div className="flex w-full items-center justify-between pt-4">
-                  <div>
                     <p className="text-xl font-medium">
                       {formatCurrency(expense.amount)}
                     </p>
-                    <p>{formatDateToLocal(expense.date)}</p>
                   </div>
-                  <div className="flex justify-end gap-2">
-                    <UpdateExpense id={expense.id} />
-                    <DeleteExpense id={expense.id} />
-                  </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>
@@ -107,7 +103,6 @@ export default async function ExpensesTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
                       <UpdateExpense id={expense.id} />
-                      <DeleteExpense id={expense.id} />
                     </div>
                   </td>
                 </tr>
