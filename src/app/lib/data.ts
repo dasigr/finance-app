@@ -9,12 +9,15 @@ import {
   BudgetTable,
   ExpenseCategoryForm,
   ExpenseCategoryTable,
+  AccountField,
   AccountForm,
   AccountsTable,
   ExpenseForm,
   ExpensesTable,
+  ExpenseCategoryField,
   IncomeForm,
   IncomesTable,
+  IncomeCategoryField,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -315,11 +318,32 @@ export async function fetchBudgetById(id: string) {
   }
 }
 
+/* Income Category */
+
+export async function fetchIncomeCategories() {
+  try {
+    const data = await sql<IncomeCategoryField>`
+      SELECT
+        id,
+        name,
+        image_url
+      FROM income_category
+      ORDER BY name ASC
+    `;
+
+    const incomeCategories = data.rows;
+    return incomeCategories;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all income categories.');
+  }
+}
+
 /* Expense Category */
 
 export async function fetchExpenseCategories() {
   try {
-    const data = await sql<CustomerField>`
+    const data = await sql<ExpenseCategoryField>`
       SELECT
         id,
         name,
@@ -407,7 +431,7 @@ export async function fetchFilteredExpenseCategory(
 
 export async function fetchAccounts() {
   try {
-    const data = await sql<CustomerField>`
+    const data = await sql<AccountField>`
       SELECT
         id,
         name

@@ -1,13 +1,13 @@
 import Form from '@/app/ui/income/edit-form';
 import Breadcrumbs from '@/app/ui/income/breadcrumbs';
-import { fetchIncomeById, fetchExpenseCategories, fetchAccounts } from '@/app/lib/data';
+import { fetchIncomeById, fetchIncomeCategories, fetchAccounts } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
   const [income, incomeCategories, accounts] = await Promise.all([
     fetchIncomeById(id),
-    fetchExpenseCategories(),
+    fetchIncomeCategories(),
     fetchAccounts(),
   ]);
 

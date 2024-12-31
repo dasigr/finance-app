@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main>
+    <main className="pb-12">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Account', href: '/dashboard/account' },

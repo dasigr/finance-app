@@ -25,7 +25,7 @@ export default async function Page({
   const totalPages = await fetchIncomesPages(query);
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Income</h1>
         <CreateIncome />
