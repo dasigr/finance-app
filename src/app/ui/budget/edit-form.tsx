@@ -76,7 +76,7 @@ export default function EditBudgetForm({
         >
           Cancel
         </Link>
-        <Button type="submit">Edit Budget</Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );

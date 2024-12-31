@@ -42,7 +42,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </div>
         </div>
 
-        {/* Account Balance */}
+        {/* Balance */}
         <div className="mb-4">
           <label htmlFor="balance" className="mb-2 block text-sm font-medium">
             Balance
@@ -54,7 +54,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 name="balance"
                 type="number"
                 step="0.01"
-                placeholder="Enter the amount"
+                placeholder="Enter initial account balance"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
               />
@@ -71,7 +71,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </div>
         </div>
 
-        {/* Account Status */}
+        {/* Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
             Status
@@ -80,38 +80,23 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             <div className="flex gap-4">
               <div className="flex items-center">
                 <input
-                  id="pending"
+                  id="status"
                   name="status"
-                  type="radio"
-                  value="0"
+                  type="checkbox"
+                  value="false"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                   aria-describedby="status-error"
                 />
                 <label
-                  htmlFor="pending"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
+                  htmlFor="status"
+                  className="ml-2 flex cursor-pointer items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-gray-600"
                 >
-                  Disabled <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="status"
-                  type="radio"
-                  value="1"
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="paid"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  Enabled <CheckIcon className="h-4 w-4" />
+                  Cleared
                 </label>
               </div>
             </div>
           </div>
-          <div id="amount-error" aria-live="polite" aria-atomic="true">
+          <div id="status-error" aria-live="polite" aria-atomic="true">
             {state.errors?.status &&
               state.errors.status.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key="error">
@@ -128,7 +113,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Account</Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );

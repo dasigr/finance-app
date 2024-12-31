@@ -6,7 +6,7 @@ export default async function Page() {
   const expenseCategories = await fetchExpenseCategories();
  
   return (
-    <main>
+    <main className="pb-12">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Budget', href: '/dashboard/budget' },
