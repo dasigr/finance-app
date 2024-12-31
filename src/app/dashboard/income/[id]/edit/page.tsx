@@ -1,32 +1,33 @@
-import Form from '@/app/ui/invoices/edit-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
+import Form from '@/app/ui/income/edit-form';
+import Breadcrumbs from '@/app/ui/income/breadcrumbs';
+import { fetchIncomeById, fetchIncomeCategories, fetchAccounts } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
+  const [income, incomeCategories, accounts] = await Promise.all([
+    fetchIncomeById(id),
+    fetchIncomeCategories(),
+    fetchAccounts(),
   ]);
 
-  if (!invoice) {
+  if (!income) {
     notFound();
   }
 
   return (
-    <main>
+    <main className="pb-12">
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
+          { label: 'Income', href: '/dashboard/income' },
           {
-            label: 'Edit Invoice',
-            href: `/dashboard/invoices/${id}/edit`,
+            label: 'Edit Income',
+            href: `/dashboard/income/${id}/edit`,
             active: true,
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <Form income={income} incomeCategories={incomeCategories} accounts={accounts} />
     </main>
   );
 }

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/income/buttons';
-import ExpenseStatus from '@/app/ui/income/status';
+import { UpdateIncome, DeleteIncome } from '@/app/ui/income/buttons';
+import IncomeStatus from '@/app/ui/income/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredIncomes } from '@/app/lib/data';
 
@@ -12,38 +12,38 @@ export default async function IncomesTable({
   query: string;
   currentPage: number;
 }) {
-  const expenses = await fetchFilteredIncomes(query, currentPage);
+  const incomes = await fetchFilteredIncomes(query, currentPage);
 
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg md:pt-0">
           <div className="md:hidden">
-            {expenses?.map((expense) => (
+            {incomes?.map((income) => (
               <div
-                key={expense.id}
+                key={income.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <Link href={`/dashboard/income/${expense.id}/edit`}>
+                <Link href={`/dashboard/income/${income.id}/edit`}>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-500 pb-2">{formatDateToLocal(expense.date)}</p>
+                      <p className="text-sm text-gray-500 pb-2">{formatDateToLocal(income.date)}</p>
                       <div className="flex items-center">
                         <Image
-                          src={expense.category_image_url}
+                          src={income.category_image_url}
                           className="mr-2 rounded-full"
                           width={28}
                           height={28}
-                          alt={expense.category_name}
+                          alt={income.category_name}
                         />
                         <div>
-                          <p>{expense.category_name}</p>
-                          <p className="text-sm text-gray-500">{expense.notes}</p>
+                          <p>{income.category_name}</p>
+                          <p className="text-sm text-gray-500">{income.notes}</p>
                         </div>
                       </div>
                     </div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(expense.amount)}
+                      {formatCurrency(income.amount)}
                     </p>
                   </div>
                 </Link>
@@ -77,33 +77,33 @@ export default async function IncomesTable({
               </tr>
             </thead>
             <tbody className="bg-white">
-              {expenses?.map((expense) => (
+              {incomes?.map((income) => (
                 <tr
-                  key={expense.id}
+                  key={income.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    {formatDateToLocal(expense.date)}
+                    {formatDateToLocal(income.date)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {expense.category_name}
+                    {income.category_name}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {expense.account_name}
+                    {income.account_name}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {expense.notes}
+                    {income.notes}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(expense.amount)}
+                    {formatCurrency(income.amount)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    <ExpenseStatus status={expense.status} />
+                    <IncomeStatus status={income.status} />
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={expense.id} />
-                      <DeleteInvoice id={expense.id} />
+                      <UpdateIncome id={income.id} />
+                      <DeleteIncome id={income.id} />
                     </div>
                   </td>
                 </tr>

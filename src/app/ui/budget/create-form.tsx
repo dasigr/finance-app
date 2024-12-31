@@ -88,7 +88,7 @@ export default function Form({ expenseCategories }: { expenseCategories: Expense
         >
           Cancel
         </Link>
-        <Button type="submit">Create Budget</Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );

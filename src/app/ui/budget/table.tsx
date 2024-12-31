@@ -23,7 +23,7 @@ export default async function BudgetTable({
                 key={budget.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <Link href={`/dashboard/expenses/${budget.id}/edit`}>
+                <Link href={`/dashboard/budget/${budget.id}/edit`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center">

@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, AccountForm } from '@/app/lib/definitions';
+import { AccountForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -11,19 +11,17 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateAccount } from '@/app/lib/actions/account';
 
-export default function EditInvoiceForm({
+export default function EditAccountForm({
   account,
-  customers,
 }: {
   account: AccountForm;
-  customers: CustomerField[];
 }) {
   const updateAccountWithId = updateAccount.bind(null, account.id);
 
   return (
     <form action={updateAccountWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Account Name */}
+        {/* Name */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
             Name
@@ -39,7 +37,7 @@ export default function EditInvoiceForm({
           </div>
         </div>
 
-        {/* Account Balance */}
+        {/* Balance */}
         <div className="mb-4">
           <label htmlFor="balance" className="mb-2 block text-sm font-medium">
             Balance
@@ -60,7 +58,7 @@ export default function EditInvoiceForm({
           </div>
         </div>
 
-        {/* Account Status */}
+        {/* Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
             Status
@@ -69,34 +67,18 @@ export default function EditInvoiceForm({
             <div className="flex gap-4">
               <div className="flex items-center">
                 <input
-                  id="pending"
+                  id="status"
                   name="status"
-                  type="radio"
-                  value="pending"
-                  defaultChecked={account.status === false}
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="pending"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                >
-                  Disabled <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="status"
-                  type="radio"
-                  value="paid"
+                  type="checkbox"
                   defaultChecked={account.status === true}
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                  aria-describedby="status-error"
                 />
                 <label
-                  htmlFor="paid"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
+                  htmlFor="status"
+                  className="ml-2 flex cursor-pointer items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-gray-600"
                 >
-                  Enabled <CheckIcon className="h-4 w-4" />
+                  Cleared
                 </label>
               </div>
             </div>
@@ -110,7 +92,7 @@ export default function EditInvoiceForm({
         >
           Cancel
         </Link>
-        <Button type="submit">Edit Account</Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );
