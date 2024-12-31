@@ -621,14 +621,18 @@ export async function fetchIncomesPages(query: string) {
 
 export async function fetchIncomeById(id: string) {
   try {
-    const data = await sql<InvoiceForm>`
+    const data = await sql<IncomeForm>`
       SELECT
         income.id,
         income.date,
         income.amount,
         income.notes,
-        income.status
+        income.status,
+        income_category.id AS "category_id",
+        account.id AS "account_id"
       FROM income
+      JOIN income_category ON income.category_id = income_category.id
+      JOIN account ON income.account_id = account.id
       WHERE income.id = ${id};
     `;
 

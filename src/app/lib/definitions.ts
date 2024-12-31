@@ -125,6 +125,11 @@ export type CustomerField = {
   name: string;
 };
 
+export type IncomeCategoryField = {
+  id: string;
+  name: string;
+};
+
 export type ExpenseCategoryField = {
   id: string;
   name: string;
