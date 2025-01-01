@@ -102,3 +102,15 @@ export async function deleteAccount(id: string) {
     return { message: 'Database Error: Failed to Delete Account.' };
   }
 }
+
+export async function updateBalance(id: string, amount: number) {
+  try {
+    await sql`
+      UPDATE account
+      SET name = balance = ${amount}
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    return { message: 'Database Error: Failed to Update Account.' };
+  }
+}
