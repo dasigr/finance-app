@@ -252,21 +252,6 @@ export async function fetchFilteredBudget(
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    // const budget = await sql<BudgetTable>`
-    //   SELECT
-    //     budget.id,
-    //     budget.amount,
-    //     expense_category.name,
-    //     expense_category.image_url
-    //   FROM budget
-    //   JOIN expense_category ON budget.category_id = expense_category.id
-    //   WHERE
-    //     expense_category.name ILIKE ${`%${query}%`} OR
-    //     budget.amount ILIKE ${`%${query}%`}
-    //   ORDER BY expense_category.name ASC
-    //   LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    // `;
-
     return budget.rows;
   } catch (error) {
     console.error('Database Error:', error);

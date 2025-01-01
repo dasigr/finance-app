@@ -5,6 +5,8 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { formatDateToLocal } from '../utils';
+import { fetchAccountById } from '../data';
+import { updateBalance } from './account';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -65,12 +67,19 @@ export async function createExpense(prevState: State, formData: FormData) {
   const amountInCents = amount * 100;
   // const date = new Date().toISOString().split('T')[0];
 
+  // Get account balance.
+  const account = fetchAccountById(accountId);
+  const prevBalance = (await account).balance;
+  const newBalance = prevBalance - amount;
+
   // Insert data into the database.
   try {
     await sql`
       INSERT INTO expense (date, category_id, account_id, amount, notes, status)
       VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
     `;
+
+    updateBalance(accountId, newBalance);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
