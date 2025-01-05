@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { fetchAccountById } from '../data';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -11,12 +12,10 @@ const FormSchema = z.object({
     invalid_type_error: 'Please select a customer.',
   }),
   balance: z.coerce
-    .number()
-    .gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.boolean({
-    invalid_type_error: 'Please select an invoice status.',
-  }),
-  date: z.string(),
+    .number(),
+  weight: z.coerce
+    .number(),
+  status: z.any(),
 });
 
 const CreateAccount = FormSchema.omit({ id: true });
@@ -26,7 +25,8 @@ export type State = {
   errors?: {
     name?: string[];
     balance?: string[];
-    status?: boolean[];
+    weight?: number[];
+    status?: string[];
   };
   message?: string | null;
 };
@@ -34,29 +34,29 @@ export type State = {
 export async function createAccount(prevState: State, formData: FormData) {
   // Validate form using Zod.
   const validatedFields = CreateAccount.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+    name: formData.get('name'),
+    balance: formData.get('balance'),
+    weight: formData.get('weight'),
+    status: formData.get('status') ? "true" : "false",
   });
 
   // If form validation fails, return errors clearly. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing fields. Failed to Create Invoice.',
+      message: 'Missing fields. Failed to Create Account.',
     };
   }
 
   // Prepare data for insertion ino the database.
-  const { name, balance, status } = validatedFields.data;
+  const { name, balance, weight, status } = validatedFields.data;
   const amountInCents = balance * 100;
-  const date = new Date().toISOString().split('T')[0];
 
   // Insert data into the database.
   try {
     await sql`
-      INSERT INTO invoices (name, amount, status)
-      VALUES (${name}, ${amountInCents}, ${status})
+      INSERT INTO account (name, balance, weight, status)
+      VALUES (${name}, ${amountInCents}, ${weight}, ${status})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -71,10 +71,11 @@ export async function createAccount(prevState: State, formData: FormData) {
 }
 
 export async function updateAccount(id: string, formData: FormData) {
-  const { name, balance, status } = UpdateAccount.parse({
+  const { name, balance, weight, status } = UpdateAccount.parse({
     name: formData.get('name'),
     balance: formData.get('balance'),
-    status: formData.get('status'),
+    weight: formData.get('weight'),
+    status: formData.get('status') ? "true" : "false",
   });
  
   const amountInCents = balance * 100;
@@ -82,7 +83,7 @@ export async function updateAccount(id: string, formData: FormData) {
   try {
     await sql`
       UPDATE account
-      SET name = ${name}, balance = ${amountInCents}, status = ${status}
+      SET name = ${name}, balance = ${amountInCents}, weight = ${weight}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
@@ -96,18 +97,31 @@ export async function updateAccount(id: string, formData: FormData) {
 export async function deleteAccount(id: string) {
   try {
     await sql`DELETE FROM account WHERE id = ${id}`;
-    revalidatePath('/dashboard/account');
-    return { message: 'Deleted Account.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Account.' };
   }
+
+  revalidatePath('/dashboard/account');
+  redirect('/dashboard/account');
+  return { message: 'Deleted Account.' };
 }
 
-export async function updateBalance(id: string, amount: number) {
+export async function updateBalance(id: string, operation: string, amountInCents: number) {
+  const account = fetchAccountById(id);
+  let newBalance = (await account).balance;
+  if (operation == 'add') {
+    newBalance = newBalance + amountInCents;
+  } else {
+    newBalance = newBalance - amountInCents;
+  }
+
+  console.log("New Balance:");
+  console.log(newBalance);
+
   try {
     await sql`
       UPDATE account
-      SET name = balance = ${amount}
+      SET balance = ${newBalance}
       WHERE id = ${id}
     `;
   } catch (error) {
