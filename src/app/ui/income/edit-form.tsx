@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
+import { Checkbox } from "@/components/ui/checkbox";
 import { updateIncome } from '@/app/lib/actions/income';
 
 export default function EditIncomeForm({
@@ -22,6 +23,8 @@ export default function EditIncomeForm({
   accounts: AccountField[];
 }) {
   const updateIncomeWithId = updateIncome.bind(null, income.id);
+  console.log("Income: ");
+  console.log(income);
 
   return (
     <form action={updateIncomeWithId}>
@@ -144,12 +147,12 @@ export default function EditIncomeForm({
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
               <div className="flex items-center">
-                <input
+                <Checkbox
                   id="status"
                   name="status"
-                  type="checkbox"
-                  defaultChecked={income.status ? true : false}
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                  value="true"
+                  defaultChecked={income.status ? true : false}
                   aria-describedby="status-error"
                 />
                 <label
@@ -170,7 +173,7 @@ export default function EditIncomeForm({
         >
           Cancel
         </Link>
-        <Button type="submit">Edit Income</Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );

@@ -93,12 +93,11 @@ export async function updateIncome(id: string, formData: FormData) {
  
   const amountInCents = amount * 100;
   const formattedDate = formatDateToLocal(date);
-  const statusOverride = true;
 
   try {
     await sql`
       UPDATE income
-      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${statusOverride}
+      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {

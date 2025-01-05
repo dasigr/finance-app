@@ -7,7 +7,7 @@ export default async function Page() {
   const accounts = await fetchAccounts();
  
   return (
-    <main className="pb-8 mb-8">
+    <div className="pb-8 mb-8">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Income', href: '/dashboard/income' },
@@ -19,6 +19,6 @@ export default async function Page() {
         ]}
       />
       <Form categories={categories} accounts={accounts} />
-    </main>
+    </div>
   );
 }
