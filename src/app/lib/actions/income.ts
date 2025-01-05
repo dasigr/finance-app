@@ -61,7 +61,6 @@ export async function createIncome(prevState: State, formData: FormData) {
   // Prepare data for insertion ino the database.
   const { date, categoryId, accountId, amount, notes, status } = validatedFields.data;
   const amountInCents = amount * 100;
-  // const date = new Date().toISOString().split('T')[0];
 
   // Insert data into the database.
   try {
@@ -111,9 +110,11 @@ export async function updateIncome(id: string, formData: FormData) {
 export async function deleteIncome(id: string) {
   try {
     await sql`DELETE FROM income WHERE id = ${id}`;
-    revalidatePath('/dashboard/income');
-    return { message: 'Deleted Income.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Income.' };
   }
+
+  revalidatePath('/dashboard/income');
+  redirect('/dashboard/income');
+  // return { message: 'Deleted Income.' };
 }

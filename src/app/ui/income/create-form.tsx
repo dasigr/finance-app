@@ -16,7 +16,6 @@ import { useFormState } from 'react-dom';
 export default function Form({ categories, accounts }: { categories: IncomeCategoryField[], accounts: AccountField[] }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useFormState(createIncome, initialState);
-
   const today = new Date().toISOString().split('T')[0];
 
   return (
