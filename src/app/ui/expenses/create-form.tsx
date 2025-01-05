@@ -9,12 +9,14 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
+import { Checkbox } from "@/components/ui/checkbox";
 import { createExpense, State } from '@/app/lib/actions/expense';
 import { useFormState } from 'react-dom';
 
 export default function Form({ categories, accounts }: { categories: ExpenseCategoryField[], accounts: AccountField[] }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useFormState(createExpense, initialState);
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <form action={formAction}>
@@ -93,6 +95,7 @@ export default function Form({ categories, accounts }: { categories: ExpenseCate
                 id="date"
                 name="date"
                 type="date"
+                defaultValue={today}
                 placeholder="Set date"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="date-error"
@@ -179,13 +182,11 @@ export default function Form({ categories, accounts }: { categories: ExpenseCate
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
               <div className="flex items-center">
-                <input
+                <Checkbox
                   id="status"
                   name="status"
-                  type="checkbox"
-                  value="false"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                  aria-describedby="status-error"
+                  value="true"
                 />
                 <label
                   htmlFor="status"

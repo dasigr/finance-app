@@ -21,9 +21,7 @@ const FormSchema = z.object({
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
   notes: z.string(),
-  status: z.string({
-    invalid_type_error: 'Please select an income status.',
-  }),
+  status: z.any(),
 });
 
 const CreateIncome = FormSchema.omit({ id: true });
@@ -49,7 +47,7 @@ export async function createIncome(prevState: State, formData: FormData) {
     accountId: formData.get('accountId'),
     amount: formData.get('amount'),
     notes: formData.get('notes'),
-    status: formData.get('status'),
+    status: formData.get('status') ? "true" : "false",
   });
 
   // If form validation fails, return errors clearly. Otherwise, continue.
@@ -63,7 +61,6 @@ export async function createIncome(prevState: State, formData: FormData) {
   // Prepare data for insertion ino the database.
   const { date, categoryId, accountId, amount, notes, status } = validatedFields.data;
   const amountInCents = amount * 100;
-  // const date = new Date().toISOString().split('T')[0];
 
   // Insert data into the database.
   try {
@@ -90,17 +87,16 @@ export async function updateIncome(id: string, formData: FormData) {
     accountId: formData.get('accountId'),
     amount: formData.get('amount'),
     notes: formData.get('notes'),
-    status: formData.get('status'),
+    status: formData.get('status') ? "true" : "false",
   });
  
   const amountInCents = amount * 100;
   const formattedDate = formatDateToLocal(date);
-  const statusOverride = true;
 
   try {
     await sql`
       UPDATE income
-      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${statusOverride}
+      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
@@ -114,9 +110,11 @@ export async function updateIncome(id: string, formData: FormData) {
 export async function deleteIncome(id: string) {
   try {
     await sql`DELETE FROM income WHERE id = ${id}`;
-    revalidatePath('/dashboard/income');
-    return { message: 'Deleted Income.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Income.' };
   }
+
+  revalidatePath('/dashboard/income');
+  redirect('/dashboard/income');
+  // return { message: 'Deleted Income.' };
 }
