@@ -5,6 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { formatDateToLocal } from '../utils';
+import { updateBalance } from './account';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -68,6 +69,8 @@ export async function createIncome(prevState: State, formData: FormData) {
       INSERT INTO income (date, category_id, account_id, amount, notes, status)
       VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
     `;
+
+    updateBalance(accountId, 'add', amountInCents);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 

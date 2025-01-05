@@ -163,6 +163,7 @@ export type AccountForm = {
   id: string;
   name: string;
   balance: number;
+  weight: number;
   status: boolean;
 };
 

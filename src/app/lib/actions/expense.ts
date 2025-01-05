@@ -66,11 +66,6 @@ export async function createExpense(prevState: State, formData: FormData) {
   const { date, categoryId, accountId, amount, notes, status } = validatedFields.data;
   const amountInCents = amount * 100;
 
-  // Get account balance.
-  const account = fetchAccountById(accountId);
-  const prevBalance = (await account).balance;
-  const newBalance = prevBalance - amount;
-
   // Insert data into the database.
   try {
     await sql`
@@ -78,7 +73,7 @@ export async function createExpense(prevState: State, formData: FormData) {
       VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
     `;
 
-    updateBalance(accountId, newBalance);
+    updateBalance(accountId, 'subtract', amountInCents);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
