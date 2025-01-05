@@ -157,6 +157,7 @@ async function seedAccounts() {
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       balance INT NOT NULL,
+      weight INT DEFAULT 0,
       status BOOLEAN DEFAULT TRUE
     );
   `;
@@ -164,8 +165,8 @@ async function seedAccounts() {
   const insertedAccounts = await Promise.all(
     accounts.map(
       (account) => client.sql`
-        INSERT INTO account (id, name, balance, status)
-        VALUES (${account.id}, ${account.name}, ${account.balance}, ${account.status})
+        INSERT INTO account (id, name, balance, weight, status)
+        VALUES (${account.id}, ${account.name}, ${account.balance}, ${account.weight}, ${account.status})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),

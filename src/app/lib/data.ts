@@ -419,7 +419,10 @@ export async function fetchAccounts() {
     const data = await sql<AccountField>`
       SELECT
         id,
-        name
+        name,
+        balance,
+        weight,
+        status
       FROM account
       ORDER BY name ASC
     `;
@@ -444,9 +447,10 @@ export async function fetchFilteredAccounts(
         account.id,
         account.name,
         account.balance,
+        account.weight,
         account.status
       FROM account
-      ORDER BY account.status DESC, account.name ASC
+      ORDER BY account.status DESC, account.weight ASC, account.name ASC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
