@@ -148,7 +148,7 @@ export default function EditIncomeForm({
                   id="status"
                   name="status"
                   type="checkbox"
-                  defaultChecked={income.status === true}
+                  defaultChecked={income.status ? true : false}
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                   aria-describedby="status-error"
                 />

@@ -183,7 +183,6 @@ export default function Form({ categories, accounts }: { categories: IncomeCateg
                   id="status"
                   name="status"
                   type="checkbox"
-                  value="false"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                   aria-describedby="status-error"
                 />

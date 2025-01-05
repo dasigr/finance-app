@@ -21,9 +21,7 @@ const FormSchema = z.object({
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
   notes: z.string(),
-  status: z.string({
-    invalid_type_error: 'Please select an income status.',
-  }),
+  status: z.any(),
 });
 
 const CreateIncome = FormSchema.omit({ id: true });
@@ -49,7 +47,7 @@ export async function createIncome(prevState: State, formData: FormData) {
     accountId: formData.get('accountId'),
     amount: formData.get('amount'),
     notes: formData.get('notes'),
-    status: formData.get('status'),
+    status: formData.get('status') ? "true" : "false",
   });
 
   // If form validation fails, return errors clearly. Otherwise, continue.
@@ -90,7 +88,7 @@ export async function updateIncome(id: string, formData: FormData) {
     accountId: formData.get('accountId'),
     amount: formData.get('amount'),
     notes: formData.get('notes'),
-    status: formData.get('status'),
+    status: formData.get('status') ? "true" : "false",
   });
  
   const amountInCents = amount * 100;
