@@ -51,7 +51,7 @@ export async function createExpense(prevState: State, formData: FormData) {
     accountId: formData.get('accountId'),
     amount: formData.get('amount'),
     notes: formData.get('notes'),
-    status: formData.get('status'),
+    status: formData.get('status') ? "true" : "false",
   });
 
   // If form validation fails, return errors clearly. Otherwise, continue.
@@ -65,7 +65,6 @@ export async function createExpense(prevState: State, formData: FormData) {
   // Prepare data for insertion ino the database.
   const { date, categoryId, accountId, amount, notes, status } = validatedFields.data;
   const amountInCents = amount * 100;
-  // const date = new Date().toISOString().split('T')[0];
 
   // Get account balance.
   const account = fetchAccountById(accountId);
@@ -99,17 +98,16 @@ export async function updateExpense(id: string, formData: FormData) {
     accountId: formData.get('accountId'),
     amount: formData.get('amount'),
     notes: formData.get('notes'),
-    status: formData.get('status'),
+    status: formData.get('status') ? "true" : "false",
   });
  
   const amountInCents = amount * 100;
   const formattedDate = formatDateToLocal(date);
-  const statusOverride = true;
 
   try {
     await sql`
       UPDATE expense
-      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${statusOverride}
+      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
@@ -123,9 +121,11 @@ export async function updateExpense(id: string, formData: FormData) {
 export async function deleteExpense(id: string) {
   try {
     await sql`DELETE FROM expense WHERE id = ${id}`;
-    revalidatePath('/dashboard/expenses');
-    return { message: 'Deleted Expense.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Expense.' };
   }
+
+  revalidatePath('/dashboard/expenses');
+  redirect('/dashboard/expenses');
+  // return { message: 'Deleted Expense.' };
 }

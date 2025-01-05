@@ -16,7 +16,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main className="pb-12">
+    <div className="pb-8 mb-8">
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Income', href: '/dashboard/income' },
@@ -28,6 +28,6 @@ export default async function Page({ params }: { params: { id: string } }) {
         ]}
       />
       <Form income={income} incomeCategories={incomeCategories} accounts={accounts} />
-    </main>
+    </div>
   );
 }
