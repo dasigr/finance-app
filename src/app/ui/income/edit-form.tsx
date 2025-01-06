@@ -14,6 +14,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DeleteIncome } from '@/app/ui/income/buttons';
 import { updateIncome } from '@/app/lib/actions/income';
 
+export const dynamic = 'force-dynamic';
+
 export default function EditIncomeForm({
   income,
   incomeCategories,

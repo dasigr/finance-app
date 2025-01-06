@@ -4,6 +4,8 @@ import { UpdateBudget } from '@/app/ui/budget/buttons';
 import { formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredBudget } from '@/app/lib/data';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BudgetTable({
   query,
   currentPage,

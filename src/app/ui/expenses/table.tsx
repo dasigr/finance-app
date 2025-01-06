@@ -5,6 +5,8 @@ import ExpenseStatus from '@/app/ui/expenses/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredExpenses } from '@/app/lib/data';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ExpensesTable({
   query,
   currentPage,

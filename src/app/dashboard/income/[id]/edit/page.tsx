@@ -2,7 +2,9 @@ import Form from '@/app/ui/income/edit-form';
 import Breadcrumbs from '@/app/ui/income/breadcrumbs';
 import { fetchIncomeById, fetchIncomeCategories, fetchAccounts } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
- 
+
+export const dynamic = 'force-dynamic';
+
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
   const [income, incomeCategories, accounts] = await Promise.all([

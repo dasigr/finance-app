@@ -15,6 +15,8 @@ const iconMap = {
   budget: UserGroupIcon,
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function CardWrapper() {
   const {
     totalIncomeAmount,
