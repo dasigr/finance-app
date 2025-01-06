@@ -108,7 +108,7 @@ export async function deleteAccount(id: string) {
 
 export async function updateBalance(id: string, operation: string, amountInCents: number) {
   const account = fetchAccountById(id);
-  let currentBalanceInCents = (await account).balance * 100;
+  const currentBalanceInCents = (await account).balance * 100;
 
   let newBalanceInCents = 0;
   if (operation == 'add') {
