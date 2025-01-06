@@ -4,6 +4,8 @@ import AccountStatus from '@/app/ui/account/status';
 import { formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredAccounts } from '@/app/lib/data';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AccountsTable({
   query,
   currentPage,

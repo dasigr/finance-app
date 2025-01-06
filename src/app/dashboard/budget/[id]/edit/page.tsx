@@ -2,7 +2,9 @@ import Form from '@/app/ui/budget/edit-form';
 import Breadcrumbs from '@/app/ui/budget/breadcrumbs';
 import { fetchBudgetById, fetchExpenseCategories } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
- 
+
+export const dynamic = 'force-dynamic';
+
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
   const [budget, expenseCategories] = await Promise.all([

@@ -15,7 +15,7 @@ const FormSchema = z.object({
     .number(),
   weight: z.coerce
     .number(),
-  status: z.any(),
+  status: z.string(),
 });
 
 const CreateAccount = FormSchema.omit({ id: true });
@@ -25,7 +25,7 @@ export type State = {
   errors?: {
     name?: string[];
     balance?: string[];
-    weight?: number[];
+    weight?: string[];
     status?: string[];
   };
   message?: string | null;

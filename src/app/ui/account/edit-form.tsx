@@ -13,6 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DeleteAccount } from '@/app/ui/account/buttons';
 import { updateAccount } from '@/app/lib/actions/account';
 
+export const dynamic = 'force-dynamic';
+
 export default function EditAccountForm({
   account,
 }: {

@@ -6,7 +6,9 @@ import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchIncomesPages } from '@/app/lib/data';
- 
+
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Income',
 };

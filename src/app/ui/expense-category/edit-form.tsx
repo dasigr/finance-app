@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateExpenseCategory } from '@/app/lib/actions/expense-category';
 
+export const dynamic = 'force-dynamic';
+
 export default function EditExpenseCategoryForm({
   expenseCategory,
 }: {

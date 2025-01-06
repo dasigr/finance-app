@@ -14,6 +14,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DeleteExpense } from '@/app/ui/expenses/buttons';
 import { updateExpense } from '@/app/lib/actions/expense';
 
+export const dynamic = 'force-dynamic';
+
 export default function EditExpenseForm({
   expense,
   expenseCategories,
