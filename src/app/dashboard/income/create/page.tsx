@@ -12,7 +12,7 @@ export default async function Page() {
         breadcrumbs={[
           { label: 'Income', href: '/dashboard/income' },
           {
-            label: 'Create Income',
+            label: 'Add Income',
             href: '/dashboard/income/create',
             active: true,
           },

@@ -11,7 +11,7 @@ export default async function Page() {
         breadcrumbs={[
           { label: 'Settings', href: '/settings' },
           {
-            label: 'Create Expense Category',
+            label: 'Add Expense Category',
             href: '/settings/expense-category/create',
             active: true,
           },

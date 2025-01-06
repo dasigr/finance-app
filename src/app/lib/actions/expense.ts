@@ -5,8 +5,9 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { formatDateToLocal } from '../utils';
-import { fetchAccountById } from '../data';
+import { fetchAccountById, fetchExpenseById } from '../data';
 import { updateBalance } from './account';
+import { ExpenseForm } from '../definitions';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -73,6 +74,7 @@ export async function createExpense(prevState: State, formData: FormData) {
       VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
     `;
 
+    // Update account balance.
     updateBalance(accountId, 'subtract', amountInCents);
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -87,6 +89,34 @@ export async function createExpense(prevState: State, formData: FormData) {
 }
 
 export async function updateExpense(id: string, formData: FormData) {
+  // Get previous expense data.
+  const data = await sql<ExpenseForm>`
+    SELECT
+      expense.id,
+      expense.date,
+      expense.amount,
+      expense.notes,
+      expense.status,
+      expense_category.id AS "category_id",
+      account.id AS "account_id"
+    FROM expense
+    JOIN expense_category ON expense.category_id = expense_category.id
+    JOIN account ON expense.account_id = account.id
+    WHERE expense.id = ${id};
+  `;
+
+  const expense = data.rows.map((expense) => ({
+    ...expense,
+    // Convert amount from cents to dollars
+    amount: expense.amount / 100,
+  }));
+  
+  const prevAmountInCents = expense[0].amount * 100;
+  console.log("prevAmountInCents");
+  console.log(prevAmountInCents);
+
+  //
+
   const { date, categoryId, accountId, amount, notes, status } = UpdateExpense.parse({
     date: formData.get('date'),
     categoryId: formData.get('categoryId'),
@@ -98,6 +128,13 @@ export async function updateExpense(id: string, formData: FormData) {
  
   const amountInCents = amount * 100;
   const formattedDate = formatDateToLocal(date);
+  console.log("newAmountInCents");
+  console.log(amountInCents);
+
+  // Prepare account balance.
+  const balanceInCents = prevAmountInCents - amountInCents;
+  console.log("balanceInCents");
+  console.log(balanceInCents);
 
   try {
     await sql`
@@ -105,6 +142,9 @@ export async function updateExpense(id: string, formData: FormData) {
       SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
       WHERE id = ${id}
     `;
+
+    // Update account balance.
+    updateBalance(accountId, 'add', balanceInCents);
   } catch (error) {
     return { message: 'Database Error: Failed to Update Expense.' };
   }
@@ -114,8 +154,16 @@ export async function updateExpense(id: string, formData: FormData) {
 }
 
 export async function deleteExpense(id: string) {
+  // Prepare account balance.
+  const expense = fetchExpenseById(id);
+  const accountId = (await expense).account_id;
+  const amountInCents = (await expense).amount * 100;
+
   try {
     await sql`DELETE FROM expense WHERE id = ${id}`;
+
+    // Update account balance.
+    updateBalance(accountId, 'add', amountInCents);
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Expense.' };
   }
