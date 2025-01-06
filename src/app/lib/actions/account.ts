@@ -108,20 +108,19 @@ export async function deleteAccount(id: string) {
 
 export async function updateBalance(id: string, operation: string, amountInCents: number) {
   const account = fetchAccountById(id);
-  let newBalance = (await account).balance;
-  if (operation == 'add') {
-    newBalance = newBalance + amountInCents;
-  } else {
-    newBalance = newBalance - amountInCents;
-  }
+  let currentBalanceInCents = (await account).balance * 100;
 
-  console.log("New Balance:");
-  console.log(newBalance);
+  let newBalanceInCents = 0;
+  if (operation == 'add') {
+    newBalanceInCents = currentBalanceInCents + amountInCents;
+  } else {
+    newBalanceInCents = currentBalanceInCents - amountInCents;
+  }
 
   try {
     await sql`
       UPDATE account
-      SET balance = ${newBalance}
+      SET balance = ${newBalanceInCents}
       WHERE id = ${id}
     `;
   } catch (error) {
