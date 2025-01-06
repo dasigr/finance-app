@@ -5,6 +5,8 @@ import IncomeStatus from '@/app/ui/income/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredIncomes } from '@/app/lib/data';
 
+export const dynamic = 'force-dynamic';
+
 export default async function IncomesTable({
   query,
   currentPage,

@@ -24,6 +24,8 @@ import { formatCurrency } from './utils';
 
 const ITEMS_PER_PAGE = 10;
 
+export const dynamic = 'force-dynamic';
+
 /* Revenue */
 
 export async function fetchRevenue() {
@@ -482,6 +484,7 @@ export async function fetchAccountById(id: string) {
         account.id,
         account.name,
         account.balance,
+        account.weight,
         account.status
       FROM account
       WHERE account.id = ${id};

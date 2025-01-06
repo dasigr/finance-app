@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { createAccount, State } from '@/app/lib/actions/account';
 import { useFormState } from 'react-dom';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function Form() {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useFormState(createAccount, initialState);
 
@@ -84,7 +84,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 name="weight"
                 type="number"
                 step="1"
-                defaultValue={0}
                 placeholder="Weight"
                 className="peer block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="weight-error"

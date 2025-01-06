@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateInvoice } from '@/app/lib/actions/invoice';
 
+export const dynamic = 'force-dynamic';
+
 export default function EditInvoiceForm({
   invoice,
   customers,

@@ -5,6 +5,8 @@ import {
   CardsSkeleton,
 } from '@/app/ui/skeletons';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Dashboard',
 };
