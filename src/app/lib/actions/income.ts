@@ -79,7 +79,9 @@ export async function createIncome(prevState: State, formData: FormData) {
   }
 
   // Revalidate the cache for the income page and redirect the user.
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/income');
+  
   redirect('/dashboard/income');
 }
 
@@ -106,7 +108,10 @@ export async function updateIncome(id: string, formData: FormData) {
     return { message: 'Database Error: Failed to Update Income.' };
   }
  
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/income');
+  revalidatePath(`/dashboard/income/${id}/edit`);
+
   redirect('/dashboard/income');
 }
 
@@ -117,7 +122,9 @@ export async function deleteIncome(id: string) {
     return { message: 'Database Error: Failed to Delete Income.' };
   }
 
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/income');
+
   redirect('/dashboard/income');
-  // return { message: 'Deleted Income.' };
+  return { message: 'Deleted Income.' };
 }
