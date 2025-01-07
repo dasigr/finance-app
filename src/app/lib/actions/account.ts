@@ -113,16 +113,18 @@ export async function deleteAccount(id: string) {
   return { message: 'Deleted Account.' };
 }
 
-export async function updateBalance(id: string, operation: string, amountInCents: number) {
+export async function updateBalance(id: string, operation: string, amount: number) {
   const account = fetchAccountById(id);
-  const currentBalanceInCents = (await account).balance * 100;
+  const currentBalance = (await account).balance;
 
-  let newBalanceInCents = 0;
+  let newBalance = 0;
   if (operation == 'add') {
-    newBalanceInCents = currentBalanceInCents + amountInCents;
+    newBalance = currentBalance + amount;
   } else {
-    newBalanceInCents = currentBalanceInCents - amountInCents;
+    newBalance = currentBalance - amount;
   }
+
+  const newBalanceInCents = newBalance * 100;
 
   try {
     await sql`
