@@ -66,7 +66,9 @@ export async function createAccount(prevState: State, formData: FormData) {
   }
 
   // Revalidate the cache for the invoices page and redirect the user.
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/account');
+
   redirect('/dashboard/account');
 }
 
@@ -90,7 +92,10 @@ export async function updateAccount(id: string, formData: FormData) {
     return { message: 'Database Error: Failed to Update Account.' };
   }
  
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/account');
+  revalidatePath(`/dashboard/account/${id}/edit`);
+
   redirect('/dashboard/account');
 }
 
@@ -101,7 +106,9 @@ export async function deleteAccount(id: string) {
     return { message: 'Database Error: Failed to Delete Account.' };
   }
 
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/account');
+
   redirect('/dashboard/account');
   return { message: 'Deleted Account.' };
 }
@@ -123,6 +130,10 @@ export async function updateBalance(id: string, operation: string, amountInCents
       SET balance = ${newBalanceInCents}
       WHERE id = ${id}
     `;
+
+    revalidatePath('/dashboard');
+    revalidatePath('/dashboard/account');
+    revalidatePath(`/dashboard/account/${id}/edit`);
   } catch (error) {
     return { message: 'Database Error: Failed to Update Account.' };
   }

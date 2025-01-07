@@ -61,7 +61,9 @@ export async function createBudget(prevState: State, formData: FormData) {
   }
 
   // Revalidate the cache for the budget page and redirect the user.
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/budget');
+
   redirect('/dashboard/budget');
 }
 
@@ -83,14 +85,21 @@ export async function updateBudget(id: string, formData: FormData) {
     return { message: 'Database Error: Failed to Update Invoice.' };
   }
  
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/budget');
+  revalidatePath(`/dashboard/budget/${id}/edit`);
+
   redirect('/dashboard/budget');
 }
 
 export async function deleteBudget(id: string) {
   try {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
+
+    revalidatePath('/dashboard');
     revalidatePath('/dashboard/budget');
+
+    redirect('/dashboard/budget');
     return { message: 'Deleted Budget.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Budget.' };

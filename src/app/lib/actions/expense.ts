@@ -5,7 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { formatDateToLocal } from '../utils';
-import { fetchAccountById, fetchExpenseById } from '../data';
+import { fetchExpenseById } from '../data';
 import { updateBalance } from './account';
 import { ExpenseForm } from '../definitions';
 
@@ -84,7 +84,9 @@ export async function createExpense(prevState: State, formData: FormData) {
   }
 
   // Revalidate the cache for the expense page and redirect the user.
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
+  
   redirect('/dashboard/expenses');
 }
 
@@ -149,7 +151,10 @@ export async function updateExpense(id: string, formData: FormData) {
     return { message: 'Database Error: Failed to Update Expense.' };
   }
  
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
+  revalidatePath(`/dashboard/expenses/${id}/edit`);
+
   redirect('/dashboard/expenses');
 }
 
@@ -168,7 +173,9 @@ export async function deleteExpense(id: string) {
     return { message: 'Database Error: Failed to Delete Expense.' };
   }
 
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
+
   redirect('/dashboard/expenses');
-  // return { message: 'Deleted Expense.' };
+  return { message: 'Deleted Expense.' };
 }
