@@ -85,6 +85,7 @@ export default function Form() {
                 type="number"
                 step="1"
                 placeholder="Weight"
+                defaultValue={0}
                 className="peer block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="weight-error"
               />

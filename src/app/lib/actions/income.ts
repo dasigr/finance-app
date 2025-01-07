@@ -6,6 +6,8 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { formatDateToLocal } from '../utils';
 import { updateBalance } from './account';
+import { fetchIncomeById } from '../data';
+import { IncomeForm } from '../definitions';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -70,7 +72,7 @@ export async function createIncome(prevState: State, formData: FormData) {
       VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
     `;
 
-    updateBalance(accountId, 'add', amountInCents);
+    updateBalance(accountId, 'add', amount);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
@@ -81,11 +83,41 @@ export async function createIncome(prevState: State, formData: FormData) {
   // Revalidate the cache for the income page and redirect the user.
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/income');
+  revalidatePath('/dashboard/account');
+  revalidatePath(`/dashboard/account/${accountId}/edit`);
   
   redirect('/dashboard/income');
 }
 
 export async function updateIncome(id: string, formData: FormData) {
+  // Get previous expense data.
+  const data = await sql<IncomeForm>`
+    SELECT
+      income.id,
+      income.date,
+      income.amount,
+      income.notes,
+      income.status,
+      income_category.id AS "category_id",
+      account.id AS "account_id"
+    FROM income
+    JOIN income_category ON income.category_id = income_category.id
+    JOIN account ON income.account_id = account.id
+    WHERE income.id = ${id};
+  `;
+
+  const income = data.rows.map((income) => ({
+    ...income,
+    // Convert amount from cents to dollars
+    amount: income.amount / 100,
+  }));
+  
+  const prevAmount = income[0].amount;
+  console.log("Prev Amount:");
+  console.log(prevAmount);
+
+  //
+
   const { date, categoryId, accountId, amount, notes, status } = UpdateIncome.parse({
     date: formData.get('date'),
     categoryId: formData.get('categoryId'),
@@ -95,7 +127,17 @@ export async function updateIncome(id: string, formData: FormData) {
     status: formData.get('status') ? "true" : "false",
   });
  
+  console.log("New Amount:");
+  console.log(amount);
+
+  // Prepare account balance.
+  const amountChanged = prevAmount - amount;
+  console.log("Changed Amount:");
+  console.log(amountChanged);
+ 
+  // Convert amount in cents before saving to the database.
   const amountInCents = amount * 100;
+
   const formattedDate = formatDateToLocal(date);
 
   try {
@@ -104,6 +146,9 @@ export async function updateIncome(id: string, formData: FormData) {
       SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
       WHERE id = ${id}
     `;
+
+    // Update account balance.
+    updateBalance(accountId, 'add', amountChanged);
   } catch (error) {
     return { message: 'Database Error: Failed to Update Income.' };
   }
@@ -111,19 +156,31 @@ export async function updateIncome(id: string, formData: FormData) {
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/income');
   revalidatePath(`/dashboard/income/${id}/edit`);
+  revalidatePath('/dashboard/account');
+  revalidatePath(`/dashboard/account/${id}/edit`);
 
   redirect('/dashboard/income');
 }
 
 export async function deleteIncome(id: string) {
+  // Prepare account balance.
+  const income = fetchIncomeById(id);
+  const accountId = (await income).account_id;
+  const amount = (await income).amount;
+
   try {
     await sql`DELETE FROM income WHERE id = ${id}`;
+
+    // Update account balance.
+    updateBalance(accountId, 'add', amount);
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Income.' };
   }
 
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/income');
+  revalidatePath('/dashboard/account');
+  revalidatePath(`/dashboard/account/${accountId}/edit`);
 
   redirect('/dashboard/income');
   return { message: 'Deleted Income.' };

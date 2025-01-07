@@ -75,7 +75,7 @@ export async function createExpense(prevState: State, formData: FormData) {
     `;
 
     // Update account balance.
-    updateBalance(accountId, 'subtract', amountInCents);
+    updateBalance(accountId, 'subtract', amount);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
@@ -86,6 +86,8 @@ export async function createExpense(prevState: State, formData: FormData) {
   // Revalidate the cache for the expense page and redirect the user.
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
+  revalidatePath('/dashboard/account');
+  revalidatePath(`/dashboard/account/${accountId}/edit`);
   
   redirect('/dashboard/expenses');
 }
@@ -113,9 +115,9 @@ export async function updateExpense(id: string, formData: FormData) {
     amount: expense.amount / 100,
   }));
   
-  const prevAmountInCents = expense[0].amount * 100;
-  console.log("prevAmountInCents");
-  console.log(prevAmountInCents);
+  const prevAmount = expense[0].amount;
+  console.log("Prev Amount:");
+  console.log(prevAmount);
 
   //
 
@@ -128,15 +130,18 @@ export async function updateExpense(id: string, formData: FormData) {
     status: formData.get('status') ? "true" : "false",
   });
  
-  const amountInCents = amount * 100;
-  const formattedDate = formatDateToLocal(date);
-  console.log("newAmountInCents");
-  console.log(amountInCents);
+  console.log("New Amount:");
+  console.log(amount);
 
   // Prepare account balance.
-  const balanceInCents = prevAmountInCents - amountInCents;
-  console.log("balanceInCents");
-  console.log(balanceInCents);
+  const amountChanged = prevAmount - amount;
+  console.log("Changed Amount:");
+  console.log(amountChanged);
+
+  // Convert amount in cents before saving to the database.
+  const amountInCents = amount * 100;
+
+  const formattedDate = formatDateToLocal(date);
 
   try {
     await sql`
@@ -146,7 +151,7 @@ export async function updateExpense(id: string, formData: FormData) {
     `;
 
     // Update account balance.
-    updateBalance(accountId, 'add', balanceInCents);
+    updateBalance(accountId, 'add', amountChanged);
   } catch (error) {
     return { message: 'Database Error: Failed to Update Expense.' };
   }
@@ -154,27 +159,51 @@ export async function updateExpense(id: string, formData: FormData) {
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
   revalidatePath(`/dashboard/expenses/${id}/edit`);
+  revalidatePath('/dashboard/account');
+  revalidatePath(`/dashboard/account/${accountId}/edit`);
 
   redirect('/dashboard/expenses');
 }
 
 export async function deleteExpense(id: string) {
-  // Prepare account balance.
-  const expense = fetchExpenseById(id);
-  const accountId = (await expense).account_id;
-  const amountInCents = (await expense).amount * 100;
+  // Get previous expense data.
+  const data = await sql<ExpenseForm>`
+    SELECT
+      expense.id,
+      expense.date,
+      expense.amount,
+      expense.notes,
+      expense.status,
+      expense_category.id AS "category_id",
+      account.id AS "account_id"
+    FROM expense
+    JOIN expense_category ON expense.category_id = expense_category.id
+    JOIN account ON expense.account_id = account.id
+    WHERE expense.id = ${id};
+  `;
+
+  const expense = data.rows.map((expense) => ({
+    ...expense,
+    // Convert amount from cents to dollars
+    amount: expense.amount / 100,
+  }));
+
+  const accountId = (await expense[0]).account_id;
+  const amount = (await expense[0]).amount;
 
   try {
     await sql`DELETE FROM expense WHERE id = ${id}`;
-
-    // Update account balance.
-    updateBalance(accountId, 'add', amountInCents);
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Expense.' };
   }
 
+  // Update account balance.
+  updateBalance(accountId, 'add', amount);
+
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
+  revalidatePath('/dashboard/account');
+  revalidatePath(`/dashboard/account/${accountId}/edit`);
 
   redirect('/dashboard/expenses');
   return { message: 'Deleted Expense.' };
