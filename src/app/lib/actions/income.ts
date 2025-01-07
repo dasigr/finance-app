@@ -131,9 +131,9 @@ export async function updateIncome(id: string, formData: FormData) {
   console.log(amount);
 
   // Prepare account balance.
-  const balance = prevAmount - amount;
-  console.log("Balance:");
-  console.log(balance);
+  const amountChanged = prevAmount - amount;
+  console.log("Changed Amount:");
+  console.log(amountChanged);
  
   // Convert amount in cents before saving to the database.
   const amountInCents = amount * 100;
@@ -148,7 +148,7 @@ export async function updateIncome(id: string, formData: FormData) {
     `;
 
     // Update account balance.
-    updateBalance(accountId, 'add', balance);
+    updateBalance(accountId, 'add', amountChanged);
   } catch (error) {
     return { message: 'Database Error: Failed to Update Income.' };
   }

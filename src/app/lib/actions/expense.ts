@@ -134,9 +134,9 @@ export async function updateExpense(id: string, formData: FormData) {
   console.log(amount);
 
   // Prepare account balance.
-  const balance = prevAmount - amount;
-  console.log("Balance:");
-  console.log(balance);
+  const amountChanged = prevAmount - amount;
+  console.log("Changed Amount:");
+  console.log(amountChanged);
 
   // Convert amount in cents before saving to the database.
   const amountInCents = amount * 100;
@@ -151,7 +151,7 @@ export async function updateExpense(id: string, formData: FormData) {
     `;
 
     // Update account balance.
-    updateBalance(accountId, 'add', balance);
+    updateBalance(accountId, 'add', amountChanged);
   } catch (error) {
     return { message: 'Database Error: Failed to Update Expense.' };
   }
@@ -166,19 +166,39 @@ export async function updateExpense(id: string, formData: FormData) {
 }
 
 export async function deleteExpense(id: string) {
-  // Prepare account balance.
-  const expense = fetchExpenseById(id);
-  const accountId = (await expense).account_id;
-  const amountInCents = (await expense).amount;
+  // Get previous expense data.
+  const data = await sql<ExpenseForm>`
+    SELECT
+      expense.id,
+      expense.date,
+      expense.amount,
+      expense.notes,
+      expense.status,
+      expense_category.id AS "category_id",
+      account.id AS "account_id"
+    FROM expense
+    JOIN expense_category ON expense.category_id = expense_category.id
+    JOIN account ON expense.account_id = account.id
+    WHERE expense.id = ${id};
+  `;
+
+  const expense = data.rows.map((expense) => ({
+    ...expense,
+    // Convert amount from cents to dollars
+    amount: expense.amount / 100,
+  }));
+
+  const accountId = (await expense[0]).account_id;
+  const amount = (await expense[0]).amount;
 
   try {
     await sql`DELETE FROM expense WHERE id = ${id}`;
-
-    // Update account balance.
-    updateBalance(accountId, 'add', amountInCents);
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Expense.' };
   }
+
+  // Update account balance.
+  updateBalance(accountId, 'add', amount);
 
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
