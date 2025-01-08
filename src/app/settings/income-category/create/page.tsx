@@ -1,5 +1,5 @@
-import Form from '@/app/ui/expense-category/create-form';
-import Breadcrumbs from '@/app/ui/expense-category/breadcrumbs';
+import Form from '@/app/ui/income-category/create-form';
+import Breadcrumbs from '@/app/ui/income-category/breadcrumbs';
  
 export default async function Page() {
  
@@ -9,8 +9,8 @@ export default async function Page() {
         breadcrumbs={[
           { label: 'Settings', href: '/settings' },
           {
-            label: 'Add Expense Category',
-            href: '/settings/expense-category/create',
+            label: 'Add Income Category',
+            href: '/settings/income-category/create',
             active: true,
           },
         ]}

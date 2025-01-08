@@ -260,17 +260,18 @@ export async function GET() {
   //   message:
   //     'Uncomment this file and remove this line. You can delete this file when you are finished.',
   // });
+  
   try {
     await client.sql`BEGIN`;
-    // await seedUsers();
-    // await seedCustomers();
-    // await seedInvoices();
-    // await seedRevenue();
-    // await seedExpenseCategories();
-    // await seedBudget();
-    // await seedAccounts();
-    // await seedExpenses();
-    // await seedIncomeCategories();
+    await seedUsers();
+    await seedCustomers();
+    await seedInvoices();
+    await seedRevenue();
+    await seedExpenseCategories();
+    await seedBudget();
+    await seedAccounts();
+    await seedExpenses();
+    await seedIncomeCategories();
     await seedIncomes();
     await client.sql`COMMIT`;
 
