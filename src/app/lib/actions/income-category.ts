@@ -15,8 +15,8 @@ const FormSchema = z.object({
   }),
 });
 
-const CreateExpenseCategory = FormSchema.omit({ id: true });
-const UpdateExpenseCategory = FormSchema.omit({ id: true });
+const CreateIncomeCategory = FormSchema.omit({ id: true });
+const UpdateIncomeCategory = FormSchema.omit({ id: true });
 
 export type State = {
   errors?: {
@@ -26,9 +26,9 @@ export type State = {
   message?: string | null;
 };
 
-export async function createExpenseCategory(prevState: State, formData: FormData) {
+export async function createIncomeCategory(prevState: State, formData: FormData) {
   // Validate form using Zod.
-  const validatedFields = CreateExpenseCategory.safeParse({
+  const validatedFields = CreateIncomeCategory.safeParse({
     name: formData.get('name'),
     image_url: formData.get('image_url'),
   });
@@ -37,7 +37,7 @@ export async function createExpenseCategory(prevState: State, formData: FormData
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing fields. Failed to Create Expense Category.',
+      message: 'Missing fields. Failed to Create Income Category.',
     };
   }
 
@@ -47,48 +47,48 @@ export async function createExpenseCategory(prevState: State, formData: FormData
   // Insert data into the database.
   try {
     await sql`
-      INSERT INTO expense_category (customer_id, amount, status, date)
+      INSERT INTO income_category (customer_id, amount, status, date)
       VALUES (${name}, ${image_url})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
-      message: 'Database Error: Failed to Create Expense Category.'
+      message: 'Database Error: Failed to Create Income Category.'
     };
   }
 
   // Revalidate the cache for the income categories page and redirect the user.
-  revalidatePath('/settings/expense-category');
-  redirect('/settings/expense-category');
+  revalidatePath('/settings/income-category');
+  redirect('/settings/income-category');
 }
 
-export async function updateExpenseCategory(id: string, formData: FormData) {
-  const { name, image_url } = UpdateExpenseCategory.parse({
+export async function updateIncomeCategory(id: string, formData: FormData) {
+  const { name, image_url } = UpdateIncomeCategory.parse({
     name: formData.get('name'),
     image_url: formData.get('image_url'),
   });
 
   try {
     await sql`
-      UPDATE expense_category
+      UPDATE income_category
       SET name = ${name}, image_url = ${image_url}
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Expense Category.' };
+    return { message: 'Database Error: Failed to Update Income Category.' };
   }
  
-  revalidatePath('/settings/expense-category');
-  redirect('/settings/expense-category');
+  revalidatePath('/settings/income-category');
+  redirect('/settings/income-category');
 }
 
-export async function deleteExpenseCategory(id: string) {
+export async function deleteIncomeCategory(id: string) {
   try {
-    await sql`DELETE FROM expense_category WHERE id = ${id}`;
+    await sql`DELETE FROM income_category WHERE id = ${id}`;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Expense Category.' };
+    return { message: 'Database Error: Failed to Delete Income Category.' };
   }
 
-  revalidatePath('/settings/expense-category');
-  return { message: 'Deleted Expense Category.' };
+  revalidatePath('/settings/income-category');
+  return { message: 'Deleted Income Category.' };
 }

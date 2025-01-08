@@ -13,7 +13,16 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { createIncome, State } from '@/app/lib/actions/income';
 import { useFormState } from 'react-dom';
 
-export default function Form({ categories, accounts }: { categories: IncomeCategoryField[], accounts: AccountField[] }) {
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export default function Form({ 
+  categories,
+  accounts
+}: {
+  categories: IncomeCategoryField[],
+  accounts: AccountField[]
+}) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useFormState(createIncome, initialState);
   const today = new Date().toISOString().split('T')[0];

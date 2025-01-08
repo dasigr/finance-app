@@ -5,6 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { fetchAccountById } from '../data';
+import { AccountForm } from '../definitions';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -114,8 +115,25 @@ export async function deleteAccount(id: string) {
 }
 
 export async function updateBalance(id: string, operation: string, amount: number) {
-  const account = fetchAccountById(id);
-  const currentBalance = (await account).balance;
+  // Get current account balance.
+  const data = await sql<AccountForm>`
+    SELECT
+      account.id,
+      account.name,
+      account.balance,
+      account.weight,
+      account.status
+    FROM account
+    WHERE account.id = ${id};
+  `;
+
+  const account = data.rows.map((account) => ({
+    ...account,
+    // Convert amount from cents to dollars
+    balance: account.balance / 100,
+  }));
+  
+  const currentBalance = account[0].balance;
 
   let newBalance = 0;
   if (operation == 'add') {
