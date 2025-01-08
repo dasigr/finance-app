@@ -172,7 +172,7 @@ export async function deleteIncome(id: string) {
     await sql`DELETE FROM income WHERE id = ${id}`;
 
     // Update account balance.
-    updateBalance(accountId, 'add', amount);
+    updateBalance(accountId, 'subtract', amount);
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Income.' };
   }

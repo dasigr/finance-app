@@ -1,6 +1,8 @@
 import Form from '@/app/ui/income/create-form';
 import Breadcrumbs from '@/app/ui/income/breadcrumbs';
 import { fetchAccounts, fetchIncomeCategories } from '@/app/lib/data';
+
+export const dynamic = 'force-dynamic';
  
 export default async function Page() {
   const categories = await fetchIncomeCategories();

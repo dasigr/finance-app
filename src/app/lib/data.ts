@@ -18,6 +18,8 @@ import {
   IncomeForm,
   IncomesTable,
   IncomeCategoryField,
+  IncomeCategoryForm,
+  IncomeCategoryTable,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -25,6 +27,7 @@ import { formatCurrency } from './utils';
 const ITEMS_PER_PAGE = 10;
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 /* Revenue */
 
@@ -263,21 +266,16 @@ export async function fetchFilteredBudget(
 
 export async function fetchBudgetPages(query: string) {
   try {
-    const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
-    WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`}
-  `;
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM budget
+    `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of invoices.');
+    throw new Error('Failed to fetch total number of budgets.');
   }
 }
 
@@ -326,6 +324,66 @@ export async function fetchIncomeCategories() {
   }
 }
 
+export async function fetchIncomeCategoryPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM income_category
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of income categories.');
+  }
+}
+
+export async function fetchIncomeCategoryById(id: string) {
+  try {
+    const data = await sql<IncomeCategoryForm>`
+      SELECT
+        income_category.id,
+        income_category.name,
+        income_category.image_url
+      FROM income_category
+      WHERE income_category.id = ${id};
+    `;
+
+    const income_category = data.rows;
+
+    return income_category[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch income category.');
+  }
+}
+
+export async function fetchFilteredIncomeCategory(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const incomeCategories = await sql<IncomeCategoryTable>`
+      SELECT
+        income_category.id,
+        income_category.name,
+        income_category.image_url
+      FROM income_category
+      WHERE
+        income_category.name ILIKE ${`%${query}%`}
+      ORDER BY income_category.name ASC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return incomeCategories.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch income categories.');
+  }
+}
+
 /* Expense Category */
 
 export async function fetchExpenseCategories() {
@@ -350,21 +408,14 @@ export async function fetchExpenseCategories() {
 export async function fetchExpenseCategoryPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
-    WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
+    FROM expense_category
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of invoices.');
+    throw new Error('Failed to fetch total number of expense categories.');
   }
 }
 
@@ -384,7 +435,7 @@ export async function fetchExpenseCategoryById(id: string) {
     return expense_category[0];
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoice.');
+    throw new Error('Failed to fetch expense category.');
   }
 }
 

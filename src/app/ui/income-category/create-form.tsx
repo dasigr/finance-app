@@ -1,6 +1,5 @@
 'use client';
 
-import { CustomerField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
   CheckIcon,
@@ -9,12 +8,12 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import { createExpenseCategory, State } from '@/app/lib/actions/expense-category';
+import { createIncomeCategory, State } from '@/app/lib/actions/income-category';
 import { useFormState } from 'react-dom';
 
 export default function Form() {
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useFormState(createExpenseCategory, initialState);
+  const [state, formAction] = useFormState(createIncomeCategory, initialState);
 
   return (
     <form action={formAction}>
@@ -28,7 +27,7 @@ export default function Form() {
               <input
                 id="name"
                 name="name"
-                placeholder="Enter expense category"
+                placeholder="Enter income category"
                 className="peer block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="name-error"
               />
