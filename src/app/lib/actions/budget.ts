@@ -7,8 +7,8 @@ import { redirect } from 'next/navigation';
 
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string({
-    invalid_type_error: 'Please select a customer.',
+  categoryId: z.string({
+    invalid_type_error: 'Please select a category.',
   }),
   amount: z.coerce
     .number()
@@ -21,7 +21,7 @@ const UpdateBudget = FormSchema.omit({ id: true, date: true });
 
 export type State = {
   errors?: {
-    customerId?: string[];
+    categoryId?: string[];
     amount?: string[];
   };
   message?: string | null;
@@ -30,7 +30,7 @@ export type State = {
 export async function createBudget(prevState: State, formData: FormData) {
   // Validate form using Zod.
   const validatedFields = CreateBudget.safeParse({
-    customerId: formData.get('customerId'),
+    categoryId: formData.get('categoryId'),
     amount: formData.get('amount'),
   });
 
@@ -43,15 +43,14 @@ export async function createBudget(prevState: State, formData: FormData) {
   }
 
   // Prepare data for insertion ino the database.
-  const { customerId, amount } = validatedFields.data;
+  const { categoryId, amount } = validatedFields.data;
   const amountInCents = amount * 100;
-  const date = new Date().toISOString().split('T')[0];
 
   // Insert data into the database.
   try {
     await sql`
-      INSERT INTO invoices (customer_id, amount, date)
-      VALUES (${customerId}, ${amountInCents}, ${date})
+      INSERT INTO budget (category_id, amount)
+      VALUES (${categoryId}, ${amountInCents})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -68,8 +67,8 @@ export async function createBudget(prevState: State, formData: FormData) {
 }
 
 export async function updateBudget(id: string, formData: FormData) {
-  const { customerId, amount } = UpdateBudget.parse({
-    customerId: formData.get('customerId'),
+  const { categoryId, amount } = UpdateBudget.parse({
+    categoryId: formData.get('categoryId'),
     amount: formData.get('amount'),
   });
  
@@ -77,12 +76,12 @@ export async function updateBudget(id: string, formData: FormData) {
 
   try {
     await sql`
-      UPDATE invoices
-      SET customer_id = ${customerId}, amount = ${amountInCents}
+      UPDATE budget
+      SET category_id = ${categoryId}, amount = ${amountInCents}
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Invoice.' };
+    return { message: 'Database Error: Failed to Update Budget.' };
   }
  
   revalidatePath('/dashboard');
@@ -94,14 +93,14 @@ export async function updateBudget(id: string, formData: FormData) {
 
 export async function deleteBudget(id: string) {
   try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-
-    revalidatePath('/dashboard');
-    revalidatePath('/dashboard/budget');
-
-    redirect('/dashboard/budget');
-    return { message: 'Deleted Budget.' };
+    await sql`DELETE FROM budget WHERE id = ${id}`;
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Budget.' };
   }
+
+  revalidatePath('/dashboard');
+  revalidatePath('/dashboard/budget');
+
+  redirect('/dashboard/budget');
+  return { message: 'Deleted Budget.' };
 }
