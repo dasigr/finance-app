@@ -131,7 +131,7 @@ export async function updateIncome(id: string, formData: FormData) {
   console.log(amount);
 
   // Prepare account balance.
-  const amountChanged = prevAmount - amount;
+  const amountChanged = amount - prevAmount;
   console.log("Changed Amount:");
   console.log(amountChanged);
  
