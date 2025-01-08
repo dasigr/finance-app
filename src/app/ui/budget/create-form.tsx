@@ -12,25 +12,29 @@ import { Button } from '@/app/ui/button';
 import { createBudget, State } from '@/app/lib/actions/budget';
 import { useFormState } from 'react-dom';
 
-export default function Form({ expenseCategories }: { expenseCategories: ExpenseCategoryField[] }) {
+export default function Form({ 
+    expenseCategories
+  }: { 
+    expenseCategories: ExpenseCategoryField[]
+  }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useFormState(createBudget, initialState);
 
   return (
     <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
+        {/* Category */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
+          <label htmlFor="category" className="mb-2 block text-sm font-medium">
             Category
           </label>
           <div className="relative">
             <select
-              id="expense-category"
-              name="expenseCategoryId"
+              id="categoryId"
+              name="categoryId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
-              aria-describedby="customer-error"
+              aria-describedby="category-error"
             >
               <option value="" disabled>
                 Select a category
@@ -43,8 +47,8 @@ export default function Form({ expenseCategories }: { expenseCategories: Expense
             </select>
           </div>
           <div id="expense-category-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.customerId &&
-              state.errors.customerId.map((error: string) => (
+            {state.errors?.categoryId &&
+              state.errors.categoryId.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key="error">
                   {error}
                 </p>
