@@ -97,7 +97,8 @@ export async function fetchCardData() {
         WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)`;
     const accountStatusPromise = sql`SELECT
         SUM(balance) AS "balance"
-        FROM account`;
+        FROM account
+        WHERE account.status = TRUE`;
     const budgetStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
         FROM budget`;
@@ -477,7 +478,8 @@ export async function fetchAccounts() {
         weight,
         status
       FROM account
-      ORDER BY name ASC
+      WHERE account.status = TRUE
+      ORDER BY account.weight ASC
     `;
 
     const account = data.rows;

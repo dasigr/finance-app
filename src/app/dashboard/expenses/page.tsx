@@ -6,6 +6,7 @@ import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchExpensesPages } from '@/app/lib/data';
+import { fetchTotalExpenseAmount } from '@/app/lib/actions/expense';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,10 +27,13 @@ export default async function Page({
 
   const totalPages = await fetchExpensesPages(query);
 
+  const totalExpenseAmount = await fetchTotalExpenseAmount();
+
   return (
     <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Expenses</h1>
+        <div>{totalExpenseAmount}</div>
         <CreateExpense />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
