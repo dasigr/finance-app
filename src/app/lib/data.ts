@@ -478,7 +478,8 @@ export async function fetchAccounts() {
         weight,
         status
       FROM account
-      ORDER BY name ASC
+      WHERE account.status = TRUE
+      ORDER BY account.weight ASC
     `;
 
     const account = data.rows;
