@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { formatDateToLocal } from '../utils';
+import { formatDateToLocal, formatCurrency } from '../utils';
 import { updateBalance } from './account';
 import { fetchIncomeById } from '../data';
 import { IncomeForm } from '../definitions';
@@ -184,4 +184,26 @@ export async function deleteIncome(id: string) {
 
   redirect('/dashboard/income');
   return { message: 'Deleted Income.' };
+}
+
+export async function fetchTotalIncomeAmount() {
+  try {
+    const incomeStatusPromise = sql`
+      SELECT
+        SUM(amount) AS "amount"
+      FROM income
+      WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)
+    `;
+
+    const data = await Promise.all([
+      incomeStatusPromise,
+    ]);
+
+    const totalIncomeAmount = formatCurrency(data[0].rows[0].amount ?? '0');
+
+    return totalIncomeAmount;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total income.');
+  }
 }

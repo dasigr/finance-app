@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { formatDateToLocal } from '../utils';
+import { formatDateToLocal, formatCurrency } from '../utils';
 import { fetchExpenseById } from '../data';
 import { updateBalance } from './account';
 import { ExpenseForm } from '../definitions';
@@ -207,4 +207,26 @@ export async function deleteExpense(id: string) {
 
   redirect('/dashboard/expenses');
   return { message: 'Deleted Expense.' };
+}
+
+export async function fetchTotalExpenseAmount() {
+  try {
+    const expenseStatusPromise = sql`
+      SELECT
+        SUM(amount) AS "amount"
+      FROM expense
+      WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
+    `;
+
+    const data = await Promise.all([
+      expenseStatusPromise,
+    ]);
+
+    const totalExpenseAmount = formatCurrency(data[0].rows[0].amount ?? '0');
+
+    return totalExpenseAmount;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total expenses.');
+  }
 }

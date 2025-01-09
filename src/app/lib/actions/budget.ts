@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { formatCurrency } from '../utils';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -103,4 +104,25 @@ export async function deleteBudget(id: string) {
 
   redirect('/dashboard/budget');
   return { message: 'Deleted Budget.' };
+}
+
+export async function fetchTotalBudgetAmount() {
+  try {
+    const budgetStatusPromise = sql`
+      SELECT
+        SUM(amount) AS "amount"
+      FROM budget
+    `;
+
+    const data = await Promise.all([
+      budgetStatusPromise,
+    ]);
+
+    const totalBudgetAmount = formatCurrency(data[0].rows[0].amount ?? '0');
+
+    return totalBudgetAmount;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total budget.');
+  }
 }

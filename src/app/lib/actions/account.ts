@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { formatCurrency } from '../utils';
 import { fetchAccountById } from '../data';
 import { AccountForm } from '../definitions';
 
@@ -156,5 +157,27 @@ export async function updateBalance(id: string, operation: string, amount: numbe
     revalidatePath(`/dashboard/account/${id}/edit`);
   } catch (error) {
     return { message: 'Database Error: Failed to Update Account.' };
+  }
+}
+
+export async function fetchTotalAccountBalance() {
+  try {
+    const accountStatusPromise = sql`
+      SELECT
+        SUM(balance) AS "balance"
+      FROM account
+      WHERE account.status = TRUE
+    `;
+
+    const data = await Promise.all([
+      accountStatusPromise,
+    ]);
+
+    const totalAccountBalance = formatCurrency(data[0].rows[0].balance ?? '0');
+
+    return totalAccountBalance;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total account balance.');
   }
 }

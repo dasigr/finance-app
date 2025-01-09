@@ -6,6 +6,7 @@ import { lusitana } from '@/app/ui/fonts';
 import { AccountTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchAccountPages } from '@/app/lib/data';
+import { fetchTotalAccountBalance } from '@/app/lib/actions/account';
  
 export const metadata: Metadata = {
   title: 'Account',
@@ -24,10 +25,13 @@ export default async function Page({
 
   const totalPages = await fetchAccountPages(query);
 
+  const totalAccountBalance = await fetchTotalAccountBalance();
+
   return (
     <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Account</h1>
+        <div>{totalAccountBalance}</div>
         <div className="flex justify-between gap-2">
           <CreateAccount />
           <TransferAccountBalance />
