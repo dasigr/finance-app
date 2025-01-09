@@ -6,6 +6,7 @@ import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchIncomesPages } from '@/app/lib/data';
+import { fetchTotalIncomeAmount } from '@/app/lib/actions/income';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,10 +27,13 @@ export default async function Page({
 
   const totalPages = await fetchIncomesPages(query);
 
+  const totalIncomeAmount = await fetchTotalIncomeAmount();
+
   return (
     <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Income</h1>
+        <div>{totalIncomeAmount}</div>
         <CreateIncome />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
