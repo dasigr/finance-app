@@ -25,7 +25,7 @@ export default async function AccountsTable({
                 key={account.id}
                 className={`mb-2 w-full rounded-md ${account.status ? 'bg-white' : 'bg-gray-200'} p-4`}
               >
-                <Link href={`/dashboard/account/${account.id}/edit`}>
+                <Link href={`/dashboard/account/${account.id}`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="mb-2 flex items-center">
