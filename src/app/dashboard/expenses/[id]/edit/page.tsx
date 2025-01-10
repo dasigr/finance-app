@@ -5,8 +5,14 @@ import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ 
+    params 
+  }: { 
+    params: { id: string, destination: string } 
+  }) {
   const id = params.id;
+  const destination = params?.destination || '';
+
   const [expense, expenseCategories, accounts] = await Promise.all([
     fetchExpenseById(id),
     fetchExpenseCategories(),

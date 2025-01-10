@@ -98,7 +98,7 @@ export async function updateAccount(id: string, formData: FormData) {
   revalidatePath('/dashboard/account');
   revalidatePath(`/dashboard/account/${id}/edit`);
 
-  redirect('/dashboard/account');
+  redirect(`/dashboard/account/${id}/edit`);
 }
 
 export async function deleteAccount(id: string) {
