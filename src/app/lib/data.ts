@@ -246,19 +246,26 @@ export async function fetchFilteredBudget(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const budget = await sql<BudgetTable>`
+    const data = await sql<BudgetTable>`
       SELECT
         budget.id,
         budget.amount,
-        expense_category.name,
-        expense_category.image_url
+        budget.category_id,
+        expense_category.name AS "category_name",
+        expense_category.image_url AS "category_image_url"
       FROM budget
       JOIN expense_category ON budget.category_id = expense_category.id
       ORDER BY expense_category.name ASC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    return budget.rows;
+    const budget = data.rows.map((budget) => ({
+      ...budget,
+      // Convert amount from cents to dollars
+      // amount: budget.amount / 100,
+    }));
+
+    return budget;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch budgets.');

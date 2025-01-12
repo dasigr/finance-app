@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { formatCurrency } from '../utils';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -118,7 +117,7 @@ export async function fetchTotalBudgetAmount() {
       budgetStatusPromise,
     ]);
 
-    const totalBudgetAmount = formatCurrency(data[0].rows[0].amount ?? '0');
+    const totalBudgetAmount = data[0].rows[0].amount ?? '0';
 
     return totalBudgetAmount;
   } catch (error) {

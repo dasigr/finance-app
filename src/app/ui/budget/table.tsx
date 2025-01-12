@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { UpdateBudget } from '@/app/ui/budget/buttons';
 import { formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredBudget } from '@/app/lib/data';
+import { BudgetExpense } from '@/app/ui/budget/budget-expense';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,14 +31,14 @@ export default async function BudgetTable({
                     <div>
                       <div className="flex items-center">
                         <Image
-                          src={budget.image_url}
+                          src={budget.category_image_url}
                           className="mr-2 rounded-full"
                           width={28}
                           height={28}
-                          alt={`${budget.name}'s profile picture`}
+                          alt={`${budget.category_name}'s profile picture`}
                         />
                         <div>
-                          <p>{budget.name}</p>
+                          <p>{budget.category_name}</p>
                           <p className="text-sm text-gray-500">Monthly</p>
                         </div>
                       </div>
@@ -47,6 +48,9 @@ export default async function BudgetTable({
                         {formatCurrency(budget.amount)}
                       </p>
                     </div>
+                  </div>
+                  <div className="pt-4">
+                    <BudgetExpense categoryId={budget.category_id} budgetAmount={budget.amount} />
                   </div>
                 </Link>
               </div>
@@ -75,13 +79,13 @@ export default async function BudgetTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
                       <Image
-                        src={budget.image_url}
+                        src={budget.category_image_url}
                         className="rounded-full"
                         width={28}
                         height={28}
-                        alt={budget.name}
+                        alt={budget.category_name}
                       />
-                      <p>{budget.name}</p>
+                      <p>{budget.category_name}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
