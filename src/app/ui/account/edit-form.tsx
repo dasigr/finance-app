@@ -55,8 +55,9 @@ export default function EditAccountForm({
                   type="number"
                   step="0.01"
                   defaultValue={account.balance}
+                  disabled={true}
                   placeholder="Enter the amount"
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  className="peer block w-full rounded-md bg-gray-100 border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
                 <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
               </div>
@@ -103,7 +104,7 @@ export default function EditAccountForm({
                     htmlFor="status"
                     className="ml-2 flex cursor-pointer items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-gray-600"
                   >
-                    Cleared
+                    Active
                   </label>
                 </div>
               </div>
@@ -112,7 +113,7 @@ export default function EditAccountForm({
         </div>
         <div className="mt-6 flex justify-end gap-4">
           <Link
-            href="/dashboard/account"
+            href={`/dashboard/account/${account.id}`}
             className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
           >
             Cancel

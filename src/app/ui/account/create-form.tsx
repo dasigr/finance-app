@@ -119,7 +119,7 @@ export default function Form() {
                   htmlFor="status"
                   className="ml-2 flex cursor-pointer items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-gray-600"
                 >
-                  Cleared
+                  Active
                 </label>
               </div>
             </div>

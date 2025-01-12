@@ -19,7 +19,7 @@ export const dynamic = 'force-dynamic';
 export default function EditExpenseForm({
   expense,
   expenseCategories,
-  accounts
+  accounts,
 }: {
   expense: ExpenseForm;
   expenseCategories: ExpenseCategoryField[];
