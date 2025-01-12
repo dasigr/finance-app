@@ -1,28 +1,22 @@
-describe('Navigation', () => {
+describe('User Login', () => {
   beforeEach(() => {
     cy.viewport(375, 667)
-  })
 
-  afterEach(() => {
-    cy.wait(2000)
-  })
-
-  it('should navigate to the income page', () => {
     cy.visit('/')
 
-    cy.get('main').within(() => {
-      // Click on the Log in button.
-      cy.get('a[href*="/login"]').click()
+    cy.login('test-engineer@a5project.com', 'T064vYL3LkZ9sGvB')
+  })
 
-      cy.get('form').within(() => {
-        // Fill in the login form.
-        cy.get('input#email').type('test-engineer@a5project.com')
-        cy.get('input#password').type('T064vYL3LkZ9sGvB')
-        cy.get('button').contains('Log in').click()
-      })
-    })
+  it('should be redirected to the dashboard page', () => {
+    // The new url should include "/dashboard"
+    // cy.url().should('include', '/dashboard')
 
     // Assert that you're able to access the dashboard page.
-    cy.get('main').should('contain', 'Budget')
+    cy.get('main').within(() => {
+      cy.root().should('contain', 'Income')
+      cy.root().should('contain', 'Expenses')
+      cy.root().should('contain', 'Account')
+      cy.root().should('contain', 'Budget')
+    })
   })
 })
