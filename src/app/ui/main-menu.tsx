@@ -27,6 +27,13 @@ export default function MainMenu() {
           <HomeIcon className="h-6 md:ml-4" />
         </Link>
         <Link
+          href="/settings"
+          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          <span className="hidden md:block">Settings</span>{' '}
+          <CogIcon className="h-6 md:ml-4" />
+        </Link>
+        <Link
           href="/dashboard/expenses/create"
           className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
@@ -39,6 +46,13 @@ export default function MainMenu() {
         >
           <span className="hidden md:block">Settings</span>{' '}
           <CogIcon className="h-6 md:ml-4" />
+        </Link>
+        <Link
+          href="/dashboard/profile"
+          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          <span className="hidden md:block">Profile</span>{' '}
+          <UserIcon className="h-6 md:ml-4" />
         </Link>
       </div>
     </footer>
