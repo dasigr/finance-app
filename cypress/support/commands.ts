@@ -35,3 +35,17 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('login', (email: string, password: string) => {
+  cy.get('main').within(() => {
+    // Click on the Log in button.
+    cy.get('a[href*="/login"]').click()
+
+    cy.get('form').within(() => {
+      // Fill in the login form.
+      cy.get('input#email').type(email)
+      cy.get('input#password').type(password)
+      cy.get('button').contains('Log in').click()
+    })
+  })
+})

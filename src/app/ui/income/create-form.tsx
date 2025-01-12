@@ -28,7 +28,7 @@ export default function Form({
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <form action={formAction}>
+    <form action={formAction} id="create-income-form">
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Amount */}
         <div className="mb-4">

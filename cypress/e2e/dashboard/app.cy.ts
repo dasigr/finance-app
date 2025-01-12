@@ -1,7 +1,14 @@
 describe('Navigation', () => {
   beforeEach(() => {
-    cy.viewport(375, 667);
-    cy.visit('http://localhost:3000/dashboard')
+    cy.viewport(375, 667)
+
+    cy.visit('/')
+
+    cy.login('test-engineer@a5project.com', 'T064vYL3LkZ9sGvB')
+  })
+
+  afterEach(() => {
+    cy.wait(2000)
   })
 
   it('should navigate to the income page', () => {
