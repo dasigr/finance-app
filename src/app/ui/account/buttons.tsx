@@ -18,7 +18,7 @@ export function UpdateAccount({ id }: { id: string }) {
   return (
     <Link
       href={`/dashboard/account/${id}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
+      className="rounded-md border p-2 bg-white hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
     </Link>

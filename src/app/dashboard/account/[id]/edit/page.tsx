@@ -15,16 +15,18 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="pb-8 mb-8">
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Account', href: '/dashboard/account' },
-          {
-            label: 'Edit Account',
-            href: `/dashboard/account/${id}/edit`,
-            active: true,
-          },
-        ]}
-      />
+      <div className="mb-6">
+        <Breadcrumbs
+          breadcrumbs={[
+            { label: 'Account', href: '/dashboard/account' },
+            {
+              label: 'Edit Account',
+              href: `/dashboard/account/${id}/edit`,
+              active: true,
+            },
+          ]}
+        />
+      </div>
       <Form account={account} />
     </div>
   );

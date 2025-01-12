@@ -7,16 +7,18 @@ export default async function Page() {
  
   return (
     <div className="pb-8 mb-8">
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Account', href: '/dashboard/account' },
-          {
-            label: 'Create Account',
-            href: '/dashboard/account/create',
-            active: true,
-          },
-        ]}
-      />
+      <div className="mb-6">
+        <Breadcrumbs
+          breadcrumbs={[
+            { label: 'Account', href: '/dashboard/account' },
+            {
+              label: 'Create Account',
+              href: '/dashboard/account/create',
+              active: true,
+            },
+          ]}
+        />
+      </div>
       <Form />
     </div>
   );

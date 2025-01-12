@@ -7,10 +7,12 @@ import { fetchFilteredExpenses } from '@/app/lib/data';
 
 export const dynamic = 'force-dynamic';
 
-export default async function ExpensesTable({
+export default async function AccountExpensesTable({
+  destination,
   query,
   currentPage,
 }: {
+  destination: string;
   query: string;
   currentPage: number;
 }) {
@@ -26,7 +28,7 @@ export default async function ExpensesTable({
                 key={expense.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <Link href={`/dashboard/expenses/${expense.id}/edit`}>
+                <Link href={`/dashboard/expenses/${expense.id}/edit?destination=${destination}`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-500 pb-2">{formatDateToLocal(expense.date)}</p>
