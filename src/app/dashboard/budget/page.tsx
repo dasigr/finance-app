@@ -1,12 +1,14 @@
 import { Metadata } from 'next';
 import Pagination from '@/app/ui/budget/pagination';
 import Table from '@/app/ui/budget/table';
+import { formatCurrency } from '@/app/lib/utils';
 import { CreateBudget } from '@/app/ui/budget/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { BudgetTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchBudgetPages } from '@/app/lib/data';
 import { fetchTotalBudgetAmount } from '@/app/lib/actions/budget';
+import { BudgetStatus } from '@/app/ui/budget/budget-status';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,8 +35,11 @@ export default async function Page({
     <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Budget</h1>
-        <div>{totalBudgetAmount}</div>
+        <div>{formatCurrency(totalBudgetAmount)}</div>
         <CreateBudget />
+      </div>
+      <div className="mt-4">
+        <BudgetStatus budgetAmount={totalBudgetAmount} />
       </div>
       <Suspense key={query + currentPage} fallback={<BudgetTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />

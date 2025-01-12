@@ -88,6 +88,7 @@ export async function createExpense(prevState: State, formData: FormData) {
   revalidatePath('/dashboard/expenses');
   revalidatePath('/dashboard/account');
   revalidatePath(`/dashboard/account/${accountId}/edit`);
+  revalidatePath('/dashboard/budget');
   
   redirect('/dashboard/expenses');
 }
@@ -161,6 +162,7 @@ export async function updateExpense(id: string, formData: FormData) {
   revalidatePath(`/dashboard/expenses/${id}/edit`);
   revalidatePath('/dashboard/account');
   revalidatePath(`/dashboard/account/${accountId}/edit`);
+  revalidatePath('/dashboard/budget');
 
   redirect('/dashboard/expenses');
 }
@@ -204,6 +206,7 @@ export async function deleteExpense(id: string) {
   revalidatePath('/dashboard/expenses');
   revalidatePath('/dashboard/account');
   revalidatePath(`/dashboard/account/${accountId}/edit`);
+  revalidatePath('/dashboard/budget');
 
   redirect('/dashboard/expenses');
   return { message: 'Deleted Expense.' };
@@ -211,20 +214,88 @@ export async function deleteExpense(id: string) {
 
 export async function fetchTotalExpenseAmount() {
   try {
-    const expenseStatusPromise = sql`
+    const data = await sql`
       SELECT
         SUM(amount) AS "amount"
       FROM expense
       WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
     `;
 
-    const data = await Promise.all([
-      expenseStatusPromise,
-    ]);
+    const expense = data.rows.map((expense) => ({
+      ...expense,
+      // Convert amount from cents to dollars
+      amount: expense.amount,
+    }));
 
-    const totalExpenseAmount = formatCurrency(data[0].rows[0].amount ?? '0');
+    return expense[0].amount;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total expenses.');
+  }
+}
 
-    return totalExpenseAmount;
+export async function fetchFutureExpenseAmount() {
+  try {
+    const data = await sql`
+      SELECT
+        SUM(amount) AS "amount"
+      FROM expense
+      WHERE DATE_TRUNC('month', expense.date) > DATE_TRUNC('month', CURRENT_DATE)
+    `;
+
+    const expense = data.rows.map((expense) => ({
+      ...expense,
+      // Convert amount from cents to dollars
+      amount: expense.amount,
+    }));
+
+    return expense[0].amount;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total expenses.');
+  }
+}
+
+export async function fetchTotalExpenseAmountByCategoryId(categoryId: string) {
+  try {
+    const data = await sql`
+      SELECT
+        SUM(amount) AS "amount"
+      FROM expense
+      WHERE expense.category_id = ${categoryId}
+      AND DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
+    `;
+
+    const expense = data.rows.map((expense) => ({
+      ...expense,
+      // Convert amount from cents to dollars
+      amount: expense.amount / 100,
+    }));
+
+    return expense[0].amount;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total expenses.');
+  }
+}
+
+export async function fetchFutureExpenseAmountByCategoryId(categoryId: string) {
+  try {
+    const data = await sql`
+      SELECT
+        SUM(amount) AS "amount"
+      FROM expense
+      WHERE expense.category_id = ${categoryId}
+      AND DATE_TRUNC('month', expense.date) > DATE_TRUNC('month', CURRENT_DATE)
+    `;
+
+    const expense = data.rows.map((expense) => ({
+      ...expense,
+      // Convert amount from cents to dollars
+      amount: expense.amount / 100,
+    }));
+
+    return expense[0].amount;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total expenses.');
