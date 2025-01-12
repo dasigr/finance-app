@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Pagination from '@/app/ui/expenses/pagination';
 import Table from '@/app/ui/expenses/table';
+import { formatCurrency } from '@/app/lib/utils';
 import { CreateExpense } from '@/app/ui/expenses/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
@@ -33,7 +34,7 @@ export default async function Page({
     <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Expenses</h1>
-        <div>{totalExpenseAmount}</div>
+        <div>{formatCurrency(totalExpenseAmount)}</div>
         <CreateExpense />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
