@@ -13,6 +13,8 @@ export default function LoginPage() {
               <Image
                 src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
                 alt="Tailswind CSS"
+                width={1000}
+                height={760}
                 className="h-8 w-auto"
               />
             </Link>
