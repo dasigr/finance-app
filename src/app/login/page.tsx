@@ -1,4 +1,5 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import Image from 'next/image';
 import LoginForm from '@/app/ui/login-form';
  
 export default function LoginPage() {
@@ -9,9 +10,9 @@ export default function LoginPage() {
           <div className="w-32 md:w-36">
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Finance</span>
-              <img
-                alt=""
+              <Image
                 src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                alt="Tailswind CSS"
                 className="h-8 w-auto"
               />
             </Link>

@@ -81,7 +81,7 @@ export async function updateBudget(id: string, formData: FormData) {
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Budget.' };
+    // return { message: 'Database Error: Failed to Update Budget.' };
   }
  
   revalidatePath('/dashboard');
@@ -95,14 +95,14 @@ export async function deleteBudget(id: string) {
   try {
     await sql`DELETE FROM budget WHERE id = ${id}`;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Budget.' };
+    // return { message: 'Database Error: Failed to Delete Budget.' };
   }
 
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/budget');
 
   redirect('/dashboard/budget');
-  return { message: 'Deleted Budget.' };
+  // return { message: 'Deleted Budget.' };
 }
 
 export async function fetchTotalBudgetAmount() {

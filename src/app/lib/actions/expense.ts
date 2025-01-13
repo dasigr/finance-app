@@ -117,8 +117,6 @@ export async function updateExpense(id: string, formData: FormData) {
   }));
   
   const prevAmount = expense[0].amount;
-  console.log("Prev Amount:");
-  console.log(prevAmount);
 
   //
 
@@ -130,14 +128,9 @@ export async function updateExpense(id: string, formData: FormData) {
     notes: formData.get('notes'),
     status: formData.get('status') ? "true" : "false",
   });
- 
-  console.log("New Amount:");
-  console.log(amount);
 
   // Prepare account balance.
   const amountChanged = prevAmount - amount;
-  console.log("Changed Amount:");
-  console.log(amountChanged);
 
   // Convert amount in cents before saving to the database.
   const amountInCents = amount * 100;
@@ -154,7 +147,7 @@ export async function updateExpense(id: string, formData: FormData) {
     // Update account balance.
     updateBalance(accountId, 'add', amountChanged);
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Expense.' };
+    // return { message: 'Database Error: Failed to Update Expense.' };
   }
  
   revalidatePath('/dashboard');
@@ -196,7 +189,7 @@ export async function deleteExpense(id: string) {
   try {
     await sql`DELETE FROM expense WHERE id = ${id}`;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Expense.' };
+    // return { message: 'Database Error: Failed to Delete Expense.' };
   }
 
   // Update account balance.
@@ -209,7 +202,7 @@ export async function deleteExpense(id: string) {
   revalidatePath('/dashboard/budget');
 
   redirect('/dashboard/expenses');
-  return { message: 'Deleted Expense.' };
+  // return { message: 'Deleted Expense.' };
 }
 
 export async function fetchTotalExpenseAmount() {

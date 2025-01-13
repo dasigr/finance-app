@@ -113,8 +113,6 @@ export async function updateIncome(id: string, formData: FormData) {
   }));
   
   const prevAmount = income[0].amount;
-  console.log("Prev Amount:");
-  console.log(prevAmount);
 
   //
 
@@ -126,14 +124,9 @@ export async function updateIncome(id: string, formData: FormData) {
     notes: formData.get('notes'),
     status: formData.get('status') ? "true" : "false",
   });
- 
-  console.log("New Amount:");
-  console.log(amount);
 
   // Prepare account balance.
   const amountChanged = amount - prevAmount;
-  console.log("Changed Amount:");
-  console.log(amountChanged);
  
   // Convert amount in cents before saving to the database.
   const amountInCents = amount * 100;
@@ -150,7 +143,7 @@ export async function updateIncome(id: string, formData: FormData) {
     // Update account balance.
     updateBalance(accountId, 'add', amountChanged);
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Income.' };
+    // return { message: 'Database Error: Failed to Update Income.' };
   }
  
   revalidatePath('/dashboard');
@@ -174,7 +167,7 @@ export async function deleteIncome(id: string) {
     // Update account balance.
     updateBalance(accountId, 'subtract', amount);
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Income.' };
+    // return { message: 'Database Error: Failed to Delete Income.' };
   }
 
   revalidatePath('/dashboard');
@@ -183,7 +176,7 @@ export async function deleteIncome(id: string) {
   revalidatePath(`/dashboard/account/${accountId}/edit`);
 
   redirect('/dashboard/income');
-  return { message: 'Deleted Income.' };
+  // return { message: 'Deleted Income.' };
 }
 
 export async function fetchTotalIncomeAmount() {
