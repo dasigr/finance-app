@@ -1,5 +1,6 @@
 'use client';
 
+import { useActionState } from "react";
 import { AccountField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
@@ -11,11 +12,10 @@ import {
 import { Button } from '@/app/ui/button';
 import { Checkbox } from "@/components/ui/checkbox";
 import { transferAccountBalance, State } from '@/app/lib/actions/account-transfer';
-import { useFormState } from 'react-dom';
 
 export default function Form({ accounts }: { accounts: AccountField[] }) {
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useFormState(transferAccountBalance, initialState);
+  const [state, formAction] = useActionState(transferAccountBalance, initialState);
 
   return (
     <form action={formAction}>

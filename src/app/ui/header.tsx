@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Dialog,
   DialogPanel,
@@ -24,9 +25,9 @@ export default function Header() {
             className="-m-1.5 p-1.5"
           >
             <span className="sr-only">Finance</span>
-            <img
-              alt=""
+            <Image
               src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Tailwind CSS"
               className="h-8 w-auto"
             />
           </Link>
@@ -94,9 +95,9 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <Link href="/dashboard" className="-m-1.5 p-1.5">
               <span className="sr-only">Finance</span>
-              <img
-                alt=""
+              <Image
                 src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                alt="Tailwind CSS"
                 className="h-8 w-auto"
               />
             </Link>
