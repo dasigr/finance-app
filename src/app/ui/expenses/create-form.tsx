@@ -1,3 +1,4 @@
+import { useActionState } from "react";
 'use client';
 
 import { ExpenseCategoryField, AccountField } from '@/app/lib/definitions';
@@ -11,11 +12,10 @@ import {
 import { Button } from '@/app/ui/button';
 import { Checkbox } from "@/components/ui/checkbox";
 import { createExpense, State } from '@/app/lib/actions/expense';
-import { useFormState } from 'react-dom';
 
 export default function Form({ categories, accounts }: { categories: ExpenseCategoryField[], accounts: AccountField[] }) {
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useFormState(createExpense, initialState);
+  const [state, formAction] = useActionState(createExpense, initialState);
   const today = new Date().toISOString().split('T')[0];
 
   return (

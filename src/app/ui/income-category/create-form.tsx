@@ -1,3 +1,4 @@
+import { useActionState } from "react";
 'use client';
 
 import Link from 'next/link';
@@ -9,11 +10,10 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { createIncomeCategory, State } from '@/app/lib/actions/income-category';
-import { useFormState } from 'react-dom';
 
 export default function Form() {
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useFormState(createIncomeCategory, initialState);
+  const [state, formAction] = useActionState(createIncomeCategory, initialState);
 
   return (
     <form action={formAction}>

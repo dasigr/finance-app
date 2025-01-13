@@ -17,16 +17,17 @@ export const metadata: Metadata = {
   title: 'Account Expenses',
 };
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string },
-  searchParams?: {
-    query?: string;
-    page?: string;
+export default async function Page(
+  props: {
+    params: Promise<{ id: string }>,
+    searchParams?: Promise<{
+      query?: string;
+      page?: string;
+    }>
   }
-}) {
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const id = params.id;
   const [account] = await Promise.all([
     fetchAccountById(id),

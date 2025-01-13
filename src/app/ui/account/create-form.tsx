@@ -1,3 +1,4 @@
+import { useActionState } from "react";
 'use client';
 
 import { CustomerField } from '@/app/lib/definitions';
@@ -11,11 +12,10 @@ import {
 import { Button } from '@/app/ui/button';
 import { Checkbox } from "@/components/ui/checkbox";
 import { createAccount, State } from '@/app/lib/actions/account';
-import { useFormState } from 'react-dom';
 
 export default function Form() {
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useFormState(createAccount, initialState);
+  const [state, formAction] = useActionState(createAccount, initialState);
 
   return (
     <form action={formAction}>

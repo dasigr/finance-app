@@ -1,3 +1,4 @@
+import { useActionState } from "react";
 'use client';
 
 import { ExpenseCategoryField } from '@/app/lib/definitions';
@@ -10,7 +11,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { createBudget, State } from '@/app/lib/actions/budget';
-import { useFormState } from 'react-dom';
 
 export default function Form({ 
     expenseCategories
@@ -18,7 +18,7 @@ export default function Form({
     expenseCategories: ExpenseCategoryField[]
   }) {
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useFormState(createBudget, initialState);
+  const [state, formAction] = useActionState(createBudget, initialState);
 
   return (
     <form action={formAction}>
