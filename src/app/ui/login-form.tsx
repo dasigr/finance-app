@@ -10,10 +10,10 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { useActionState } from 'react';
 import { authenticate } from '@/app/lib/actions/user';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 
 export default function LoginForm() {
-  const [errorMessage, formAction, isPending] = useFormState(
+  const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined,
   );

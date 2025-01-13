@@ -91,7 +91,7 @@ export async function updateAccount(id: string, formData: FormData) {
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Account.' };
+    // return { message: 'Database Error: Failed to Update Account.' };
   }
  
   revalidatePath('/dashboard');
@@ -105,14 +105,14 @@ export async function deleteAccount(id: string) {
   try {
     await sql`DELETE FROM account WHERE id = ${id}`;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Account.' };
+    // return { message: 'Database Error: Failed to Delete Account.' };
   }
 
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/account');
 
   redirect('/dashboard/account');
-  return { message: 'Deleted Account.' };
+  // return { message: 'Deleted Account.' };
 }
 
 export async function updateBalance(id: string, operation: string, amount: number) {

@@ -75,7 +75,7 @@ export async function updateExpenseCategory(id: string, formData: FormData) {
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Expense Category.' };
+    // return { message: 'Database Error: Failed to Update Expense Category.' };
   }
  
   revalidatePath('/settings/expense-category');
@@ -86,9 +86,9 @@ export async function deleteExpenseCategory(id: string) {
   try {
     await sql`DELETE FROM expense_category WHERE id = ${id}`;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Expense Category.' };
+    // return { message: 'Database Error: Failed to Delete Expense Category.' };
   }
 
   revalidatePath('/settings/expense-category');
-  return { message: 'Deleted Expense Category.' };
+  // return { message: 'Deleted Expense Category.' };
 }

@@ -75,7 +75,7 @@ export async function updateIncomeCategory(id: string, formData: FormData) {
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Income Category.' };
+    // return { message: 'Database Error: Failed to Update Income Category.' };
   }
  
   revalidatePath('/settings/income-category');
@@ -86,9 +86,9 @@ export async function deleteIncomeCategory(id: string) {
   try {
     await sql`DELETE FROM income_category WHERE id = ${id}`;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Income Category.' };
+    // return { message: 'Database Error: Failed to Delete Income Category.' };
   }
 
   revalidatePath('/settings/income-category');
-  return { message: 'Deleted Income Category.' };
+  // return { message: 'Deleted Income Category.' };
 }
