@@ -13,8 +13,9 @@ export default function LoginPage() {
               <Image
                 src="/logo.svg"
                 alt="Personal Finance"
-                width={1000}
-                height={760}
+                width={96}
+                height={96}
+                priority={false}
                 className="h-8 w-auto"
               />
             </Link>
