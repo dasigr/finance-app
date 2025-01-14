@@ -24,7 +24,7 @@ export default function MainMenu() {
         </Link>
         <Link
           href="/dashboard/expenses/create"
-          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          className="flex h-8 items-center rounded-2xl px-1 bg-gray-500 font-medium text-white border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
           <span className="hidden md:block">Add Expense</span>{' '}
           <PlusIcon className="h-6 md:ml-4" />
