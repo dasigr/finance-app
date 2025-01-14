@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { PlusIcon, UserIcon, ChartPieIcon, ArrowsRightLeftIcon, ChartBarIcon } from '@heroicons/react/24/outline'
+import { PlusIcon, WalletIcon, ChartPieIcon, ArrowsRightLeftIcon, ChartBarIcon } from '@heroicons/react/24/outline'
 
 export default function MainMenu() {
   return (
@@ -16,11 +16,11 @@ export default function MainMenu() {
           <ChartBarIcon className="h-6 md:ml-4" />
         </Link>
         <Link
-          href="/dashboard/account/transfer"
+          href="/dashboard/income/create"
           className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
-          <span className="hidden md:block">Transfer</span>{' '}
-          <ArrowsRightLeftIcon className="h-6 md:ml-4" />
+          <span className="hidden md:block">Add Income</span>{' '}
+          <WalletIcon className="h-6 md:ml-4" />
         </Link>
         <Link
           href="/dashboard/expenses/create"
@@ -30,18 +30,18 @@ export default function MainMenu() {
           <PlusIcon className="h-6 md:ml-4" />
         </Link>
         <Link
+          href="/dashboard/account/transfer"
+          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          <span className="hidden md:block">Transfer</span>{' '}
+          <ArrowsRightLeftIcon className="h-6 md:ml-4" />
+        </Link>
+        <Link
           href="/dashboard/reports"
           className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
           <span className="hidden md:block">Reports</span>{' '}
           <ChartPieIcon className="h-6 md:ml-4" />
-        </Link>
-        <Link
-          href="/dashboard/profile"
-          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-        >
-          <span className="hidden md:block">Profile</span>{' '}
-          <UserIcon className="h-6 md:ml-4" />
         </Link>
       </div>
     </footer>
