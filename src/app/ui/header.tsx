@@ -15,6 +15,7 @@ import {
   BellIcon,
   ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/24/outline'
+import LogoutForm from '@/app/ui/logout-form'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -39,10 +40,11 @@ export default function Header() {
           >
             <span className="sr-only">Finance</span>
             <Image
-              src="/logo.svg"
-              alt="Personal Finance"
-              width={1000}
-              height={760}
+              src={"/logo.png"}
+              alt={"Personal Finance"}
+              width={96}
+              height={96}
+              priority={false}
               className="h-8 w-auto"
             />
           </Link>
@@ -113,10 +115,11 @@ export default function Header() {
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Finance</span>
               <Image
-                src="/logo.svg"
-                alt="Personal Finance"
-                width={1000}
-                height={760}
+                src={"/logo.png"}
+                alt={"Personal Finance"}
+                width={96}
+                height={96}
+                priority={false}
                 className="h-8 w-auto"
               />
             </Link>
@@ -166,6 +169,12 @@ export default function Header() {
                 </Link>
               </div>
               <div className="py-6">
+                <Link
+                  href="/dashboard/profile"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Profile
+                </Link>
                 <Link
                   href="/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
