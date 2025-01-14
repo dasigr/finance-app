@@ -27,7 +27,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 mr-8"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 mr-10"
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon aria-hidden="true" className="size-6" />
@@ -40,16 +40,16 @@ export default function Header() {
           >
             <span className="sr-only">Finance</span>
             <Image
-              src={"/logo.png"}
-              alt={"Personal Finance"}
-              width={96}
-              height={96}
+              src="/logo.png"
+              alt="Personal Finance"
+              width={40}
+              height={40}
               priority={false}
-              className="h-8 w-auto"
+              className="h-10 w-auto"
             />
           </Link>
         </div>
-        <div className="flex justify-center gap-4 lg:hidden">
+        <div className="flex justify-center gap-6 lg:hidden">
           <BellIcon aria-hidden="true" className="size-6" />
           <ArrowRightStartOnRectangleIcon aria-hidden="true" className="size-6" />
         </div>
@@ -107,7 +107,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700 mr-8"
+              className="-m-2.5 rounded-md p-2.5 text-gray-700 mr-10"
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="size-6" />
@@ -115,15 +115,15 @@ export default function Header() {
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Finance</span>
               <Image
-                src={"/logo.png"}
-                alt={"Personal Finance"}
-                width={96}
-                height={96}
+                src="/logo.png"
+                alt="Personal Finance"
+                width={40}
+                height={40}
                 priority={false}
-                className="h-8 w-auto"
+                className="h-10 w-auto"
               />
             </Link>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-6">
               <BellIcon aria-hidden="true" className="size-6" />
               <ArrowRightStartOnRectangleIcon  aria-hidden="true" className="size-6" />
             </div>
