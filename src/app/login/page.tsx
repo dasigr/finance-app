@@ -11,8 +11,8 @@ export default function LoginPage() {
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Personal Finance</span>
               <Image
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                alt="Tailswind CSS"
+                src="/logo.svg"
+                alt="Personal Finance"
                 width={1000}
                 height={760}
                 className="h-8 w-auto"
