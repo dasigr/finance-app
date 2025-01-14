@@ -30,14 +30,14 @@ export async function sendNotification(message: string) {
   }
  
   try {
-    await webpush.sendNotification(
-      subscription,
-      JSON.stringify({
-        title: 'Test Notification',
-        body: message,
-        icon: '/icon.png',
-      })
-    )
+    // await webpush.sendNotification(
+    //   subscription,
+    //   JSON.stringify({
+    //     title: 'Test Notification',
+    //     body: message,
+    //     icon: '/icon.png',
+    //   })
+    // )
     return { success: true }
   } catch (error) {
     console.error('Error sending push notification:', error)

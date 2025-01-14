@@ -104,7 +104,7 @@ function InstallPrompt() {
  
   useEffect(() => {
     setIsIOS(
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
+      /iPad|iPhone|iPod/.test(navigator.userAgent)
     )
  
     setIsStandalone(window.matchMedia('(display-mode: standalone)').matches)
@@ -125,7 +125,7 @@ function InstallPrompt() {
             {' '}
             ⎋{' '}
           </span>
-          and then "Add to Home Screen"
+          and then Add to Home Screen
           <span role="img" aria-label="plus icon">
             {' '}
             ➕{' '}
