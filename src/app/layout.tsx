@@ -6,8 +6,8 @@ export const metadata: Metadata = {
     template: '%s | Finance',
     default: 'Finance'
   },
-  description: 'The official Next.js Course Dashboard, built with App Router.',
-  metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
+  description: 'Manage your budget with personal finance',
+  metadataBase: new URL('https://www.a5project.com'),
 };
 
 export default function RootLayout({

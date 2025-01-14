@@ -39,10 +39,10 @@ export default function Header() {
           >
             <span className="sr-only">Finance</span>
             <Image
-              src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+              src="/logo.svg"
+              alt="Personal Finance"
               width={1000}
               height={760}
-              alt="Tailwind CSS"
               className="h-8 w-auto"
             />
           </Link>
@@ -113,8 +113,8 @@ export default function Header() {
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Finance</span>
               <Image
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                alt="Tailwind CSS"
+                src="/logo.svg"
+                alt="Personal Finance"
                 width={1000}
                 height={760}
                 className="h-8 w-auto"
