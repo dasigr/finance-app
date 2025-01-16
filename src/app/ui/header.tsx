@@ -11,7 +11,7 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
-  UserIcon,
+  CogIcon,
   BellIcon,
   ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/24/outline'
@@ -51,15 +51,9 @@ export default function Header() {
         </div>
         <div className="flex justify-center gap-6 lg:hidden">
           <BellIcon aria-hidden="true" className="size-6" />
-          <ArrowRightStartOnRectangleIcon aria-hidden="true" className="size-6" />
+          <CogIcon aria-hidden="true" className="size-6" />
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <Link
-            href="/dashboard"
-            className="text-sm/6 font-semibold text-gray-900"
-          >
-            Dashboard
-          </Link>
           <Link
             href="/dashboard/income"
             className="text-sm/6 font-semibold text-gray-900"
@@ -83,12 +77,6 @@ export default function Header() {
             className="text-sm/6 font-semibold text-gray-900"
           >
             Budget
-          </Link>
-          <Link
-            href="/settings"
-            className="text-sm/6 font-semibold text-gray-900"
-          >
-            Settings
           </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -125,18 +113,30 @@ export default function Header() {
             </Link>
             <div className="flex justify-center gap-6">
               <BellIcon aria-hidden="true" className="size-6" />
-              <ArrowRightStartOnRectangleIcon  aria-hidden="true" className="size-6" />
+              <CogIcon  aria-hidden="true" className="size-6" />
             </div>
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Link
-                  href="/dashboard"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Dashboard
-                </Link>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center">
+                      <Image
+                        src="/customers/amy-burns.png"
+                        className="mr-2 rounded-full"
+                        width={28}
+                        height={28}
+                        alt="Amy Burns"
+                      />
+                      <div>
+                        <p>Amy Burns</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
                 <Link
                   href="/dashboard/income"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
@@ -162,10 +162,52 @@ export default function Header() {
                   Budget
                 </Link>
                 <Link
-                  href="/settings"
+                  href="/dashboard/income/category"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
-                  Settings
+                  Income Categories
+                </Link>
+                <Link
+                  href="/dashboard/expenses/category"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Expense Categories
+                </Link>
+                <Link
+                  href="/dashboard/payee"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Payee
+                </Link>
+                <Link
+                  href="/dashboard/payer"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Payer
+                </Link>
+                <Link
+                  href="/dashboard/bills"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Bills
+                </Link>
+                <Link
+                  href="/dashboard/assets-liabilities"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Assets &amp; Liabilities
+                </Link>
+                <Link
+                  href="/dashboard/portfolio"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Portfolio
+                </Link>
+                <Link
+                  href="/dashboard/goals"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Goals
                 </Link>
               </div>
               <div className="py-6">
@@ -176,13 +218,19 @@ export default function Header() {
                   Profile
                 </Link>
                 <Link
+                  href="/dashboard/settings"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Settings
+                </Link>
+                <Link
                   href="/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   Log in
                 </Link>
                 <Link
-                  href="/logout"
+                  href="/dashboard/logout"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   Log out

@@ -163,10 +163,6 @@ export default function Page() {
           />
         </div>
       </main>
-      <div>
-        <PushNotificationManager />
-        <InstallPrompt />
-      </div>
     </div>
   );
 }
