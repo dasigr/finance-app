@@ -1,5 +1,7 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
 // https://nextjs.org/learn/dashboard-app/fetching-data
+import { ledgers } from "../seed/data/ledger";
+
 const users = [
   {
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
@@ -816,4 +818,59 @@ const incomes = [
   }
 ];
 
-export { users, customers, invoices, revenue, expenseCategories, budgets, accounts, expenses, incomeCategories, incomes };
+const transfer_ledger = [
+  {
+    date: '2024-01-09',
+    from_account_id: accounts[2].id,
+    to_account_id: accounts[1].id,
+    amount: 1000000,
+    notes: 'Transfer from UB',
+    status: 1
+  },
+  {
+    date: '2024-01-10',
+    from_account_id: accounts[1].id,
+    to_account_id: accounts[0].id,
+    amount: 1000000,
+    notes: 'Transfer to Wallet',
+    status: 1
+  }
+]
+
+const income_ledger = [
+  {
+    date: '2025-01-11',
+    account_id: accounts[1].id,
+    category_id: incomeCategories[0].id,
+    amount: 500000,
+    notes: 'Income from Side Project',
+    status: 1
+  }
+]
+
+const expense_ledger = [
+  {
+    date: '2025-01-12',
+    account_id: accounts[1].id,
+    category_id: expenseCategories[0].id,
+    amount: 10000,
+    notes: 'Bread',
+    status: 1
+  }
+]
+
+export { 
+  users, 
+  customers, 
+  invoices, 
+  revenue, 
+  expenseCategories, 
+  budgets, 
+  accounts,
+  expense_ledger,
+  expenses,
+  incomeCategories,
+  income_ledger,
+  incomes,
+  ledgers
+};
