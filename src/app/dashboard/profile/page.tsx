@@ -1,10 +1,9 @@
-import { signOut } from '@/auth';
-import { Metadata } from 'next';
-import { lusitana } from '@/app/ui/fonts';
+import { Metadata } from 'next'
+import { lusitana } from '@/app/ui/fonts'
 
 export const metadata: Metadata = {
   title: 'Profile',
-};
+}
 
 export default async function Page() {
   return (
@@ -16,5 +15,5 @@ export default async function Page() {
         <p>-- Content here --</p>
       </div>
     </div>
-  );
+  )
 }

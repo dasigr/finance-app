@@ -2,6 +2,7 @@ import { cookies } from 'next/headers'
 import { decrypt } from '@/app/lib/session'
 import { Token } from '@/app/lib/definitions'
 import axios from 'axios'
+import Error from 'next/error'
 
 export async function getToken(name: string, password: string) {
   try {
@@ -90,6 +91,7 @@ export async function getCurrentUser() {
   const user_id = await getUserId()
   const current_user = await getUser(user_id)
 
+  // console.log(current_user)
   return current_user
 }
 
