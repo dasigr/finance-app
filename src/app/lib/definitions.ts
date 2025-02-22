@@ -52,7 +52,7 @@ export type Token = {
 
 export type SessionPayload = {
   token?: Token,
-  expiresAt?: Date
+  data?: User
 }
 
 // This file contains type definitions for your data.

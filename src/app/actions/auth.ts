@@ -1,9 +1,9 @@
 'use server'
 
-import { SignupFormSchema, LoginFormSchema, FormState } from '@/app/lib/definitions'
+import { SignupFormSchema, LoginFormSchema, FormState, SessionPayload } from '@/app/lib/definitions'
 import { createSession, deleteSession } from '@/app/lib/session'
 import { redirect } from 'next/navigation'
-import { getToken, getUserId } from '@/app/lib/user'
+import { getCurrentUser, getToken, registerUser } from '@/app/lib/user'
 
 export async function signup(state: FormState, formData: FormData) {
   // 1. Validate form fields
@@ -12,7 +12,7 @@ export async function signup(state: FormState, formData: FormData) {
     email: formData.get('email'),
     password: formData.get('password'),
   })
- 
+
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return {
@@ -24,36 +24,22 @@ export async function signup(state: FormState, formData: FormData) {
   const { name, email, password } = validatedFields.data
   // e.g. Hash the user's password before storing it
   // const hashedPassword = await bcrypt.hash(password, 10)
- 
-  // 3. Insert the user into the database
-  // const data = await db
-  //   .insert(users)
-  //   .values({
-  //     name,
-  //     email,
-  //     password: hashedPassword,
-  //   })
-  //   .returning({ id: users.id })
- 
-  // const user = data[0]
- 
-  // if (!user) {
-  //   return {
-  //     message: 'An error occurred while creating your account.',
-  //   }
-  // }
 
   // 3. Call the Auth provider
-  console.log('Call Auth API')
-  const user = {
-    id: '1234-5678'
+  const user = await registerUser(name, email, password)
+ 
+  if (!user) {
+    return {
+      message: 'An error occurred while creating your account.',
+    }
   }
 
   // 4. Create user session
-  await createSession(user.id)
+  // await createSession(user.id)
 
   // 5. Redirect user
-  redirect('/dashboard')
+  console.log('Successfully registered an account')
+  redirect('/login')
 }
 
 export async function login(state: FormState, formData: FormData) {
@@ -76,11 +62,14 @@ export async function login(state: FormState, formData: FormData) {
   // 3. Call the Auth provider
   const token = await getToken(name, password)
 
-  // const user = await getUserId()
-  // const user_id = user.meta.links.me.meta.id
+  const payload = {
+    token: token,
+    data: await getCurrentUser()
+  }
 
   // 4. Create user session
-  await createSession(token)
+  // console.log('Payload', payload)
+  await createSession(payload)
 
   // 5. Redirect user
   redirect('/dashboard')

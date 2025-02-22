@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { decrypt } from '@/app/lib/session'
+import { Token } from '@/app/lib/definitions'
 import axios from 'axios'
 
 export async function getArticles() {
@@ -11,7 +12,7 @@ export async function getArticles() {
   }
 
   const token = payload.token
-  const access_token = token.access_token
+  const access_token = (<Token>token).access_token
 
   try {
     const url = `${process.env.DRUPAL_API_URL}/jsonapi/node/article`
