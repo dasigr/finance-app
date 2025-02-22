@@ -26,7 +26,7 @@ export async function decrypt(session: string | undefined = '') {
 }
 
 export async function createSession(payload: SessionPayload) {
-  const token = <Token>payload.token;
+  const token = <Token>payload.token
   const data = payload.data
 
   const expiresAt = new Date(Date.now() + token.expires_in * 1000)
@@ -50,7 +50,7 @@ export async function updateSession() {
     return null
   }
 
-  const token = payload.token
+  const token = <Token>payload.token
   const expiresAt = new Date(Date.now() + token.expires_in * 1000)
  
   const cookieStore = await cookies()
