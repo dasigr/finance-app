@@ -22,7 +22,6 @@ export async function getToken(name: string, password: string) {
       }
     })
 
-    // console.log('Access Token:', response.data)
     return response.data
 
   } catch (error: any) {
