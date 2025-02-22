@@ -43,18 +43,34 @@ export type FormState =
     }
   | undefined
 
-export type SessionPayload = {}
+export type Token = {
+  token_type?: string,
+  expires_in?: number,
+  access_token?: string,
+  refresh_token?: string
+}
+
+export type SessionPayload = {
+  token?: Token,
+  expiresAt?: Date
+}
 
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type User = {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-};
+  id?: string,
+  name?: string,
+  email?: string,
+  password?: string,
+  phonenumber?: string,
+  team?: string,
+  isAdmin?: boolean,
+  attributes?: {
+    display_name?: string
+  }
+}
 
 export type Customer = {
   id: string;
