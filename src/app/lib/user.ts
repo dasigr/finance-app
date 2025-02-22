@@ -2,6 +2,7 @@ import { cookies } from 'next/headers'
 import { decrypt } from '@/app/lib/session'
 import { Token } from '@/app/lib/definitions'
 import axios from 'axios'
+import Error from 'next/error'
 
 export async function getToken(name: string, password: string) {
   try {
@@ -24,8 +25,8 @@ export async function getToken(name: string, password: string) {
 
     return response.data
 
-  } catch (error: any) {
-    console.error("Error fetching token:", error.response?.data || error.message)
+  } catch (error) {
+    console.error("Error fetching token:", error)
   }
 }
 
@@ -52,8 +53,8 @@ export async function getUserId() {
 
     return response.data.meta.links.me.meta.id
     
-  } catch (error: any) {
-    console.error("Error fetching user:", error.response?.data || error.message)
+  } catch (error) {
+    console.error("Error fetching user:", error)
   }
 }
 
@@ -81,8 +82,8 @@ export async function getUser(user_id: string) {
     // console.log('User', response.data)
     return response.data
     
-  } catch (error: any) {
-    console.error("Error fetching user details:", error.response?.data || error.message)
+  } catch (error) {
+    console.error("Error fetching user details:", error)
   }
 }
 
@@ -129,8 +130,8 @@ export async function registerUser(name: string, email: string, password: string
     const user = response.data
     return user
 
-  } catch (error: any) {
-    console.error("Error registering user:", error.response?.data || error.message)
+  } catch (error) {
+    console.error("Error registering user:", error)
   }
 }
 
@@ -186,7 +187,7 @@ export async function createUser(name: string, email: string, password: string) 
     const user = response.data
     return user
 
-  } catch (error: any) {
-    console.error("Error registering user:", error.response?.data || error.message)
+  } catch (error) {
+    console.error("Error registering user:", error)
   }
 }
