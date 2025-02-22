@@ -51,8 +51,8 @@ export type Token = {
 }
 
 export type SessionPayload = {
-  token?: Token,
-  data?: User
+  token: Token,
+  data: User
 }
 
 // This file contains type definitions for your data.
