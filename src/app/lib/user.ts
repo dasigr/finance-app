@@ -1,8 +1,6 @@
 import { cookies } from 'next/headers'
 import { decrypt } from '@/app/lib/session'
-import { Token } from '@/app/lib/definitions'
 import axios from 'axios'
-import Error from 'next/error'
 
 export async function getToken(name: string, password: string) {
   try {
@@ -39,7 +37,7 @@ export async function getUserId() {
   }
 
   const token = payload.token
-  const access_token = (<Token>token).access_token
+  const access_token = token.access_token
 
   try {
     const url = `${process.env.DRUPAL_API_URL}/jsonapi`
@@ -67,7 +65,7 @@ export async function getUser(user_id: string) {
   }
 
   const token = payload.token
-  const access_token = (<Token>token).access_token
+  const access_token = token.access_token
 
   try {
     const url = `${process.env.DRUPAL_API_URL}/jsonapi/user/user/${user_id}`
@@ -79,7 +77,6 @@ export async function getUser(user_id: string) {
       }
     })
 
-    // console.log('User', response.data)
     return response.data
     
   } catch (error) {
@@ -91,7 +88,6 @@ export async function getCurrentUser() {
   const user_id = await getUserId()
   const current_user = await getUser(user_id)
 
-  // console.log(current_user)
   return current_user
 }
 
@@ -126,7 +122,6 @@ export async function registerUser(name: string, email: string, password: string
       }
     })
 
-    // console.log('Register user', response)
     const user = response.data
     return user
 
@@ -146,7 +141,7 @@ export async function createUser(name: string, email: string, password: string) 
   }
 
   const token = payload.token
-  const access_token = (<Token>token).access_token
+  const access_token = token.access_token
 
   const role_id = `${process.env.ROLE_ID}`
 
