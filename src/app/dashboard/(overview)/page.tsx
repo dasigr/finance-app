@@ -1,14 +1,14 @@
-import { Metadata } from 'next';
-import CardWrapper from '@/app/ui/dashboard/cards';
-import { Suspense } from 'react';
+import { Metadata } from 'next'
+import CardWrapper from '@/app/ui/dashboard/cards'
+import { Suspense } from 'react'
 import {
   CardsSkeleton,
-} from '@/app/ui/skeletons';
-import { formatCurrency } from '@/app/lib/utils';
-import { BudgetStatus } from '@/app/ui/budget/budget-status';
-import { fetchTotalBudgetAmount } from '@/app/lib/actions/budget';
+} from '@/app/ui/skeletons'
+import { formatCurrency } from '@/app/lib/utils'
+import { BudgetStatus } from '@/app/ui/budget/budget-status'
+import { fetchTotalBudgetAmount } from '@/app/lib/actions/budget'
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -29,5 +29,5 @@ export default async function Page() {
         </Suspense>
       </div>
     </div>
-  );
+  )
 }
