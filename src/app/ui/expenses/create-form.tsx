@@ -10,7 +10,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import { Checkbox } from "@/app/ui/components/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { createExpense, State } from '@/app/lib/actions/expense';
 
 export default function Form({ categories, accounts }: { categories: ExpenseCategoryField[], accounts: AccountField[] }) {
