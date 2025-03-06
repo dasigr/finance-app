@@ -1,4 +1,4 @@
-import { Progress } from "@/components/ui/progress";
+import { Progress } from "@/app/ui/components/progress";
 import { fetchTotalExpenseAmount, fetchFutureExpenseAmount } from '@/app/lib/actions/expense';
 import { formatCurrency } from "@/app/lib/utils";
 

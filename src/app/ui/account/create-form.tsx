@@ -10,7 +10,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/app/ui/components/checkbox";
 import { createAccount, State } from '@/app/lib/actions/account';
 
 export default function Form() {
