@@ -9,13 +9,12 @@ import { decrypt } from '@/app/lib/session'
 export const verifySession = cache(async () => {
   const cookie = (await cookies()).get('session')?.value
   const session = await decrypt(cookie)
-  // console.log('Session', session)
  
-  if (!session?.userId) {
+  if (!session?.data.id) {
     redirect('/login')
   }
  
-  return { isAuth: true, userId: session.userId }
+  return { isAuth: true, userId: session.data.id }
 })
 
 export const getUser = cache(async () => {
