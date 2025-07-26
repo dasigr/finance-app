@@ -6,17 +6,17 @@ export default function LoginPage() {
   return (
     <main className="flex items-center justify-center md:h-screen">
       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <div className="flex h-20 w-full items-end rounded-lg p-3 md:h-36">
-          <div className="w-32 md:w-36">
+        <div className="flex h-32 w-full justify-center rounded-lg p-3 md:h-32">
+          <div>
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Personal Finance</span>
               <Image
                 src="/logo.svg"
                 alt="Personal Finance"
-                width={96}
-                height={96}
+                width={64}
+                height={64}
                 priority={false}
-                className="h-8 w-auto"
+                className="h-16 w-auto"
               />
             </Link>
           </div>
