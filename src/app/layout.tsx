@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     default: 'Finance'
   },
   description: 'Manage your budget with personal finance',
-  metadataBase: new URL('https://www.a5project.com'),
+  metadataBase: new URL('https://finance.a5project.com'),
 };
 
 export default function RootLayout({
