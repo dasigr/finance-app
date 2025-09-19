@@ -12,7 +12,7 @@ export async function getToken(name: string, password: string) {
     data.append('client_secret', `${process.env.DRUPAL_CLIENT_SECRET}`)
     data.append('username', `${name}`)
     data.append('password', `${password}`)
-    data.append('scope', 'finance')
+    data.append('scope', `${process.env.DRUPAL_SCOPE}`)
 
     const response = await axios.post(url, data, {
       headers: {
