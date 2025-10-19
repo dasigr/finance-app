@@ -777,16 +777,3 @@ export async function fetchFilteredCustomers(query: string) {
     throw new Error('Failed to fetch customer table.');
   }
 }
-
-export async function fetchArticles() {
-  try {
-    const data = await fetch('https://api.vercel.app/blog')
-    const posts = await data.json()
-    console.log(posts)
-
-    return posts
-  } catch (err) {
-    console.error('API Fetch Error:', err);
-    throw new Error('Failed to fetch articles.');
-  }
-}
