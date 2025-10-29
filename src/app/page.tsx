@@ -129,8 +129,7 @@ function InstallPrompt() {
           <span role="img" aria-label="plus icon">
             {' '}
             ➕{' '}
-          </span>
-          .
+          </span>.
         </p>
       )}
     </div>
