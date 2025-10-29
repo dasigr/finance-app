@@ -4,4 +4,8 @@ node_modules
 npm-debug.log
 README.md
 .next
+.env
 .git
+.gitignore
+__pycache__
+*.pyc
