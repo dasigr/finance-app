@@ -143,7 +143,7 @@ export async function createUser(name: string, email: string, password: string) 
   const token = payload.token
   const access_token = token.access_token
 
-  const role_id = `${process.env.ROLE_ID}`
+  const role_id = `${process.env.DRUPAL_ROLE_ID}`
 
   const data = {
     "data": {

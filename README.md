@@ -58,12 +58,11 @@ docker build -t dasigr/finance-app .
 Run the container.
 
 ```bash
-docker run -d --name finance-app -p 3000:3000 dasigr/finance-app
+docker run -d --env-file .env --name finance-app -p 3000:3000 dasigr/finance-app
 ```
 
 Using Docker Compose.
 
 ```bash
-docker compose build
 docker compose up -d
 ```
