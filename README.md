@@ -52,7 +52,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 Build a Docker image.
 
 ```bash
-docker build -t dasigr/finance-app .
+docker build --platform linux/amd64 -t dasigr/finance-app .
 ```
 
 Run the container.
