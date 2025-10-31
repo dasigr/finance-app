@@ -168,8 +168,10 @@ async function seedAccounts() {
   await client.sql`
     CREATE TABLE IF NOT EXISTS account (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      user_id UUID NOT NULL,
       name VARCHAR(255) NOT NULL,
       balance INT NOT NULL,
+      currency VARCHAR(3) DEFAULT 'PHP',
       weight INT DEFAULT 0,
       status BOOLEAN DEFAULT TRUE
     );
@@ -186,6 +188,24 @@ async function seedAccounts() {
   );
 
   return insertedAccounts;
+}
+
+async function seedTransactions() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS transaction (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      user_id UUID NOT NULL,
+      type VARCHAR(20) NOT NULL,
+      amount INT NOT NULL,
+      description VARCHAR(255),
+      from_account_id UUID,
+      to_account_id UUID,
+      date DATE NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW()
+    );
+  `;
 }
 
 async function seedExpenses() {
@@ -309,11 +329,12 @@ export async function GET() {
     // await seedRevenue();
     // await seedExpenseCategories();
     // await seedBudget();
-    // await seedAccounts();
+    await seedAccounts();
     // await seedExpenses();
     // await seedIncomeCategories();
     // await seedIncomes();
-    await seedLedgers();
+    // await seedLedgers();
+    await seedTransactions();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
