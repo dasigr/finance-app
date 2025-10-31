@@ -50,8 +50,6 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex justify-center gap-6 lg:hidden">
-          {/* <BellIcon aria-hidden="true" className="size-6" />
-          <CogIcon aria-hidden="true" className="size-6" /> */}
           <LogoutForm />
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
@@ -113,8 +111,6 @@ export default function Header() {
               />
             </Link>
             <div className="flex justify-center gap-6">
-              {/* <BellIcon aria-hidden="true" className="size-6" />
-              <CogIcon  aria-hidden="true" className="size-6" /> */}
               <LogoutForm />
             </div>
           </div>
@@ -131,9 +127,9 @@ export default function Header() {
                         height={28}
                         alt="Amy Burns"
                       />
-                      <div>
+                      <Link href="/profile">
                         <p>Amy Burns</p>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -163,62 +159,8 @@ export default function Header() {
                 >
                   Budget
                 </Link>
-                <Link
-                  href="/dashboard/income/category"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Income Categories
-                </Link>
-                <Link
-                  href="/dashboard/expenses/category"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Expense Categories
-                </Link>
-                <Link
-                  href="/dashboard/payee"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Payee
-                </Link>
-                <Link
-                  href="/dashboard/payer"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Payer
-                </Link>
-                <Link
-                  href="/dashboard/bills"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Bills
-                </Link>
-                <Link
-                  href="/dashboard/assets-liabilities"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Assets &amp; Liabilities
-                </Link>
-                <Link
-                  href="/dashboard/portfolio"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Portfolio
-                </Link>
-                <Link
-                  href="/dashboard/goals"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Goals
-                </Link>
               </div>
               <div className="py-6 mb-12">
-                <Link
-                  href="/dashboard/profile"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Profile
-                </Link>
                 <Link
                   href="/dashboard/settings"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
@@ -226,16 +168,16 @@ export default function Header() {
                   Settings
                 </Link>
                 <Link
-                  href="/login"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  href="/dashboard/settings/income-categories"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
-                  Log in
+                  Income Categories
                 </Link>
                 <Link
-                  href="/dashboard/logout"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  href="/dashboard/settings/expense-categories"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
-                  Log out
+                  Expense Categories
                 </Link>
               </div>
             </div>

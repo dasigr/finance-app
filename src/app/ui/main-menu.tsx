@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { PlusIcon, WalletIcon, ChartPieIcon, ArrowsRightLeftIcon, ChartBarIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, PlusIcon, WalletIcon, ChartPieIcon, ArrowsRightLeftIcon, ChartBarIcon } from '@heroicons/react/24/outline'
 
 export default function MainMenu() {
   return (
@@ -13,7 +13,7 @@ export default function MainMenu() {
           className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
           <span className="hidden md:block">Dashboard</span>{' '}
-          <ChartBarIcon className="h-6 md:ml-4" />
+          <HomeIcon className="h-6 md:ml-4" />
         </Link>
         <Link
           href="/dashboard/income/create"
