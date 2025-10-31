@@ -42,10 +42,10 @@ export default function Header() {
             <Image
               src="/logo.png"
               alt="Personal Finance"
-              width={40}
-              height={40}
+              width={48}
+              height={48}
               priority={false}
-              className="h-10 w-auto"
+              className="h-12 w-auto"
             />
           </Link>
         </div>
@@ -104,10 +104,10 @@ export default function Header() {
               <Image
                 src="/logo.png"
                 alt="Personal Finance"
-                width={40}
-                height={40}
+                width={48}
+                height={48}
                 priority={false}
-                className="h-10 w-auto"
+                className="h-12 w-auto"
               />
             </Link>
             <div className="flex justify-center gap-6">
