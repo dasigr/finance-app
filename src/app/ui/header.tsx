@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className="bg-white sm:block">
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between py-4 px-6 lg:px-8">
+      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between py-2 px-6 lg:px-8">
         <div className="flex lg:hidden">
           <button
             type="button"

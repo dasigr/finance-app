@@ -51,7 +51,7 @@ export function Card({
   return (
     <div className={`rounded-xl p-2 shadow-sm ${bgColor}`}>
       <Link href={`/dashboard/${type}`} className="">
-        <div className="flex p-4">
+        <div className="flex pt-4 px-4">
           {Icon ? <Icon className="h-5 w-5 text-white" /> : null}
           <h3 className="ml-2 text-sm text-white font-medium">{title}</h3>
         </div>

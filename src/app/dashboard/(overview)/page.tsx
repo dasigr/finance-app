@@ -19,7 +19,7 @@ export default async function Page() {
 
   return (
     <div className="pb-4 mb-12">
-      <div className="mt-4 mb-4">
+      <div className="mb-4">
         <p className="mb-4">Budget: {formatCurrency(totalBudgetAmount)}</p>
         <BudgetStatus budgetAmount={totalBudgetAmount} />
       </div>
