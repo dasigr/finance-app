@@ -1,6 +1,6 @@
 'use client'
 
-import { signup } from '@/app/actions/auth'
+import { signup } from '@/app/lib/actions/auth'
 import { useActionState } from 'react'
 
 export function SignupForm() {

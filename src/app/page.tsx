@@ -5,7 +5,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { subscribeUser, unsubscribeUser, sendNotification } from '@/app/actions/pwa'
+import { subscribeUser, unsubscribeUser, sendNotification } from '@/app/lib/actions/pwa'
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)

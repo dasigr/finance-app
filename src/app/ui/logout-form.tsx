@@ -1,4 +1,4 @@
-import { logout } from '@/app/actions/auth'
+import { logout } from '@/app/lib/actions/auth'
 import { useActionState } from 'react'
 import { PowerIcon } from '@heroicons/react/20/solid'
 

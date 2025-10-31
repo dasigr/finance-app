@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
-import { login } from '@/app/actions/auth'
+import { login } from '@/app/lib/actions/auth'
 import { lusitana } from '@/app/ui/fonts'
 import {
   AtSymbolIcon,

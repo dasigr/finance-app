@@ -11,9 +11,7 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
-  CogIcon,
-  BellIcon,
-  ArrowRightStartOnRectangleIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline'
 import LogoutForm from '@/app/ui/logout-form'
 
@@ -50,6 +48,9 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex justify-center gap-6 lg:hidden">
+          <Link href="/login">
+            <UserIcon className="size-6" />
+          </Link>
           <LogoutForm />
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
@@ -89,7 +90,7 @@ export default function Header() {
       </nav>
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-4 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-2 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <button
               type="button"
@@ -111,6 +112,9 @@ export default function Header() {
               />
             </Link>
             <div className="flex justify-center gap-6">
+              <Link href="/login">
+                <UserIcon className="size-6" />
+              </Link>
               <LogoutForm />
             </div>
           </div>
