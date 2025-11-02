@@ -1,5 +1,5 @@
 import Header from '@/app/ui/header';
-import MainMenu from '@/app/ui/main-menu';
+import UserAction from '@/app/ui/user-action';
  
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </main>
-      <MainMenu />
+      <UserAction />
     </>
   );
 }

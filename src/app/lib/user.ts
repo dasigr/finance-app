@@ -2,6 +2,17 @@ import { cookies } from 'next/headers'
 import { decrypt } from '@/app/lib/session'
 import axios from 'axios'
 
+export async function isLoggedIn(): Promise<boolean> {
+  const cookie = (await cookies()).get('session')?.value
+  const session = await decrypt(cookie)
+
+  if (!session?.token) {
+    return true
+  }
+
+  return false
+}
+
 export async function getToken(name: string, password: string) {
   try {
     const url = `${process.env.DRUPAL_API_URL}/oauth/token`

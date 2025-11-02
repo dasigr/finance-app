@@ -5,7 +5,8 @@ import {
   customers, 
   revenue, 
   users, 
-  expenseCategories, 
+  categories,
+  expenseCategories,
   budgets, accounts, 
   expense_ledger,
   expenses,
@@ -114,6 +115,40 @@ async function seedRevenue() {
   return insertedRevenue;
 }
 
+/**
+ * Seed categories.
+ * 
+ * name (e.g. Groceries, Rent, Salary)
+ * type (income, expense)
+ * 
+ * @returns 
+ */
+async function seedCategories() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS category (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      user_id UUID NOT NULL,
+      name VARCHAR(100) NOT NULL,
+      type VARCHAR(20) NOT NULL,
+      image_url VARCHAR(255) NOT NULL
+    );
+  `;
+
+  const insertedCategories = await Promise.all(
+    categories.map(
+      (category) => client.sql`
+        INSERT INTO category (id, name, image_url)
+        VALUES (${category.id},${category.name}, ${category.image_url})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+  return insertedCategories;
+}
+
 async function seedExpenseCategories() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -162,6 +197,13 @@ async function seedBudget() {
   return insertedBudget;
 }
 
+/**
+ * Seed accounts.
+ * 
+ * name (e.g. Bank Savings, Cash Wallet)
+ * 
+ * @returns 
+ */
 async function seedAccounts() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -190,6 +232,11 @@ async function seedAccounts() {
   return insertedAccounts;
 }
 
+/**
+ * Seed transactions.
+ * 
+ * type (income, expense, transfer)
+ */
 async function seedTransactions() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 

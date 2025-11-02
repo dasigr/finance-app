@@ -1,49 +1,54 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
-import { HomeIcon, PlusIcon, WalletIcon, ChartPieIcon, ArrowsRightLeftIcon, ChartBarIcon } from '@heroicons/react/24/outline'
 
 export default function MainMenu() {
   return (
-    <footer className="bg-white lg:hidden">
-      <div className="fixed bottom-0 w-full bg-white bg-opacity-90 border-t text-grey-700 flex justify-around py-4 shadow-lg z-50">
+    <>
+      <div className="space-y-2 py-6">
         <Link
-          href="/dashboard"
-          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          href="/dashboard/income"
+          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
         >
-          <span className="hidden md:block">Dashboard</span>{' '}
-          <HomeIcon className="h-6 md:ml-4" />
+          Income
         </Link>
         <Link
-          href="/dashboard/income/create"
-          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          href="/dashboard/expenses"
+          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
         >
-          <span className="hidden md:block">Add Income</span>{' '}
-          <WalletIcon className="h-6 md:ml-4" />
+          Expenses
         </Link>
         <Link
-          href="/dashboard/expenses/create"
-          className="flex h-8 items-center rounded-2xl px-1 bg-gray-500 font-medium text-white border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          href="/dashboard/account"
+          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
         >
-          <span className="hidden md:block">Add Expense</span>{' '}
-          <PlusIcon className="h-6 md:ml-4" />
+          Account
         </Link>
         <Link
-          href="/dashboard/account/transfer"
-          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          href="/dashboard/budget"
+          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
         >
-          <span className="hidden md:block">Transfer</span>{' '}
-          <ArrowsRightLeftIcon className="h-6 md:ml-4" />
-        </Link>
-        <Link
-          href="/dashboard/reports"
-          className="flex h-8 items-center rounded-lg px-2 font-medium text-grey-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-        >
-          <span className="hidden md:block">Reports</span>{' '}
-          <ChartPieIcon className="h-6 md:ml-4" />
+          Budget
         </Link>
       </div>
-    </footer>
+      <div className="py-6 mb-12">
+        <Link
+          href="/dashboard/settings"
+          className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+        >
+          Settings
+        </Link>
+        <Link
+          href="/dashboard/settings/income-categories"
+          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+        >
+          Income Categories
+        </Link>
+        <Link
+          href="/dashboard/settings/expense-categories"
+          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+        >
+          Expense Categories
+        </Link>
+      </div>
+    </>
   )
 }

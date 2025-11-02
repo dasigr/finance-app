@@ -11,9 +11,10 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
-  UserIcon,
 } from '@heroicons/react/24/outline'
-import LogoutForm from '@/app/ui/logout-form'
+import MainMenu from '@/app/ui/main-menu'
+import UserMenu from '@/app/ui/user-menu'
+import Branding from '@/app/ui/branding'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -48,10 +49,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex justify-center gap-6 lg:hidden">
-          <Link href="/login">
-            <UserIcon className="size-6" />
-          </Link>
-          <LogoutForm />
+          <UserMenu />
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Link
@@ -100,22 +98,9 @@ export default function Header() {
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="size-6" />
             </button>
-            <Link href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Finance</span>
-              <Image
-                src="/logo.png"
-                alt="Personal Finance"
-                width={48}
-                height={48}
-                priority={false}
-                className="h-12 w-auto"
-              />
-            </Link>
+            <Branding />
             <div className="flex justify-center gap-6">
-              <Link href="/login">
-                <UserIcon className="size-6" />
-              </Link>
-              <LogoutForm />
+              <UserMenu />
             </div>
           </div>
           <div className="mt-6 flow-root">
@@ -138,52 +123,7 @@ export default function Header() {
                   </div>
                 </div>
               </div>
-              <div className="space-y-2 py-6">
-                <Link
-                  href="/dashboard/income"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Income
-                </Link>
-                <Link
-                  href="/dashboard/expenses"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Expenses
-                </Link>
-                <Link
-                  href="/dashboard/account"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Account
-                </Link>
-                <Link
-                  href="/dashboard/budget"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Budget
-                </Link>
-              </div>
-              <div className="py-6 mb-12">
-                <Link
-                  href="/dashboard/settings"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Settings
-                </Link>
-                <Link
-                  href="/dashboard/settings/income-categories"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Income Categories
-                </Link>
-                <Link
-                  href="/dashboard/settings/expense-categories"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Expense Categories
-                </Link>
-              </div>
+              <MainMenu />
             </div>
           </div>
         </DialogPanel>
