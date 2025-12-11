@@ -33,20 +33,7 @@ export default function Header() {
           </button>
         </div>
         <div className="flex lg:flex-1">
-          <Link 
-            href="/"
-            className="-m-1.5 p-1.5"
-          >
-            <span className="sr-only">Finance</span>
-            <Image
-              src="/logo.png"
-              alt="Personal Finance"
-              width={48}
-              height={48}
-              priority={false}
-              className="h-12 w-auto"
-            />
-          </Link>
+          <Branding />
         </div>
         <div className="flex justify-center gap-6 lg:hidden">
           <UserMenu />

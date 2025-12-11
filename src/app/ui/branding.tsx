@@ -10,7 +10,7 @@ export default function Branding() {
         alt="Personal Finance"
         width={48}
         height={48}
-        priority={false}
+        priority={true}
         className="h-12 w-auto"
       />
     </Link>
