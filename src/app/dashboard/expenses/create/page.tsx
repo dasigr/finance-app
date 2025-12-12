@@ -1,5 +1,5 @@
-import Form from '@/app/ui/expenses/create-form';
-import Breadcrumbs from '@/app/ui/expenses/breadcrumbs';
+import Form from '@/app/components/expenses/create-form';
+import Breadcrumbs from '@/app/components/expenses/breadcrumbs';
 import { fetchAccounts, fetchExpenseCategories } from '@/app/lib/data';
  
 export default async function Page() {

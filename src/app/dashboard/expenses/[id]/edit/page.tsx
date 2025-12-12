@@ -1,5 +1,5 @@
-import Form from '@/app/ui/expenses/edit-form';
-import Breadcrumbs from '@/app/ui/expenses/breadcrumbs';
+import Form from '@/app/components/expenses/edit-form';
+import Breadcrumbs from '@/app/components/expenses/breadcrumbs';
 import { fetchExpenseById, fetchExpenseCategories, fetchAccounts } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 

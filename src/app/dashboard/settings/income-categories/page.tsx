@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
-import { lusitana } from '@/app/ui/fonts';
-import { CreateCategory } from '@/app/ui/income-category/buttons';
+import { lusitana } from '@/app/fonts';
+import { CreateCategory } from '@/app/components/income-category/buttons';
 import { Suspense } from 'react';
-import Table from '@/app/ui/income-category/table';
-import Pagination from '@/app/ui/income-category/pagination';
-import Search from '@/app/ui/search';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import Table from '@/app/components/income-category/table';
+import Pagination from '@/app/components/income-category/pagination';
+import Search from '@/app/components/search';
+import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { fetchIncomeCategoryPages } from '@/app/lib/data';
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
-import Form from '@/app/ui/expense-category/create-form';
-import Breadcrumbs from '@/app/ui/expense-category/breadcrumbs';
+import Form from '@/app/components/expense-category/create-form';
+import Breadcrumbs from '@/app/components/expense-category/breadcrumbs';
  
 export default async function Page() {
  

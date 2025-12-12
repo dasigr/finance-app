@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
-import Pagination from '@/app/ui/expenses/pagination';
-import Table from '@/app/ui/expenses/table';
+import Pagination from '@/app/components/expenses/pagination';
+import Table from '@/app/components/expenses/table';
 import { formatCurrency } from '@/app/lib/utils';
-import { CreateExpense } from '@/app/ui/expenses/buttons';
-import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { CreateExpense } from '@/app/components/expenses/buttons';
+import { lusitana } from '@/app/fonts';
+import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
 import { fetchExpensesPages } from '@/app/lib/data';
 import { fetchTotalExpenseAmount } from '@/app/lib/actions/expense';

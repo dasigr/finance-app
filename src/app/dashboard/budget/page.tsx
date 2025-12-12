@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
-import Pagination from '@/app/ui/budget/pagination';
-import Table from '@/app/ui/budget/table';
+import Pagination from '@/app/components/budget/pagination';
+import Table from '@/app/components/budget/table';
 import { formatCurrency } from '@/app/lib/utils';
-import { CreateBudget } from '@/app/ui/budget/buttons';
-import { lusitana } from '@/app/ui/fonts';
-import { BudgetTableSkeleton } from '@/app/ui/skeletons';
+import { CreateBudget } from '@/app/components/budget/buttons';
+import { lusitana } from '@/app/fonts';
+import { BudgetTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
 import { fetchBudgetPages } from '@/app/lib/data';
 import { fetchTotalBudgetAmount } from '@/app/lib/actions/budget';
-import { BudgetStatus } from '@/app/ui/budget/budget-status';
+import { BudgetStatus } from '@/app/components/budget/budget-status';
 
 export const dynamic = 'force-dynamic';
 
