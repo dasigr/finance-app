@@ -1,5 +1,5 @@
-import Form from '@/app/ui/income/edit-form';
-import Breadcrumbs from '@/app/ui/income/breadcrumbs';
+import Form from '@/app/components/income/edit-form';
+import Breadcrumbs from '@/app/components/income/breadcrumbs';
 import { fetchIncomeById, fetchIncomeCategories, fetchAccounts } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 

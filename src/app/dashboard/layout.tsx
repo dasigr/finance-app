@@ -1,5 +1,5 @@
-import Header from '@/app/ui/header';
-import UserAction from '@/app/ui/user-action';
+import Header from '@/app/components/header';
+import UserAction from '@/app/components/user-action';
  
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

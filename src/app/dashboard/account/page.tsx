@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
-import Pagination from '@/app/ui/account/pagination';
-import Table from '@/app/ui/account/table';
-import { CreateAccount, TransferAccountBalance } from '@/app/ui/account/buttons';
-import { lusitana } from '@/app/ui/fonts';
-import { AccountTableSkeleton } from '@/app/ui/skeletons';
+import Pagination from '@/app/components/account/pagination';
+import Table from '@/app/components/account/table';
+import { CreateAccount, TransferAccountBalance } from '@/app/components/account/buttons';
+import { lusitana } from '@/app/fonts';
+import { AccountTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
 import { fetchAccountPages } from '@/app/lib/data';
 import { fetchTotalAccountBalance } from '@/app/lib/actions/account';

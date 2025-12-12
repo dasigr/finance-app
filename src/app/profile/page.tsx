@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import { lusitana } from '@/app/ui/fonts'
-import Header from '@/app/ui/header'
+import { lusitana } from '@/app/fonts'
+import Header from '@/app/components/header'
 
 export const metadata: Metadata = {
   title: 'Profile',

@@ -1,5 +1,5 @@
-import Form from '@/app/ui/income/create-form';
-import Breadcrumbs from '@/app/ui/income/breadcrumbs';
+import Form from '@/app/components/income/create-form';
+import Breadcrumbs from '@/app/components/income/breadcrumbs';
 import { fetchAccounts, fetchIncomeCategories } from '@/app/lib/data';
 
 export const dynamic = 'force-dynamic';

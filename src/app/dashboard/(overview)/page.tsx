@@ -1,11 +1,11 @@
 import { Metadata } from 'next'
-import CardWrapper from '@/app/ui/dashboard/cards'
+import CardWrapper from '@/app/components/dashboard/cards'
 import { Suspense } from 'react'
 import {
   CardsSkeleton,
-} from '@/app/ui/skeletons'
+} from '@/app/components/skeletons'
 import { formatCurrency } from '@/app/lib/utils'
-import { BudgetStatus } from '@/app/ui/budget/budget-status'
+import { BudgetStatus } from '@/app/components/budget/budget-status'
 import { fetchTotalBudgetAmount } from '@/app/lib/actions/budget'
 
 export const dynamic = 'force-dynamic'

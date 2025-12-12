@@ -1,5 +1,5 @@
-import Form from '@/app/ui/account/transfer-form';
-import Breadcrumbs from '@/app/ui/account/breadcrumbs';
+import Form from '@/app/components/account/transfer-form';
+import Breadcrumbs from '@/app/components/account/breadcrumbs';
 import { fetchAccounts } from '@/app/lib/data';
  
 export default async function Page() {

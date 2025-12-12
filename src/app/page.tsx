@@ -1,6 +1,6 @@
 'use client'
 
-import Header from '@/app/ui/header'
+import Header from '@/app/components/header'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import Image from 'next/image'

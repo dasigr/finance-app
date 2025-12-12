@@ -1,5 +1,5 @@
-import Form from '@/app/ui/account/edit-form';
-import Breadcrumbs from '@/app/ui/account/breadcrumbs';
+import Form from '@/app/components/account/edit-form';
+import Breadcrumbs from '@/app/components/account/breadcrumbs';
 import { fetchAccountById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 

@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
-import Pagination from '@/app/ui/income/pagination';
-import Table from '@/app/ui/income/table';
-import { CreateIncome } from '@/app/ui/income/buttons';
-import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import Pagination from '@/app/components/income/pagination';
+import Table from '@/app/components/income/table';
+import { CreateIncome } from '@/app/components/income/buttons';
+import { lusitana } from '@/app/fonts';
+import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
 import { fetchIncomesPages } from '@/app/lib/data';
 import { fetchTotalIncomeAmount } from '@/app/lib/actions/income';
