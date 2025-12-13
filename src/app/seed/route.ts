@@ -378,11 +378,12 @@ export async function GET() {
     // await seedExpenseCategories();
     // await seedBudget();
 
-    await seedAccounts();
-    // await seedExpenses();
-    // await seedIncomeCategories();
+    // await seedAccounts();
+    await seedExpenses();
+
+    await seedIncomeCategories();
+    await seedIncomes();
     
-    // await seedIncomes();
     // await seedLedgers();
     // await seedTransactions();
     await client.sql`COMMIT`;
