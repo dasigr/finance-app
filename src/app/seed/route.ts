@@ -382,9 +382,9 @@ export async function GET() {
     // await seedExpenses();
 
     // await seedIncomeCategories();
-    await seedIncomes();
+    // await seedIncomes();
     
-    // await seedLedgers();
+    await seedLedgers();
     // await seedTransactions();
     await client.sql`COMMIT`;
 
