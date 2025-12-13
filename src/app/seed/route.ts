@@ -373,15 +373,15 @@ export async function GET() {
     await seedUsers();
     await seedCustomers();
     await seedInvoices();
-    await seedRevenue();
-    await seedExpenseCategories();
-    await seedBudget();
-    await seedAccounts();
-    await seedExpenses();
-    await seedIncomeCategories();
-    await seedIncomes();
-    await seedLedgers();
-    await seedTransactions();
+    // await seedRevenue();
+    // await seedExpenseCategories();
+    // await seedBudget();
+    // await seedAccounts();
+    // await seedExpenses();
+    // await seedIncomeCategories();
+    // await seedIncomes();
+    // await seedLedgers();
+    // await seedTransactions();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
