@@ -249,7 +249,7 @@ async function seedTransactions() {
       description VARCHAR(255),
       from_account_id UUID,
       to_account_id UUID,
-      date DATE NOT NULL,
+      date DATE NOT NULL DEFAULT CURRENT_DATE,
       created_at TIMESTAMP DEFAULT NOW()
     );
   `;
