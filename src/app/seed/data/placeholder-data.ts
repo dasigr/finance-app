@@ -1,19 +1,9 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
 // https://nextjs.org/learn/dashboard-app/fetching-data
-import { ledgers } from "./ledger";
-
+import { users } from "./users";
 
 const date = new Date();
 const set_date = date.toISOString().split('T')[0];
-
-const users = [
-  {
-    id: '410544b2-4001-4271-9855-fec4b6a6442a',
-    name: 'Test Engineer',
-    email: 'test-engineer@a5project.com',
-    password: 'T064vYL3LkZ9sGvB',
-  },
-];
 
 const customers = [
   {
@@ -1072,6 +1062,5 @@ export {
   expenses,
   incomeCategories,
   income_ledger,
-  incomes,
-  ledgers
+  incomes
 };

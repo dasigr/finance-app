@@ -12,8 +12,7 @@ import {
   expenses,
   incomeCategories,
   income_ledger,
-  incomes,
-  ledgers
+  incomes
 } from './data/placeholder-data';
 
 const client = await db.connect();
@@ -337,33 +336,6 @@ async function seedIncomes() {
   return insertedIncomes;
 }
 
-async function seedLedgers() {
-  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-  await client.sql`
-    CREATE TABLE IF NOT EXISTS ledger (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      date DATE NOT NULL,
-      transaction VARCHAR(255),
-      account_id UUID NOT NULL,
-      amount INT NOT NULL,
-      notes VARCHAR(255)
-    );
-  `;
-
-  const insertedLedgers = await Promise.all(
-    ledgers.map(
-      (ledger) => client.sql`
-        INSERT INTO income (date, transaction, account_id, amount, notes)
-        VALUES (${ledger.date}, ${ledger.transaction}, ${ledger.account_id}, ${ledger.amount}, ${ledger.notes})
-        ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
-  );
-
-  return insertedLedgers;
-}
-
 export async function GET() {
   // return Response.json({
   //   message:
@@ -387,7 +359,6 @@ export async function GET() {
     // await seedExpenses();
     // await seedIncomes();
     
-    // await seedLedgers();
     await seedTransactions();
     await client.sql`COMMIT`;
 
