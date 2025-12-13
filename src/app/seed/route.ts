@@ -384,8 +384,8 @@ export async function GET() {
     // await seedIncomeCategories();
     // await seedIncomes();
     
-    await seedLedgers();
-    // await seedTransactions();
+    // await seedLedgers();
+    await seedTransactions();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
