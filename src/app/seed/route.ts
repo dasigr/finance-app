@@ -379,8 +379,8 @@ export async function GET() {
     // await seedBudget();
 
     await seedAccounts();
-    await seedExpenses();
-    await seedIncomeCategories();
+    // await seedExpenses();
+    // await seedIncomeCategories();
     
     // await seedIncomes();
     // await seedLedgers();
