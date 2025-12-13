@@ -378,11 +378,11 @@ export async function GET() {
     // await seedInvoices();
     // await seedRevenue();
     
-    await seedCategories();
+    // await seedCategories();
     // await seedExpenseCategories();
     // await seedIncomeCategories();
 
-    // await seedAccounts();
+    await seedAccounts();
     // await seedBudget();
     // await seedExpenses();
     // await seedIncomes();
