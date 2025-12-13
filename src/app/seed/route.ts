@@ -139,8 +139,8 @@ async function seedCategories() {
   const insertedCategories = await Promise.all(
     categories.map(
       (category) => client.sql`
-        INSERT INTO category (id, name, type, image_url)
-        VALUES (${category.id}, ${category.name}, ${category.type}, ${category.image_url})
+        INSERT INTO category (id, user_id, name, type, image_url)
+        VALUES (${category.id}, ${category.user_id}, ${category.name}, ${category.type}, ${category.image_url})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
