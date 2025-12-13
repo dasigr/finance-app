@@ -382,13 +382,13 @@ export async function GET() {
     // await seedExpenseCategories();
     // await seedIncomeCategories();
 
-    // await seedAccounts();
+    await seedAccounts();
     // await seedBudget();
     // await seedExpenses();
     // await seedIncomes();
     
     // await seedLedgers();
-    // await seedTransactions();
+    await seedTransactions();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
