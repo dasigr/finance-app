@@ -1,6 +1,6 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
 // https://nextjs.org/learn/dashboard-app/fetching-data
-import { ledgers } from "../seed/data/ledger";
+import { ledgers } from "./ledger";
 
 const users = [
   {
@@ -439,129 +439,120 @@ const budgets = [
 const accounts = [
   {
     id: 'af9fdbca-312e-496e-a922-7958f918d13d',
+    user_id: users[0].id,
     name: 'Wallet',
     balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 1
   },
   {
     id: '2e7924b0-535f-4af2-812f-a2ba6fbf6ad2',
+    user_id: users[0].id,
     name: 'GCash',
     balance: 0,
+    currency: 'PHP',
     weight: 1,
     status: 1
   },
   {
     id: '0ae2153f-c11d-42b0-aff6-d5e5f39cce97',
+    user_id: users[0].id,
     name: 'UB',
     balance: 0,
+    currency: 'PHP',
     weight: 2,
     status: 1
   },
   {
     id: '7e5f95c2-9298-4361-b4d0-a4be007f6911',
+    user_id: users[0].id,
     name: 'BPI',
     balance: 0,
+    currency: 'PHP',
     weight: 3,
     status: 1
   },
   {
     id: '5f0c5a94-5ff8-4380-b030-128e0f59aab2',
+    user_id: users[0].id,
     name: 'MCC',
     balance: 0,
+    currency: 'PHP',
     weight: 4,
     status: 1
   },
   {
     id: '4b9aaade-ad4b-48b6-b690-c0558c885d71',
+    user_id: users[0].id,
     name: 'BCC',
     balance: 0,
+    currency: 'PHP',
     weight: 5,
     status: 1
   },
   {
-    id: 'd5900b6c-58db-4788-a754-a55c5ea54990',
-    name: 'Maya',
-    balance: 0,
-    weight: 0,
-    status: 0
-  },
-  {
     id: '3dc459ee-7569-43cb-94ba-24e3e27d892f',
+    user_id: users[0].id,
     name: 'Wise',
     balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 0
   },
   {
     id: '83ce7484-577f-4492-9bba-e6dbe4f76b77',
+    user_id: users[0].id,
     name: 'Emergency Fund',
     balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 0
   },
   {
     id: 'ecae60b7-a21b-43b9-85b9-1b41d3b13517',
+    user_id: users[0].id,
     name: 'DJ Internet Cafe',
     balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 0
   },
   {
     id: 'b7ce4e1a-68ab-40ad-8138-4ad63dea8b01',
+    user_id: users[0].id,
     name: 'Trading 212',
     balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 0
   },
   {
     id: 'bd110ad3-f723-4fc5-8b56-c4f5ac3b6728',
+    user_id: users[0].id,
     name: 'IBKR',
     balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 0
   },
   {
     id: '018dd564-dd44-4b52-967a-97620c6b057c',
+    user_id: users[0].id,
     name: 'Gotrade',
     balance: 0,
-    weight: 0,
-    status: 0
-  },
-  {
-    id: 'bfb223c7-094e-4316-9c9b-b73cc84b0e1e',
-    name: 'IG',
-    balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 0
   },
   {
     id: 'e8a381d0-8540-494b-b797-893353f6c877',
+    user_id: users[0].id,
     name: 'PDAX',
     balance: 0,
+    currency: 'PHP',
     weight: 0,
     status: 0 
-  },
-  {
-    id: '65f4a83a-7609-489b-8d4f-41d417349519',
-    name: 'eToro',
-    balance: 0,
-    weight: 0,
-    status: 0
-  },
-  {
-    id: 'cba302e0-cf70-4506-92fe-2a060f16485a',
-    name: 'Skrill',
-    balance: 0,
-    weight: 0,
-    status: 0
-  },
-  {
-    id: '0e9b5f63-bfe5-4e33-8181-e79086cfba48',
-    name: 'GCrypto',
-    balance: 0,
-    weight: 0,
-    status: 0
   }
 ];
 

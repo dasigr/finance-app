@@ -14,7 +14,7 @@ import {
   income_ledger,
   incomes,
   ledgers
-} from '../lib/placeholder-data';
+} from './data/placeholder-data';
 
 const client = await db.connect();
 
@@ -222,8 +222,8 @@ async function seedAccounts() {
   const insertedAccounts = await Promise.all(
     accounts.map(
       (account) => client.sql`
-        INSERT INTO account (id, name, balance, weight, status)
-        VALUES (${account.id}, ${account.name}, ${account.balance}, ${account.weight}, ${account.status})
+        INSERT INTO account (id, user_id, name, balance, currency, weight, status)
+        VALUES (${account.id}, ${account.user_id}, ${account.name}, ${account.balance}, ${account.currency}, ${account.weight}, ${account.status})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -376,12 +376,12 @@ export async function GET() {
     // await seedRevenue();
     // await seedExpenseCategories();
     // await seedBudget();
-    // await seedAccounts();
+    await seedAccounts();
     // await seedExpenses();
     // await seedIncomeCategories();
     // await seedIncomes();
     // await seedLedgers();
-    await seedTransactions();
+    // await seedTransactions();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
