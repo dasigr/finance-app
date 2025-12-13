@@ -139,8 +139,8 @@ async function seedCategories() {
   const insertedCategories = await Promise.all(
     categories.map(
       (category) => client.sql`
-        INSERT INTO category (id, name, image_url)
-        VALUES (${category.id},${category.name}, ${category.image_url})
+        INSERT INTO category (id, name, type, image_url)
+        VALUES (${category.id}, ${category.name}, ${category.type}, ${category.image_url})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -201,6 +201,7 @@ async function seedBudget() {
  * Seed accounts.
  * 
  * name (e.g. Bank Savings, Cash Wallet)
+ * type (e.g. 'bank', 'cash', 'credit card')
  * 
  * @returns 
  */
@@ -212,6 +213,7 @@ async function seedAccounts() {
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       user_id UUID NOT NULL,
       name VARCHAR(255) NOT NULL,
+      type VARCHAR(50),
       balance INT NOT NULL,
       currency VARCHAR(3) DEFAULT 'PHP',
       weight INT DEFAULT 0,
@@ -371,17 +373,18 @@ export async function GET() {
   try {
     await client.sql`BEGIN`;
     // await seedUsers();
+
     // await seedCustomers();
     // await seedInvoices();
-    
     // await seedRevenue();
+    
+    await seedCategories();
     // await seedExpenseCategories();
-    // await seedBudget();
-
-    // await seedAccounts();
-    // await seedExpenses();
-
     // await seedIncomeCategories();
+
+    await seedAccounts();
+    // await seedBudget();
+    // await seedExpenses();
     // await seedIncomes();
     
     // await seedLedgers();
