@@ -2,6 +2,10 @@
 // https://nextjs.org/learn/dashboard-app/fetching-data
 import { ledgers } from "./ledger";
 
+
+const date = new Date();
+const set_date = date.toISOString().split('T')[0];
+
 const users = [
   {
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
@@ -55,79 +59,79 @@ const invoices = [
     customer_id: customers[0].id,
     amount: 15795,
     status: 'pending',
-    date: '2022-12-06',
+    date: set_date,
   },
   {
     customer_id: customers[1].id,
     amount: 20348,
     status: 'pending',
-    date: '2022-11-14',
+    date: set_date,
   },
   {
     customer_id: customers[4].id,
     amount: 3040,
     status: 'paid',
-    date: '2022-10-29',
+    date: set_date,
   },
   {
     customer_id: customers[3].id,
     amount: 44800,
     status: 'paid',
-    date: '2023-09-10',
+    date: set_date,
   },
   {
     customer_id: customers[5].id,
     amount: 34577,
     status: 'pending',
-    date: '2023-08-05',
+    date: set_date,
   },
   {
     customer_id: customers[2].id,
     amount: 54246,
     status: 'pending',
-    date: '2023-07-16',
+    date: set_date,
   },
   {
     customer_id: customers[0].id,
     amount: 666,
     status: 'pending',
-    date: '2023-06-27',
+    date: set_date,
   },
   {
     customer_id: customers[3].id,
     amount: 32545,
     status: 'paid',
-    date: '2023-06-09',
+    date: set_date,
   },
   {
     customer_id: customers[4].id,
     amount: 1250,
     status: 'paid',
-    date: '2023-06-17',
+    date: set_date,
   },
   {
     customer_id: customers[5].id,
     amount: 8546,
     status: 'paid',
-    date: '2023-06-07',
+    date: set_date,
   },
   {
     customer_id: customers[1].id,
     amount: 500,
     status: 'paid',
-    date: '2023-08-19',
+    date: set_date,
   },
   {
     customer_id: customers[5].id,
     amount: 8945,
     status: 'paid',
-    date: '2023-06-03',
+    date: set_date,
   },
   {
     customer_id: customers[2].id,
     amount: 1000,
     status: 'paid',
-    date: '2022-06-05',
+    date: set_date,
   },
 ];
 
@@ -560,7 +564,7 @@ const expenses = [
   {
     category_id: expenseCategories[0].id,
     account_id: accounts[0].id,
-    date: '2024-12-01',
+    date: set_date,
     amount: 200000,
     notes: 'Item A',
     status: 1
@@ -568,7 +572,7 @@ const expenses = [
   {
     category_id: expenseCategories[1].id,
     account_id: accounts[1].id,
-    date: '2024-12-02',
+    date: set_date,
     amount: 200000,
     notes: 'Item B',
     status: 1
@@ -576,7 +580,7 @@ const expenses = [
   {
     category_id: expenseCategories[2].id,
     account_id: accounts[2].id,
-    date: '2024-12-03',
+    date: set_date,
     amount: 200000,
     notes: 'Item C',
     status: 1
@@ -584,7 +588,7 @@ const expenses = [
   {
     category_id: expenseCategories[3].id,
     account_id: accounts[3].id,
-    date: '2024-12-04',
+    date: set_date,
     amount: 200000,
     notes: 'Item D',
     status: 1
@@ -592,7 +596,7 @@ const expenses = [
   {
     category_id: expenseCategories[4].id,
     account_id: accounts[4].id,
-    date: '2024-12-05',
+    date: set_date,
     amount: 200000,
     notes: 'Item E',
     status: 1
@@ -600,7 +604,7 @@ const expenses = [
   {
     category_id: expenseCategories[0].id,
     account_id: accounts[0].id,
-    date: '2024-12-06',
+    date: set_date,
     amount: 200000,
     notes: 'Item F',
     status: 1
@@ -608,7 +612,7 @@ const expenses = [
   {
     category_id: expenseCategories[5].id,
     account_id: accounts[5].id,
-    date: '2024-12-07',
+    date: set_date,
     amount: 200000,
     notes: 'Item G',
     status: 1
@@ -616,7 +620,7 @@ const expenses = [
   {
     category_id: expenseCategories[6].id,
     account_id: accounts[6].id,
-    date: '2024-12-01',
+    date: set_date,
     amount: 200000,
     notes: 'Item H',
     status: 1
@@ -624,7 +628,7 @@ const expenses = [
   {
     category_id: expenseCategories[7].id,
     account_id: accounts[7].id,
-    date: '2024-12-02',
+    date: set_date,
     amount: 200000,
     notes: 'Item I',
     status: 1
@@ -632,7 +636,7 @@ const expenses = [
   {
     category_id: expenseCategories[8].id,
     account_id: accounts[8].id,
-    date: '2024-12-03',
+    date: set_date,
     amount: 200000,
     notes: 'Item J',
     status: 1
@@ -640,7 +644,7 @@ const expenses = [
   {
     category_id: expenseCategories[9].id,
     account_id: accounts[9].id,
-    date: '2024-12-04',
+    date: set_date,
     amount: 200000,
     notes: 'Item K',
     status: 1
@@ -648,7 +652,7 @@ const expenses = [
   {
     category_id: expenseCategories[10].id,
     account_id: accounts[10].id,
-    date: '2024-12-01',
+    date: set_date,
     amount: 200000,
     notes: 'Item L',
     status: 1
@@ -656,7 +660,7 @@ const expenses = [
   {
     category_id: expenseCategories[0].id,
     account_id: accounts[0].id,
-    date: '2024-12-02',
+    date: set_date,
     amount: 200000,
     notes: 'Item M',
     status: 1
@@ -664,7 +668,7 @@ const expenses = [
   {
     category_id: expenseCategories[1].id,
     account_id: accounts[1].id,
-    date: '2024-12-03',
+    date: set_date,
     amount: 200000,
     notes: 'Item N',
     status: 1
@@ -672,7 +676,7 @@ const expenses = [
   {
     category_id: expenseCategories[2].id,
     account_id: accounts[2].id,
-    date: '2024-12-06',
+    date: set_date,
     amount: 200000,
     notes: 'Item 0',
     status: 1
@@ -721,7 +725,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-01-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -729,7 +733,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-01-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -737,7 +741,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-02-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -745,7 +749,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-02-28',
+    date: set_date,
     amount: 7000000,
     notes: '28th Salary',
     status: 1
@@ -753,7 +757,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-03-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -761,7 +765,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-03-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -769,7 +773,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-04-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -777,7 +781,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-04-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -785,7 +789,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-05-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -793,7 +797,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-05-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -801,7 +805,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-06-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -809,7 +813,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-06-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -817,7 +821,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-07-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -825,7 +829,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-07-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -833,7 +837,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-08-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -841,7 +845,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-08-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -849,7 +853,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-09-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -857,7 +861,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-09-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -865,7 +869,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-10-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -873,7 +877,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-10-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -881,7 +885,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-11-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -889,7 +893,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-11-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -897,7 +901,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-12-15',
+    date: set_date,
     amount: 8000000,
     notes: '15th Salary',
     status: 1
@@ -905,7 +909,7 @@ const incomes = [
   {
     category_id: incomeCategories[0].id,
     account_id: accounts[2].id,
-    date: '2024-12-30',
+    date: set_date,
     amount: 7000000,
     notes: '30th Salary',
     status: 1
@@ -914,7 +918,7 @@ const incomes = [
 
 const transfer_ledger = [
   {
-    date: '2024-01-09',
+    date: set_date,
     from_account_id: accounts[2].id,
     to_account_id: accounts[1].id,
     amount: 1000000,
@@ -922,7 +926,7 @@ const transfer_ledger = [
     status: 1
   },
   {
-    date: '2024-01-10',
+    date: set_date,
     from_account_id: accounts[1].id,
     to_account_id: accounts[0].id,
     amount: 1000000,
@@ -933,7 +937,7 @@ const transfer_ledger = [
 
 const income_ledger = [
   {
-    date: '2025-01-11',
+    date: set_date,
     account_id: accounts[1].id,
     category_id: incomeCategories[0].id,
     amount: 500000,
@@ -944,7 +948,7 @@ const income_ledger = [
 
 const expense_ledger = [
   {
-    date: '2025-01-12',
+    date: set_date,
     account_id: accounts[1].id,
     category_id: expenseCategories[0].id,
     amount: 10000,
