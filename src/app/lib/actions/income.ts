@@ -184,7 +184,7 @@ export async function deleteIncome(id: string) {
   const amount = (await income).amount;
 
   try {
-    await sql`DELETE FROM income WHERE id = ${id}`;
+    await sql`DELETE FROM transaction WHERE id = ${id} AND type = 'income'`;
 
     // Update account balance.
     updateBalance(accountId, 'subtract', amount);
