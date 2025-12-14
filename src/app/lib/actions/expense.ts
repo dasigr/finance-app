@@ -8,7 +8,7 @@ import { formatDateToLocal, formatCurrency } from '../utils';
 import { fetchExpenseById } from '../data';
 import { updateBalance } from './account';
 import { ExpenseForm } from '../definitions';
-import { createTransaction } from '@/app/lib/transaction';
+import { createTransaction, updateTransaction } from '@/app/lib/transaction';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -86,6 +86,7 @@ export async function createExpense(prevState: State, formData: FormData) {
       categoryId_n,
       fromAccountId,
       toAccountId,
+      date
     });
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -106,19 +107,18 @@ export async function createExpense(prevState: State, formData: FormData) {
 
 export async function updateExpense(id: string, formData: FormData) {
   // Get previous expense data.
-  const data = await sql<ExpenseForm>`
+  const data = await sql`
     SELECT
-      expense.id,
-      expense.date,
-      expense.amount,
-      expense.notes,
-      expense.status,
-      expense_category.id AS "category_id",
+      transaction.id,
+      transaction.date,
+      transaction.amount,
+      transaction.description,
+      category.id AS "category_id",
       account.id AS "account_id"
-    FROM expense
-    JOIN expense_category ON expense.category_id = expense_category.id
-    JOIN account ON expense.account_id = account.id
-    WHERE expense.id = ${id};
+    FROM transaction
+    JOIN category ON transaction.category_id = category.id
+    JOIN account ON transaction.from_account_id = account.id
+    WHERE transaction.id = ${id};
   `;
 
   const expense = data.rows.map((expense) => ({
@@ -128,8 +128,6 @@ export async function updateExpense(id: string, formData: FormData) {
   }));
   
   const prevAmount = expense[0].amount;
-
-  //
 
   const { date, categoryId, accountId, amount, notes, status } = UpdateExpense.parse({
     date: formData.get('date'),
@@ -146,14 +144,26 @@ export async function updateExpense(id: string, formData: FormData) {
   // Convert amount in cents before saving to the database.
   const amountInCents = amount * 100;
 
-  const formattedDate = formatDateToLocal(date);
+  const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
+  const type = 'expense';
+  const amount_n = amountInCents;
+  const categoryId_n = categoryId;
+  const fromAccountId = accountId;
+  const toAccountId = undefined;
+  const description = notes;
 
   try {
-    await sql`
-      UPDATE expense
-      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
-      WHERE id = ${id}
-    `;
+    await updateTransaction({
+      id,
+      userId,
+      type,
+      amount_n,
+      description,
+      categoryId_n,
+      fromAccountId,
+      toAccountId,
+      date
+    });
 
     // Update account balance.
     updateBalance(accountId, 'add', amountChanged);
