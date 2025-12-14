@@ -8,7 +8,7 @@ import { formatDateToLocal, formatCurrency } from '../utils';
 import { updateBalance } from './account';
 import { fetchIncomeById } from '../data';
 import { IncomeForm } from '../definitions';
-import { createTransaction } from '@/app/lib/transaction';
+import { createTransaction, updateTransaction } from '@/app/lib/transaction';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -84,6 +84,7 @@ export async function createIncome(prevState: State, formData: FormData) {
       categoryId_n,
       fromAccountId,
       toAccountId,
+      date
     });
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -126,8 +127,6 @@ export async function updateIncome(id: string, formData: FormData) {
   
   const prevAmount = income[0].amount;
 
-  //
-
   const { date, categoryId, accountId, amount, notes, status } = UpdateIncome.parse({
     date: formData.get('date'),
     categoryId: formData.get('categoryId'),
@@ -145,6 +144,14 @@ export async function updateIncome(id: string, formData: FormData) {
 
   const formattedDate = formatDateToLocal(date);
 
+  const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
+  const type = 'income';
+  const amount_n = amountInCents;
+  const categoryId_n = categoryId;
+  const fromAccountId = undefined;
+  const toAccountId = accountId;
+  const description = notes;
+
   try {
     await sql`
       UPDATE income
@@ -154,6 +161,17 @@ export async function updateIncome(id: string, formData: FormData) {
 
     // Update account balance.
     updateBalance(accountId, 'add', amountChanged);
+    await updateTransaction({
+      id,
+      userId,
+      type,
+      amount_n,
+      description,
+      categoryId_n,
+      fromAccountId,
+      toAccountId,
+      date
+    });
   } catch (error) {
     // return { message: 'Database Error: Failed to Update Income.' };
   }
