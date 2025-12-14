@@ -5,7 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { fetchAccountById } from '../data';
-import { AccountForm } from '../definitions';
+import { createTransaction } from '@/app/lib/transaction';
 
 const FormSchema = z.object({
   fromAccountId: z.string(),
@@ -43,14 +43,15 @@ export async function transferAccountBalance(prevState: State, formData: FormDat
 
   // Prepare data for insertion ino the database.
   const { fromAccountId, toAccountId, amount } = validatedFields.data;
+  const amountInCents = amount * 100;
 
+  const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
+  const type = 'transfer';
+  const amount_n = amountInCents;
+  const categoryId_n = undefined;
   const fromAccount = fetchAccountById(fromAccountId);
-  const fromAccountAmount = (await fromAccount).balance - amount;
-  const fromAccountAmountInCents = fromAccountAmount * 100;
-
   const toAccount = fetchAccountById(toAccountId);
-  const toAccountAmount = (await toAccount).balance + amount;
-  const toAccountAmountInCents = toAccountAmount * 100;
+  const description = `Transfer from ${(await fromAccount).name} to ${(await toAccount).name}`;
 
   // Validate from balance.
   if ((await fromAccount).balance < amount) {
@@ -59,17 +60,15 @@ export async function transferAccountBalance(prevState: State, formData: FormDat
 
   // Update account balance in the database.
   try {
-    await sql`
-      UPDATE account
-      SET balance = ${fromAccountAmountInCents}
-      WHERE id = ${fromAccountId}
-    `;
-
-    await sql`
-      UPDATE account
-      SET balance = ${toAccountAmountInCents}
-      WHERE id = ${toAccountId}
-    `;
+    await createTransaction({
+      userId,
+      type,
+      amount_n,
+      description,
+      categoryId_n,
+      fromAccountId,
+      toAccountId,
+    });
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 

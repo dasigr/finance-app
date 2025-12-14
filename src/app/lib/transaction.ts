@@ -7,7 +7,7 @@ interface CreateTransactionParams {
   type: TransactionType;
   amount_n: number;
   description?: string;
-  categoryId_n: string;
+  categoryId_n?: string;
   fromAccountId?: string;
   toAccountId?: string;
 }
