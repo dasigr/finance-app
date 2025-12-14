@@ -110,32 +110,6 @@ export async function updateTransaction({
       WHERE id = ${id};
     `;
 
-    // 2️⃣ Handle account balance updates
-    if (type === "income" && toAccountId) {
-      await sql`
-        UPDATE account
-        SET balance = balance + ${amount_n}
-        WHERE id = ${toAccountId};
-      `;
-    } else if (type === "expense" && fromAccountId) {
-      await sql`
-        UPDATE account
-        SET balance = balance - ${amount_n}
-        WHERE id = ${fromAccountId};
-      `;
-    } else if (type === "transfer" && fromAccountId && toAccountId) {
-      await sql`
-        UPDATE account
-        SET balance = balance - ${amount_n}
-        WHERE id = ${fromAccountId};
-      `;
-      await sql`
-        UPDATE account
-        SET balance = balance + ${amount_n}
-        WHERE id = ${toAccountId};
-      `;
-    }
-
     // 3️⃣ Commit transaction
     await sql`COMMIT`;
 

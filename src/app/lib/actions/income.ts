@@ -103,20 +103,19 @@ export async function createIncome(prevState: State, formData: FormData) {
 }
 
 export async function updateIncome(id: string, formData: FormData) {
-  // Get previous expense data.
-  const data = await sql<IncomeForm>`
+  // Get previous income data.
+  const data = await sql`
     SELECT
-      income.id,
-      income.date,
-      income.amount,
-      income.notes,
-      income.status,
-      income_category.id AS "category_id",
+      transaction.id,
+      transaction.date,
+      transaction.amount,
+      transaction.description,
+      category.id AS "category_id",
       account.id AS "account_id"
-    FROM income
-    JOIN income_category ON income.category_id = income_category.id
-    JOIN account ON income.account_id = account.id
-    WHERE income.id = ${id};
+    FROM transaction
+    JOIN category ON transaction.category_id = category.id
+    JOIN account ON transaction.to_account_id = account.id
+    WHERE transaction.id = ${id};
   `;
 
   const income = data.rows.map((income) => ({
@@ -142,8 +141,6 @@ export async function updateIncome(id: string, formData: FormData) {
   // Convert amount in cents before saving to the database.
   const amountInCents = amount * 100;
 
-  const formattedDate = formatDateToLocal(date);
-
   const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
   const type = 'income';
   const amount_n = amountInCents;
@@ -153,14 +150,6 @@ export async function updateIncome(id: string, formData: FormData) {
   const description = notes;
 
   try {
-    await sql`
-      UPDATE income
-      SET date = ${formattedDate}, category_id = ${categoryId}, account_id = ${accountId}, amount = ${amountInCents}, notes = ${notes}, status = ${status}
-      WHERE id = ${id}
-    `;
-
-    // Update account balance.
-    updateBalance(accountId, 'add', amountChanged);
     await updateTransaction({
       id,
       userId,
@@ -172,6 +161,9 @@ export async function updateIncome(id: string, formData: FormData) {
       toAccountId,
       date
     });
+
+    // Update account balance.
+    updateBalance(accountId, 'add', amountChanged);
   } catch (error) {
     // return { message: 'Database Error: Failed to Update Income.' };
   }
