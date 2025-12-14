@@ -93,8 +93,9 @@ export async function fetchCardData() {
         WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)`;
     const expenseStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
-        FROM expense
-        WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)`;
+        FROM transaction
+        WHERE transaction.type = 'expense'
+        AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)`;
     const accountStatusPromise = sql`SELECT
         SUM(balance) AS "balance"
         FROM account
@@ -564,36 +565,74 @@ export async function fetchAccountById(id: string) {
 }
 
 /* Expenses */
-
 export async function fetchFilteredExpenses(
-  query: string,
   currentPage: number,
+  account_id?: string,
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const expenses = await sql<ExpensesTable>`
-      SELECT
-        expense.id,
-        expense.date,
-        expense.amount,
-        expense.notes,
-        expense.status,
-        expense_category.name AS "category_name",
-        expense_category.image_url AS "category_image_url",
-        account.name AS "account_name"
-      FROM expense
-      JOIN expense_category ON expense.category_id = expense_category.id
-      JOIN account ON expense.account_id = account.id
-      WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
-      ORDER BY expense.date DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    `;
+    let expenses;
+
+    if (account_id) {
+      expenses = await sql<ExpensesTable>`
+        SELECT
+          transaction.id,
+          transaction.date,
+          transaction.amount,
+          transaction.description AS "notes",
+          category.name AS "category_name",
+          category.image_url AS "category_image_url",
+          account.name AS "account_name"
+        FROM transaction
+        JOIN category ON transaction.category_id = category.id
+        JOIN account ON transaction.from_account_id = account.id
+        WHERE transaction.from_account_id = ${account_id}
+        AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        ORDER BY transaction.date DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+      `;
+    } else {
+      expenses = await sql<ExpensesTable>`
+        SELECT
+          transaction.id,
+          transaction.date,
+          transaction.amount,
+          transaction.description AS "notes",
+          category.name AS "category_name",
+          category.image_url AS "category_image_url",
+          account.name AS "account_name"
+        FROM transaction
+        JOIN category ON transaction.category_id = category.id
+        JOIN account ON transaction.from_account_id = account.id
+        WHERE DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        ORDER BY transaction.date DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+      `;
+    }
 
     return expenses.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch expenses.');
+  }
+}
+
+export async function fetchAccountExpensesPages(account_id: string, query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM transaction
+    JOIN category ON transaction.category_id = category.id
+    JOIN account ON transaction.from_account_id = account.id
+    WHERE transaction.from_account_id = ${account_id}
+    AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of expenses.');
   }
 }
 

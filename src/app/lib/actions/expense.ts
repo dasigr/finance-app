@@ -71,7 +71,7 @@ export async function createExpense(prevState: State, formData: FormData) {
   const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
   const type = 'expense';
   const amount_n = amountInCents;
-  const categoryId_n = categoryId
+  const categoryId_n = categoryId;
   const fromAccountId = accountId;
   const toAccountId = undefined;
   const description = notes;
@@ -221,14 +221,15 @@ export async function fetchTotalExpenseAmount() {
     const data = await sql`
       SELECT
         SUM(amount) AS "amount"
-      FROM expense
-      WHERE DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
+      FROM transaction
+      WHERE transaction.type = 'expense'
+      AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
     `;
 
-    const expense = data.rows.map((expense) => ({
-      ...expense,
+    const expense = data.rows.map((transaction) => ({
+      ...transaction,
       // Convert amount from cents to dollars
-      amount: expense.amount,
+      amount: transaction.amount,
     }));
 
     return expense[0].amount;

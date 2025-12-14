@@ -8,13 +8,13 @@ import { fetchFilteredExpenses } from '@/app/lib/data';
 export const dynamic = 'force-dynamic';
 
 export default async function AccountExpensesTable({
-  query,
+  account_id,
   currentPage,
 }: {
-  query: string;
+  account_id?: string,
   currentPage: number;
 }) {
-  const expenses = await fetchFilteredExpenses(query, currentPage);
+  const expenses = await fetchFilteredExpenses(currentPage, account_id);
 
   return (
     <div className="mt-6 flow-root">

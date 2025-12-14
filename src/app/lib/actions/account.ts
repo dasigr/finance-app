@@ -160,6 +160,29 @@ export async function updateBalance(id: string, operation: string, amount: numbe
   }
 }
 
+export async function fetchAccountBalance(account_id: string) {
+  try {
+    const accountStatusPromise = sql`
+      SELECT
+        SUM(balance) AS "balance"
+      FROM account
+      WHERE account.id = ${account_id}
+      AND account.status = TRUE
+    `;
+
+    const data = await Promise.all([
+      accountStatusPromise,
+    ]);
+
+    const totalAccountBalance = formatCurrency(data[0].rows[0].balance ?? '0');
+
+    return totalAccountBalance;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total account balance.');
+  }
+}
+
 export async function fetchTotalAccountBalance() {
   try {
     const accountStatusPromise = sql`

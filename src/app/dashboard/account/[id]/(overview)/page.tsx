@@ -6,10 +6,10 @@ import { UpdateAccount } from '@/app/components/account/buttons';
 import { lusitana } from '@/app/fonts';
 import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
-import { fetchExpensesPages } from '@/app/lib/data';
+import { fetchAccountExpensesPages, fetchExpensesPages } from '@/app/lib/data';
 import { fetchAccountById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
-import { fetchTotalAccountBalance } from '@/app/lib/actions/account';
+import { fetchAccountBalance } from '@/app/lib/actions/account';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,9 +40,9 @@ export default async function Page(
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
-  const totalPages = await fetchExpensesPages(query);
+  const totalPages = await fetchAccountExpensesPages(account.id, query);
 
-  const totalAccountBalance = await fetchTotalAccountBalance();
+  const accountBalance = await fetchAccountBalance(account.id);
 
   return (
     <div className="w-full pb-8 mb-8">
@@ -57,11 +57,11 @@ export default async function Page(
             },
           ]}
         />
-        <div>{totalAccountBalance}</div>
+        <div>{accountBalance}</div>
         <UpdateAccount id={account.id} />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+        <Table currentPage={currentPage} account_id={account.id} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
