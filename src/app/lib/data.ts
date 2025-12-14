@@ -84,13 +84,14 @@ export async function fetchCardData() {
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-         FROM invoices`;
+        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        FROM invoices`;
     const incomeStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
-        FROM income
-        WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)`;
+        FROM transaction
+        WHERE transaction.type = 'income'
+        AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)`;
     const expenseStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
         FROM transaction
@@ -321,7 +322,8 @@ export async function fetchIncomeCategories() {
         id,
         name,
         image_url
-      FROM income_category
+      FROM category
+      WHERE category.type = 'income'
       ORDER BY name ASC
     `;
 
@@ -402,7 +404,8 @@ export async function fetchExpenseCategories() {
         id,
         name,
         image_url
-      FROM expense_category
+      FROM category
+      WHERE category.type = 'expense'
       ORDER BY name ASC
     `;
 
@@ -657,17 +660,16 @@ export async function fetchExpenseById(id: string) {
   try {
     const data = await sql<ExpenseForm>`
       SELECT
-        expense.id,
-        expense.date,
-        expense.amount,
-        expense.notes,
-        expense.status,
-        expense_category.id AS "category_id",
+        transaction.id,
+        transaction.date,
+        transaction.amount,
+        transaction.description AS "notes",
+        category.id AS "category_id",
         account.id AS "account_id"
-      FROM expense
-      JOIN expense_category ON expense.category_id = expense_category.id
-      JOIN account ON expense.account_id = account.id
-      WHERE expense.id = ${id};
+      FROM transaction
+      JOIN category ON transaction.category_id = category.id
+      JOIN account ON transaction.from_account_id = account.id
+      WHERE transaction.id = ${id};
     `;
 
     const expense = data.rows.map((expense) => ({
@@ -694,19 +696,19 @@ export async function fetchFilteredIncomes(
   try {
     const incomes = await sql<IncomesTable>`
       SELECT
-        income.id,
-        income.date,
-        income.amount,
-        income.notes,
-        income.status,
-        income_category.name AS "category_name",
-        income_category.image_url AS "category_image_url",
+        transaction.id,
+        transaction.date,
+        transaction.amount,
+        transaction.description AS "notes",
+        category.name AS "category_name",
+        category.image_url AS "category_image_url",
         account.name AS "account_name"
-      FROM income
-      JOIN income_category ON income.category_id = income_category.id
-      JOIN account ON income.account_id = account.id
-      WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)
-      ORDER BY income.date DESC
+      FROM transaction
+      JOIN category ON transaction.category_id = category.id
+      JOIN account ON transaction.to_account_id = account.id
+      WHERE transaction.type = 'income'
+      AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+      ORDER BY transaction.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
@@ -720,10 +722,11 @@ export async function fetchFilteredIncomes(
 export async function fetchIncomesPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM income
-    JOIN income_category ON income.category_id = income_category.id
-    JOIN account ON income.account_id = account.id
-    WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)
+    FROM transaction
+    JOIN category ON transaction.category_id = category.id
+    JOIN account ON transaction.to_account_id = account.id
+    WHERE transaction.type = 'income'
+    AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
@@ -738,17 +741,16 @@ export async function fetchIncomeById(id: string) {
   try {
     const data = await sql<IncomeForm>`
       SELECT
-        income.id,
-        income.date,
-        income.amount,
-        income.notes,
-        income.status,
-        income_category.id AS "category_id",
+        transaction.id,
+        transaction.date,
+        transaction.amount,
+        transaction.description AS "notes",
+        category.id AS "category_id",
         account.id AS "account_id"
-      FROM income
-      JOIN income_category ON income.category_id = income_category.id
-      JOIN account ON income.account_id = account.id
-      WHERE income.id = ${id};
+      FROM transaction
+      JOIN category ON transaction.category_id = category.id
+      JOIN account ON transaction.to_account_id = account.id
+      WHERE transaction.id = ${id};
     `;
 
     const income = data.rows.map((income) => ({

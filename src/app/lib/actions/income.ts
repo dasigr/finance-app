@@ -8,6 +8,7 @@ import { formatDateToLocal, formatCurrency } from '../utils';
 import { updateBalance } from './account';
 import { fetchIncomeById } from '../data';
 import { IncomeForm } from '../definitions';
+import { createTransaction } from '@/app/lib/transaction';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -65,14 +66,25 @@ export async function createIncome(prevState: State, formData: FormData) {
   const { date, categoryId, accountId, amount, notes, status } = validatedFields.data;
   const amountInCents = amount * 100;
 
+  const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
+  const type = 'income';
+  const amount_n = amountInCents;
+  const categoryId_n = categoryId;
+  const fromAccountId = undefined;
+  const toAccountId = accountId;
+  const description = notes;
+
   // Insert data into the database.
   try {
-    await sql`
-      INSERT INTO income (date, category_id, account_id, amount, notes, status)
-      VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
-    `;
-
-    updateBalance(accountId, 'add', amount);
+    await createTransaction({
+      userId,
+      type,
+      amount_n,
+      description,
+      categoryId_n,
+      fromAccountId,
+      toAccountId,
+    });
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
@@ -184,8 +196,9 @@ export async function fetchTotalIncomeAmount() {
     const incomeStatusPromise = sql`
       SELECT
         SUM(amount) AS "amount"
-      FROM income
-      WHERE DATE_TRUNC('month', income.date) = DATE_TRUNC('month', CURRENT_DATE)
+      FROM transaction
+      WHERE transaction.type = 'income'
+      AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
     `;
 
     const data = await Promise.all([
