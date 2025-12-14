@@ -21,6 +21,7 @@ import {
   IncomeCategoryForm,
   IncomeCategoryTable,
   Revenue,
+  TransactionsTable,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -567,6 +568,63 @@ export async function fetchAccountById(id: string) {
   }
 }
 
+/* Transactions */
+
+export async function fetchTransactions(
+  currentPage: number,
+  account_id?: string,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    let transactions;
+
+    if (account_id) {
+      transactions = await sql<TransactionsTable>`
+        SELECT
+          transaction.id,
+          transaction.date,
+          transaction.type,
+          transaction.amount,
+          transaction.description AS "notes",
+          category.name AS "category_name",
+          category.image_url AS "category_image_url",
+          account.name AS "account_name"
+        FROM transaction
+        LEFT JOIN category ON transaction.category_id = category.id
+        LEFT JOIN account ON transaction.from_account_id = account.id
+        WHERE (transaction.from_account_id = ${account_id} OR transaction.to_account_id = ${account_id})
+        AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        ORDER BY transaction.date DESC, transaction.created_at DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+      `;
+    } else {
+      transactions = await sql<TransactionsTable>`
+        SELECT
+          transaction.id,
+          transaction.date,
+          transaction.type,
+          transaction.amount,
+          transaction.description AS "notes",
+          category.name AS "category_name",
+          category.image_url AS "category_image_url",
+          account.name AS "account_name"
+        FROM transaction
+        JOIN category ON transaction.category_id = category.id
+        JOIN account ON transaction.from_account_id = account.id
+        WHERE DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        ORDER BY transaction.date DESC, transaction.created_at DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+      `;
+    }
+
+    return transactions.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch transactions.');
+  }
+}
+
 /* Expenses */
 export async function fetchFilteredExpenses(
   currentPage: number,
@@ -591,8 +649,9 @@ export async function fetchFilteredExpenses(
         JOIN category ON transaction.category_id = category.id
         JOIN account ON transaction.from_account_id = account.id
         WHERE transaction.from_account_id = ${account_id}
+        AND transaction.type = 'expense'
         AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
-        ORDER BY transaction.date DESC
+        ORDER BY transaction.date DESC, transaction.created_at DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
     } else {
@@ -608,8 +667,9 @@ export async function fetchFilteredExpenses(
         FROM transaction
         JOIN category ON transaction.category_id = category.id
         JOIN account ON transaction.from_account_id = account.id
-        WHERE DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
-        ORDER BY transaction.date DESC
+        WHERE transaction.type = 'expense'
+        AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        ORDER BY transaction.date DESC, transaction.created_at DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
     }
@@ -618,6 +678,24 @@ export async function fetchFilteredExpenses(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch expenses.');
+  }
+}
+
+export async function fetchAccountTransactionsPages(account_id: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM transaction
+    JOIN category ON transaction.category_id = category.id
+    JOIN account ON transaction.from_account_id = account.id
+    WHERE transaction.from_account_id = ${account_id}
+    AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of expenses.');
   }
 }
 

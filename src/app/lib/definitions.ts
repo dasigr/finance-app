@@ -145,6 +145,18 @@ export type AccountsTable = {
   status: boolean;
 };
 
+export type TransactionsTable = {
+  id: string;
+  date: string;
+  type: string;
+  category_name: string;
+  category_image_url: string;
+  account_name: string;
+  notes: string;
+  amount: number;
+  status: boolean;
+};
+
 export type ExpensesTable = {
   id: string;
   date: string;

@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 import Breadcrumbs from '@/app/components/account/breadcrumbs';
-import Pagination from '@/app/components/expenses/pagination';
-import Table from '@/app/components/expenses/table';
+import Pagination from '@/app/components/account/pagination';
+import TransactionsTable from '@/app/components/transaction/table';
 import { UpdateAccount } from '@/app/components/account/buttons';
 import { lusitana } from '@/app/fonts';
 import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
-import { fetchAccountExpensesPages, fetchExpensesPages } from '@/app/lib/data';
+import { fetchAccountTransactionsPages } from '@/app/lib/data';
 import { fetchAccountById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import { fetchAccountBalance } from '@/app/lib/actions/account';
@@ -40,7 +40,7 @@ export default async function Page(
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
-  const totalPages = await fetchAccountExpensesPages(account.id, query);
+  const totalPages = await fetchAccountTransactionsPages(account.id);
 
   const accountBalance = await fetchAccountBalance(account.id);
 
@@ -61,7 +61,7 @@ export default async function Page(
         <UpdateAccount id={account.id} />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table currentPage={currentPage} account_id={account.id} />
+        <TransactionsTable currentPage={currentPage} account_id={account.id} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

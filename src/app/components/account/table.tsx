@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function AccountsTable({
   query,
-  currentPage,
+  currentPage
 }: {
   query: string;
   currentPage: number;

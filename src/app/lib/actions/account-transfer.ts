@@ -48,7 +48,7 @@ export async function transferAccountBalance(prevState: State, formData: FormDat
   const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
   const type = 'transfer';
   const amount_n = amountInCents;
-  const categoryId_n = undefined;
+  const categoryId_n = '472b3cbe-4488-42a5-a942-e033dba62fdd'; // Set a transfer icon.
   const fromAccount = fetchAccountById(fromAccountId);
   const toAccount = fetchAccountById(toAccountId);
   const description = `Transfer from ${(await fromAccount).name} to ${(await toAccount).name}`;
