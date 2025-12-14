@@ -21,7 +21,7 @@ const FormSchema = z.object({
   accountId: z.string({
     invalid_type_error: 'Please select an account.',
   }),
-  amount_n: z.coerce
+  amount: z.coerce
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
   notes: z.string(),
@@ -51,7 +51,7 @@ export async function createExpense(prevState: State, formData: FormData) {
     date: formData.get('date'),
     categoryId: formData.get('categoryId'),
     accountId: formData.get('accountId'),
-    amount_n: formData.get('amount'),
+    amount: formData.get('amount'),
     notes: formData.get('notes'),
     status: formData.get('status') ? "true" : "false",
   });
@@ -65,12 +65,12 @@ export async function createExpense(prevState: State, formData: FormData) {
   }
 
   // Prepare data for insertion ino the database.
-  const { date, categoryId, accountId, amount_n, notes, status } = validatedFields.data;
-  const amountInCents = amount_n * 100;
+  const { date, categoryId, accountId, amount, notes, status } = validatedFields.data;
+  const amountInCents = amount * 100;
 
   const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
   const type = 'expense';
-  const amount = amountInCents;
+  const amount_n = amountInCents;
   const fromAccountId = accountId;
   const toAccountId = undefined;
   const description = notes;
@@ -85,7 +85,7 @@ export async function createExpense(prevState: State, formData: FormData) {
     await createTransaction({
       userId,
       type,
-      amount,
+      amount_n,
       description,
       fromAccountId,
       toAccountId,
@@ -137,20 +137,20 @@ export async function updateExpense(id: string, formData: FormData) {
 
   //
 
-  const { date, categoryId, accountId, amount_n, notes, status } = UpdateExpense.parse({
+  const { date, categoryId, accountId, amount, notes, status } = UpdateExpense.parse({
     date: formData.get('date'),
     categoryId: formData.get('categoryId'),
     accountId: formData.get('accountId'),
-    amount_n: formData.get('amount'),
+    amount: formData.get('amount'),
     notes: formData.get('notes'),
     status: formData.get('status') ? "true" : "false",
   });
 
   // Prepare account balance.
-  const amountChanged = prevAmount - amount_n;
+  const amountChanged = prevAmount - amount;
 
   // Convert amount in cents before saving to the database.
-  const amountInCents = amount_n * 100;
+  const amountInCents = amount * 100;
 
   const formattedDate = formatDateToLocal(date);
 
