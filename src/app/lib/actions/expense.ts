@@ -183,42 +183,23 @@ export async function updateExpense(id: string, formData: FormData) {
 
 export async function deleteExpense(id: string) {
   // Get previous expense data.
-  const data = await sql`
-    SELECT
-      transaction.id,
-      transaction.date,
-      transaction.amount,
-      transaction.description,
-      category.id AS "category_id",
-      account.id AS "account_id"
-    FROM transaction
-    JOIN category ON transaction.category_id = category.id
-    JOIN account ON transaction.from_account_id = account.id
-    WHERE transaction.id = ${id};
-  `;
-
-  const expense = data.rows.map((expense) => ({
-    ...expense,
-    // Convert amount from cents to dollars
-    amount: expense.amount / 100,
-  }));
-
-  const accountId = (await expense[0]).account_id;
-  const amount = (await expense[0]).amount;
+  const expense = fetchExpenseById(id);
+  const accountId = (await expense).account_id;
+  const amount = (await expense).amount;
 
   try {
     await sql`DELETE FROM transaction WHERE id = ${id} AND type = 'expense'`;
+
+    // Update account balance.
+    updateBalance(accountId, 'add', amount);
   } catch (error) {
     // return { message: 'Database Error: Failed to Delete Expense.' };
   }
 
-  // Update account balance.
-  updateBalance(accountId, 'add', amount);
-
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
   revalidatePath('/dashboard/account');
-  // revalidatePath(`/dashboard/account/${accountId}/edit`);
+  revalidatePath(`/dashboard/account/${accountId}/edit`);
   revalidatePath('/dashboard/budget');
 
   redirect('/dashboard/expenses');
