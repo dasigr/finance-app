@@ -7,6 +7,7 @@ interface CreateTransactionParams {
   type: TransactionType;
   amount_n: number;
   description?: string;
+  categoryId_n: string;
   fromAccountId?: string;
   toAccountId?: string;
 }
@@ -16,6 +17,7 @@ export async function createTransaction({
   type,
   amount_n,
   description,
+  categoryId_n,
   fromAccountId,
   toAccountId,
 }: CreateTransactionParams) {
@@ -25,31 +27,31 @@ export async function createTransaction({
   try {
     // 1️⃣ Insert transaction record
     await sql`
-      INSERT INTO transactions (user_id, type, amount, description, from_account_id, to_account_id)
-      VALUES (${userId}, ${type}, ${amount_n}, ${description}, ${fromAccountId}, ${toAccountId});
+      INSERT INTO transaction (user_id, type, amount, description, category_id, from_account_id, to_account_id)
+      VALUES (${userId}, ${type}, ${amount_n}, ${description}, ${categoryId_n}, ${fromAccountId}, ${toAccountId});
     `;
 
     // 2️⃣ Handle account balance updates
     if (type === "income" && toAccountId) {
       await sql`
-        UPDATE accounts
+        UPDATE account
         SET balance = balance + ${amount_n}
         WHERE id = ${toAccountId};
       `;
     } else if (type === "expense" && fromAccountId) {
       await sql`
-        UPDATE accounts
+        UPDATE account
         SET balance = balance - ${amount_n}
         WHERE id = ${fromAccountId};
       `;
     } else if (type === "transfer" && fromAccountId && toAccountId) {
       await sql`
-        UPDATE accounts
+        UPDATE account
         SET balance = balance - ${amount_n}
         WHERE id = ${fromAccountId};
       `;
       await sql`
-        UPDATE accounts
+        UPDATE account
         SET balance = balance + ${amount_n}
         WHERE id = ${toAccountId};
       `;

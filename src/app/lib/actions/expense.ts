@@ -71,28 +71,22 @@ export async function createExpense(prevState: State, formData: FormData) {
   const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
   const type = 'expense';
   const amount_n = amountInCents;
+  const categoryId_n = categoryId
   const fromAccountId = accountId;
   const toAccountId = undefined;
   const description = notes;
 
   // Insert data into the database.
   try {
-    // await sql`
-    //   INSERT INTO expense (date, category_id, account_id, amount, notes, status)
-    //   VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
-    // `;
-
     await createTransaction({
       userId,
       type,
       amount_n,
       description,
+      categoryId_n,
       fromAccountId,
       toAccountId,
     });
-
-    // Update account balance.
-    // updateBalance(accountId, 'subtract', amount);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
