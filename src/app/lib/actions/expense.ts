@@ -8,6 +8,7 @@ import { formatDateToLocal, formatCurrency } from '../utils';
 import { fetchExpenseById } from '../data';
 import { updateBalance } from './account';
 import { ExpenseForm } from '../definitions';
+import { createTransaction } from '@/app/lib/transaction';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -20,7 +21,7 @@ const FormSchema = z.object({
   accountId: z.string({
     invalid_type_error: 'Please select an account.',
   }),
-  amount: z.coerce
+  amount_n: z.coerce
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
   notes: z.string(),
@@ -50,7 +51,7 @@ export async function createExpense(prevState: State, formData: FormData) {
     date: formData.get('date'),
     categoryId: formData.get('categoryId'),
     accountId: formData.get('accountId'),
-    amount: formData.get('amount'),
+    amount_n: formData.get('amount'),
     notes: formData.get('notes'),
     status: formData.get('status') ? "true" : "false",
   });
@@ -64,18 +65,34 @@ export async function createExpense(prevState: State, formData: FormData) {
   }
 
   // Prepare data for insertion ino the database.
-  const { date, categoryId, accountId, amount, notes, status } = validatedFields.data;
-  const amountInCents = amount * 100;
+  const { date, categoryId, accountId, amount_n, notes, status } = validatedFields.data;
+  const amountInCents = amount_n * 100;
+
+  const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
+  const type = 'expense';
+  const amount = amountInCents;
+  const fromAccountId = accountId;
+  const toAccountId = undefined;
+  const description = notes;
 
   // Insert data into the database.
   try {
-    await sql`
-      INSERT INTO expense (date, category_id, account_id, amount, notes, status)
-      VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
-    `;
+    // await sql`
+    //   INSERT INTO expense (date, category_id, account_id, amount, notes, status)
+    //   VALUES (${date}, ${categoryId}, ${accountId}, ${amountInCents}, ${notes}, ${status})
+    // `;
+
+    await createTransaction({
+      userId,
+      type,
+      amount,
+      description,
+      fromAccountId,
+      toAccountId,
+    });
 
     // Update account balance.
-    updateBalance(accountId, 'subtract', amount);
+    // updateBalance(accountId, 'subtract', amount);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return { 
@@ -120,20 +137,20 @@ export async function updateExpense(id: string, formData: FormData) {
 
   //
 
-  const { date, categoryId, accountId, amount, notes, status } = UpdateExpense.parse({
+  const { date, categoryId, accountId, amount_n, notes, status } = UpdateExpense.parse({
     date: formData.get('date'),
     categoryId: formData.get('categoryId'),
     accountId: formData.get('accountId'),
-    amount: formData.get('amount'),
+    amount_n: formData.get('amount'),
     notes: formData.get('notes'),
     status: formData.get('status') ? "true" : "false",
   });
 
   // Prepare account balance.
-  const amountChanged = prevAmount - amount;
+  const amountChanged = prevAmount - amount_n;
 
   // Convert amount in cents before saving to the database.
-  const amountInCents = amount * 100;
+  const amountInCents = amount_n * 100;
 
   const formattedDate = formatDateToLocal(date);
 

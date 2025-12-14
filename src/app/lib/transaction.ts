@@ -3,12 +3,12 @@ import { sql } from '@vercel/postgres';
 type TransactionType = "income" | "expense" | "transfer";
 
 interface CreateTransactionParams {
-  userId: number;
+  userId: string;
   type: TransactionType;
   amount: number;
   description?: string;
-  fromAccountId?: number;
-  toAccountId?: number;
+  fromAccountId?: string;
+  toAccountId?: string;
 }
 
 export async function createTransaction({
