@@ -251,14 +251,15 @@ export async function fetchFilteredBudget(
   try {
     const data = await sql<BudgetTable>`
       SELECT
-        budget.id,
-        budget.amount,
-        budget.category_id,
-        expense_category.name AS "category_name",
-        expense_category.image_url AS "category_image_url"
-      FROM budget
-      JOIN expense_category ON budget.category_id = expense_category.id
-      ORDER BY expense_category.name ASC
+        transaction.id,
+        transaction.amount,
+        transaction.category_id,
+        category.name AS "category_name",
+        category.image_url AS "category_image_url"
+      FROM transaction
+      JOIN category ON transaction.category_id = category.id
+      WHERE transaction.date > NOW()
+      ORDER BY transaction.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
@@ -595,6 +596,7 @@ export async function fetchTransactions(
         LEFT JOIN account ON transaction.from_account_id = account.id
         WHERE (transaction.from_account_id = ${account_id} OR transaction.to_account_id = ${account_id})
         AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        AND transaction.date <= NOW()
         ORDER BY transaction.date DESC, transaction.created_at DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
@@ -613,6 +615,7 @@ export async function fetchTransactions(
         JOIN category ON transaction.category_id = category.id
         JOIN account ON transaction.from_account_id = account.id
         WHERE DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        AND transaction.date <= NOW()
         ORDER BY transaction.date DESC, transaction.created_at DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
@@ -651,6 +654,7 @@ export async function fetchFilteredExpenses(
         WHERE transaction.from_account_id = ${account_id}
         AND transaction.type = 'expense'
         AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        AND transaction.date <= NOW()
         ORDER BY transaction.date DESC, transaction.created_at DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
@@ -669,6 +673,7 @@ export async function fetchFilteredExpenses(
         JOIN account ON transaction.from_account_id = account.id
         WHERE transaction.type = 'expense'
         AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
+        AND transaction.date <= NOW()
         ORDER BY transaction.date DESC, transaction.created_at DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
       `;
@@ -747,7 +752,8 @@ export async function fetchExpenseById(id: string) {
       FROM transaction
       JOIN category ON transaction.category_id = category.id
       JOIN account ON transaction.from_account_id = account.id
-      WHERE transaction.id = ${id};
+      WHERE transaction.id = ${id}
+      AND transaction.date <= NOW();
     `;
 
     const expense = data.rows.map((expense) => ({
