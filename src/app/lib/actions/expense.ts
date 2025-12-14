@@ -183,19 +183,18 @@ export async function updateExpense(id: string, formData: FormData) {
 
 export async function deleteExpense(id: string) {
   // Get previous expense data.
-  const data = await sql<ExpenseForm>`
+  const data = await sql`
     SELECT
-      expense.id,
-      expense.date,
-      expense.amount,
-      expense.notes,
-      expense.status,
-      expense_category.id AS "category_id",
+      transaction.id,
+      transaction.date,
+      transaction.amount,
+      transaction.description,
+      category.id AS "category_id",
       account.id AS "account_id"
-    FROM expense
-    JOIN expense_category ON expense.category_id = expense_category.id
-    JOIN account ON expense.account_id = account.id
-    WHERE expense.id = ${id};
+    FROM transaction
+    JOIN category ON transaction.category_id = category.id
+    JOIN account ON transaction.from_account_id = account.id
+    WHERE transaction.id = ${id};
   `;
 
   const expense = data.rows.map((expense) => ({
@@ -208,7 +207,7 @@ export async function deleteExpense(id: string) {
   const amount = (await expense[0]).amount;
 
   try {
-    await sql`DELETE FROM expense WHERE id = ${id}`;
+    await sql`DELETE FROM transaction WHERE id = ${id} AND type = 'expense'`;
   } catch (error) {
     // return { message: 'Database Error: Failed to Delete Expense.' };
   }
@@ -219,7 +218,7 @@ export async function deleteExpense(id: string) {
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/expenses');
   revalidatePath('/dashboard/account');
-  revalidatePath(`/dashboard/account/${accountId}/edit`);
+  // revalidatePath(`/dashboard/account/${accountId}/edit`);
   revalidatePath('/dashboard/budget');
 
   redirect('/dashboard/expenses');

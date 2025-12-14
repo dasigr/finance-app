@@ -8,6 +8,9 @@ import { fetchAccountById } from '../data';
 import { createTransaction } from '@/app/lib/transaction';
 
 const FormSchema = z.object({
+  date: z.string({
+    invalid_type_error: 'Please select a date.',
+  }),
   fromAccountId: z.string(),
   toAccountId: z.string(),
   amount: z.coerce
@@ -18,6 +21,7 @@ const TransferAccountBalance = FormSchema;
 
 export type State = {
   errors?: {
+    date?: string[];
     fromAccountId?: string[];
     toAccountId?: string[];
     amount?: string[];
@@ -28,6 +32,7 @@ export type State = {
 export async function transferAccountBalance(prevState: State, formData: FormData) {
   // Validate form using Zod.
   const validatedFields = TransferAccountBalance.safeParse({
+    date: formData.get('date'),
     fromAccountId: formData.get('fromAccountId'),
     toAccountId: formData.get('toAccountId'),
     amount: formData.get('amount'),
@@ -42,7 +47,7 @@ export async function transferAccountBalance(prevState: State, formData: FormDat
   }
 
   // Prepare data for insertion ino the database.
-  const { fromAccountId, toAccountId, amount } = validatedFields.data;
+  const { date, fromAccountId, toAccountId, amount } = validatedFields.data;
   const amountInCents = amount * 100;
 
   const userId = '410544b2-4001-4271-9855-fec4b6a6442a'; // Get userId from session.
@@ -68,6 +73,7 @@ export async function transferAccountBalance(prevState: State, formData: FormDat
       categoryId_n,
       fromAccountId,
       toAccountId,
+      date
     });
   } catch (error) {
     // If a database error occurs, return a more specific error.

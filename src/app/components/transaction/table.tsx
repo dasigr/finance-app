@@ -26,7 +26,7 @@ export default async function TransactionsTable({
                 key={expense.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <Link href={`/dashboard/expenses/${expense.id}/edit`}>
+                <Link href={`/dashboard/${expense.type}/${expense.id}/edit`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-500 pb-2">{formatDateToLocal(expense.date)}</p>
