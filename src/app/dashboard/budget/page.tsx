@@ -36,7 +36,7 @@ export default async function Page(
     <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Budget</h1>
-        <div>{formatCurrency(totalBudgetAmount)}</div>
+        <div>{formatCurrency(totalBudgetAmount)} / month</div>
         <CreateBudget />
       </div>
       <div className="mt-4">

@@ -251,15 +251,15 @@ export async function fetchFilteredBudget(
   try {
     const data = await sql<BudgetTable>`
       SELECT
-        transaction.id,
-        transaction.amount,
-        transaction.category_id,
+        budget.id,
+        budget.amount,
+        budget.category_id,
         category.name AS "category_name",
+        category.description AS "category_description",
         category.image_url AS "category_image_url"
-      FROM transaction
-      JOIN category ON transaction.category_id = category.id
-      WHERE transaction.date > NOW()
-      ORDER BY transaction.date DESC
+      FROM budget
+      JOIN category ON budget.category_id = category.id
+      ORDER BY category.weight ASC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 

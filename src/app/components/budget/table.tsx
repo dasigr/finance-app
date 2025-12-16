@@ -39,7 +39,7 @@ export default async function BudgetTable({
                         />
                         <div>
                           <p>{budget.category_name}</p>
-                          <p className="text-sm text-gray-500">Monthly</p>
+                          <p className="text-sm text-gray-500">{budget.category_description}</p>
                         </div>
                       </div>
                     </div>

@@ -131,7 +131,9 @@ async function seedCategories() {
       user_id UUID NOT NULL,
       name VARCHAR(100) NOT NULL,
       type VARCHAR(20) NOT NULL,
-      image_url VARCHAR(255) NOT NULL
+      description VARCHAR(255),
+      image_url VARCHAR(255) NOT NULL,
+      weight INT DEFAULT 0 NOT NULL
     );
   `;
 
@@ -351,7 +353,7 @@ export async function GET() {
     // await seedInvoices();
     // await seedRevenue();
     
-    // await seedCategories();
+    await seedCategories();
     // await seedExpenseCategories();
     // await seedIncomeCategories();
 

@@ -256,9 +256,9 @@ export async function fetchTotalExpenseAmountByCategoryId(categoryId: string) {
     const data = await sql`
       SELECT
         SUM(amount) AS "amount"
-      FROM expense
-      WHERE expense.category_id = ${categoryId}
-      AND DATE_TRUNC('month', expense.date) = DATE_TRUNC('month', CURRENT_DATE)
+      FROM transaction
+      WHERE transaction.category_id = ${categoryId}
+      AND DATE_TRUNC('month', transaction.date) = DATE_TRUNC('month', CURRENT_DATE)
     `;
 
     const expense = data.rows.map((expense) => ({
@@ -279,9 +279,9 @@ export async function fetchFutureExpenseAmountByCategoryId(categoryId: string) {
     const data = await sql`
       SELECT
         SUM(amount) AS "amount"
-      FROM expense
-      WHERE expense.category_id = ${categoryId}
-      AND DATE_TRUNC('month', expense.date) > DATE_TRUNC('month', CURRENT_DATE)
+      FROM transaction
+      WHERE transaction.category_id = ${categoryId}
+      AND DATE_TRUNC('month', transaction.date) > DATE_TRUNC('month', CURRENT_DATE)
     `;
 
     const expense = data.rows.map((expense) => ({
