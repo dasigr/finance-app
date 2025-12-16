@@ -44,7 +44,7 @@ export default async function TransactionsTable({
                         </div>
                       </div>
                     </div>
-                    <p className="text-xl font-medium">
+                    <p className={`text-xl font-medium text-red-500 ${expense.type == 'income' ? 'text-green-500' : ''} ${expense.to_account_id == account_id ? 'text-green-500' : ''}`}>
                       {formatCurrency(expense.amount)}
                     </p>
                   </div>

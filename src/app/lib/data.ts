@@ -586,6 +586,8 @@ export async function fetchTransactions(
           transaction.id,
           transaction.date,
           transaction.type,
+          transaction.from_account_id,
+          transaction.to_account_id,
           transaction.amount,
           transaction.description AS "notes",
           category.name AS "category_name",

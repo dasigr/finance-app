@@ -32,7 +32,7 @@ export default async function AccountsTable({
                         <p>{account.name}</p>
                       </div>
                     </div>
-                    <p className="text-xl font-medium">
+                    <p className={`text-xl font-medium ${account.balance < 0 ? 'text-red-500' : 'text-green-500'}`}>
                       {formatCurrency(account.balance)}
                     </p>
                   </div>

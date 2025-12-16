@@ -156,6 +156,8 @@ export type TransactionsTable = {
   notes: string;
   amount: number;
   status: boolean;
+  from_account_id: string;
+  to_account_id: string;
 };
 
 export type ExpensesTable = {
