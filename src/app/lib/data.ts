@@ -25,7 +25,7 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 50;
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -518,7 +518,7 @@ export async function fetchFilteredAccounts(
         account.weight,
         account.status
       FROM account
-      ORDER BY account.status DESC, account.weight ASC, account.name ASC
+      ORDER BY account.status DESC, account.weight ASC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 

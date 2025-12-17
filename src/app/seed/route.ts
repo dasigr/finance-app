@@ -199,43 +199,6 @@ async function seedBudget() {
 }
 
 /**
- * Seed accounts.
- * 
- * name (e.g. Bank Savings, Cash Wallet)
- * type (e.g. 'bank', 'cash', 'credit card')
- * 
- * @returns 
- */
-async function seedAccounts() {
-  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-  await client.sql`
-    CREATE TABLE IF NOT EXISTS account (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      user_id UUID NOT NULL,
-      name VARCHAR(255) NOT NULL,
-      type VARCHAR(50),
-      balance INT NOT NULL,
-      currency VARCHAR(3) DEFAULT 'PHP',
-      weight INT DEFAULT 0,
-      status BOOLEAN DEFAULT TRUE
-    );
-  `;
-
-  const insertedAccounts = await Promise.all(
-    accounts.map(
-      (account) => client.sql`
-        INSERT INTO account (id, user_id, name, type, balance, currency, weight, status)
-        VALUES (${account.id}, ${account.user_id}, ${account.name}, ${account.type}, ${account.balance}, ${account.currency}, ${account.weight}, ${account.status})
-        ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
-  );
-
-  return insertedAccounts;
-}
-
-/**
  * Seed transactions.
  * 
  * type (income, expense, transfer)
@@ -353,11 +316,10 @@ export async function GET() {
     // await seedInvoices();
     // await seedRevenue();
     
-    await seedCategories();
+    // await seedCategories();
     // await seedExpenseCategories();
     // await seedIncomeCategories();
 
-    // await seedAccounts();
     // await seedBudget();
     // await seedExpenses();
     // await seedIncomes();

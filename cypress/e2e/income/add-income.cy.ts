@@ -25,12 +25,15 @@ describe('Income', () => {
     cy.get('main').within(() => {
       cy.get('form#create-income-form').within(() => {
         // Fill in the create income form.
-        cy.get('input#amount').type('10000')
-        cy.get('select#category').select('Salary')
-        cy.get('input#date').type('2025-12-10')
-        cy.get('select#account').select('UB')
-        cy.get('textarea#notes').type('10th month salary')
-        cy.get('button#status').click()
+        cy.fixture('income').then((income) => {
+          cy.get('input#amount').type(income.amount)
+          cy.get('select#category').select(income.category)
+          cy.get('input#date').type(income.date)
+          cy.get('select#account').select(income.account)
+          cy.get('textarea#notes').type(income.notes)
+          cy.get('button#status').click()
+        })
+
         cy.get('button').contains('Save').click()
       })
     })

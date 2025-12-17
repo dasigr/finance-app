@@ -54,11 +54,15 @@ export async function createAccount(prevState: State, formData: FormData) {
   const { name, balance, weight, status } = validatedFields.data;
   const amountInCents = balance * 100;
 
+  const user_id = "410544b2-4001-4271-9855-fec4b6a6442a"
+  const type = "bank"
+  const currency = "PHP"
+
   // Insert data into the database.
   try {
     await sql`
-      INSERT INTO account (name, balance, weight, status)
-      VALUES (${name}, ${amountInCents}, ${weight}, ${status})
+      INSERT INTO account (user_id, name, type, balance, currency, weight, status)
+      VALUES (${user_id}, ${name}, ${type}, ${amountInCents}, ${currency}, ${weight}, ${status})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
