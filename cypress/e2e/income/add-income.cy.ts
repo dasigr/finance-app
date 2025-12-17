@@ -4,7 +4,8 @@ describe('Income', () => {
 
     cy.visit('/')
 
-    cy.login('test-engineer@a5project.com', 'T064vYL3LkZ9sGvB')
+    const user = Cypress.env('user')
+    cy.login(user.email, user.password)
   })
 
   it('should be able to add an income', () => {
@@ -24,9 +25,9 @@ describe('Income', () => {
     cy.get('main').within(() => {
       cy.get('form#create-income-form').within(() => {
         // Fill in the create income form.
-        cy.get('input#amount').type('100')
+        cy.get('input#amount').type('10000')
         cy.get('select#category').select('Salary')
-        cy.get('input#date').type('2025-01-10')
+        cy.get('input#date').type('2025-12-10')
         cy.get('select#account').select('UB')
         cy.get('textarea#notes').type('10th month salary')
         cy.get('button#status').click()

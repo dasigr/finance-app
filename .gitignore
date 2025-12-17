@@ -29,6 +29,7 @@ yarn-error.log*
 .env
 .env*.local
 example.*.env
+cypress.env.json
 
 # vercel
 .vercel

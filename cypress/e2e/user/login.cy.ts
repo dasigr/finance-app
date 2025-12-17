@@ -4,7 +4,8 @@ describe('User Login', () => {
 
     cy.visit('/')
 
-    cy.login('test-engineer@a5project.com', 'T064vYL3LkZ9sGvB')
+    const user = Cypress.env('user')
+    cy.login(user.email, user.password)
   })
 
   it('should be redirected to the dashboard page', () => {
