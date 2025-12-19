@@ -22,6 +22,8 @@ import {
   IncomeCategoryTable,
   Revenue,
   TransactionsTable,
+  DebtTable,
+  PortfolioTable,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -642,6 +644,52 @@ export async function fetchTransactions(
   }
 }
 
+/* Debt */
+export async function fetchFilteredDebt(
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    let debts = await sql<DebtTable>`
+      SELECT
+        debt.id,
+        debt.name,
+        debt.amount
+      FROM debt
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return debts.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch debts.');
+  }
+}
+
+/* Portfolio */
+export async function fetchFilteredPortfolio(
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    let debts = await sql<PortfolioTable>`
+      SELECT
+        portfolio.id,
+        portfolio.name,
+        portfolio.amount
+      FROM portfolio
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return debts.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch portfolios.');
+  }
+}
+
 /* Expenses */
 export async function fetchFilteredExpenses(
   currentPage: number,
@@ -733,6 +781,34 @@ export async function fetchAccountExpensesPages(account_id: string, query: strin
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of expenses.');
+  }
+}
+
+export async function fetchDebtPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM debt
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of debts.');
+  }
+}
+
+export async function fetchPortfolioPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM portfolio
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of portfolios.');
   }
 }
 

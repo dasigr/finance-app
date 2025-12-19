@@ -160,6 +160,19 @@ export type TransactionsTable = {
   to_account_id: string;
 };
 
+export type DebtTable = {
+  id: string;
+  name: string;
+  amount: number;
+};
+
+export type PortfolioTable = {
+  id: string;
+  name: string;
+  type: string;
+  amount: number;
+};
+
 export type ExpensesTable = {
   id: string;
   date: string;
