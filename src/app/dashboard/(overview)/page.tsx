@@ -23,7 +23,7 @@ export default async function Page() {
         <p className="mb-4">Budget: {formatCurrency(totalBudgetAmount)}</p>
         <BudgetStatus budgetAmount={totalBudgetAmount} />
       </div>
-      <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-2 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
         <Suspense fallback={<CardsSkeleton />}>
           <CardWrapper />
         </Suspense>
