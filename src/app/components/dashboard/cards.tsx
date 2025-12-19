@@ -63,7 +63,7 @@ export function Card({
           {Icon ? <Icon className="h-5 w-5 text-white" /> : null}
           <h3 className="ml-2 text-sm text-white font-medium">{title}</h3>
         </div>
-        <p className={`${lusitana.className} truncate rounded-xl px-2 py-2 text-center text-xl text-white`}>
+        <p className={`${lusitana.className} truncate rounded-xl px-2 py-2 text-xl text-white`}>
           {value}
         </p>
       </Link>
