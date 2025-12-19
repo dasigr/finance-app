@@ -105,6 +105,12 @@ export async function fetchCardData() {
     const budgetStatusPromise = sql`SELECT
         SUM(amount) AS "amount"
         FROM budget`;
+    const debtStatusPromise = sql`SELECT
+        SUM(amount) AS "amount"
+        FROM debt`;
+    const portfolioStatusPromise = sql`SELECT
+        SUM(amount) AS "amount"
+        FROM portfolio`;
 
     const data = await Promise.all([
       // invoiceCountPromise,
@@ -114,6 +120,8 @@ export async function fetchCardData() {
       expenseStatusPromise,
       accountStatusPromise,
       budgetStatusPromise,
+      debtStatusPromise,
+      portfolioStatusPromise,
     ]);
 
     // const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
@@ -124,6 +132,8 @@ export async function fetchCardData() {
     const totalExpensesAmount = formatCurrency(data[1].rows[0].amount ?? '0');
     const totalAccountBalance = formatCurrency(data[2].rows[0].balance ?? '0');
     const totalBudgetAmount = formatCurrency(data[3].rows[0].amount ?? '0');
+    const totalDebtAmount = formatCurrency(data[4].rows[0].amount ?? '0');
+    const totalPortfolioAmount = formatCurrency(data[5].rows[0].amount ?? '0');
 
     // console.log('Data fetch completed after 3 seconds.');
 
@@ -132,6 +142,8 @@ export async function fetchCardData() {
       totalExpensesAmount,
       totalAccountBalance,
       totalBudgetAmount,
+      totalDebtAmount,
+      totalPortfolioAmount,
     };
   } catch (error) {
     console.error('Database Error:', error);

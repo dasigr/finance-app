@@ -198,6 +198,31 @@ async function seedBudget() {
   return insertedBudget;
 }
 
+async function seedDebt() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS debt (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      amount INT NOT NULL
+    );
+  `;
+}
+
+async function seedPortfolio() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS portfolio (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      type VARCHAR(20) NOT NULL,
+      amount INT NOT NULL
+    );
+  `;
+}
+
 /**
  * Seed transactions.
  * 
@@ -320,9 +345,11 @@ export async function GET() {
     // await seedExpenseCategories();
     // await seedIncomeCategories();
 
-    // await seedBudget();
+    await seedBudget();
     // await seedExpenses();
     // await seedIncomes();
+    await seedDebt();
+    await seedPortfolio();
     
     await seedTransactions();
     await client.sql`COMMIT`;

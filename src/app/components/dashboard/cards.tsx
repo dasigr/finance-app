@@ -5,6 +5,8 @@ import {
   ClockIcon,
   UserGroupIcon,
   InboxIcon,
+  MinusCircleIcon,
+  RocketLaunchIcon,
 } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/fonts';
 
@@ -13,6 +15,8 @@ const iconMap = {
   expenses: ClockIcon,
   account: InboxIcon,
   budget: UserGroupIcon,
+  debt: MinusCircleIcon,
+  portfolio: RocketLaunchIcon,
 };
 
 export const dynamic = 'force-dynamic';
@@ -22,7 +26,9 @@ export default async function CardWrapper() {
     totalIncomeAmount,
     totalExpensesAmount,
     totalAccountBalance,
-    totalBudgetAmount
+    totalBudgetAmount,
+    totalDebtAmount,
+    totalPortfolioAmount,
   } = await fetchCardData()
 
   return (
@@ -31,6 +37,8 @@ export default async function CardWrapper() {
       <Card title="Expenses" value={totalExpensesAmount} type="expenses" bgColor="bg-red-400" />
       <Card title="Account" value={totalAccountBalance} type="account" bgColor="bg-blue-400" />
       <Card title="Budget" value={totalBudgetAmount} type="budget" bgColor="bg-pink-400" />
+      <Card title="Debt" value={totalDebtAmount} type="debt" bgColor="bg-orange-400" />
+      <Card title="Portfolio" value={totalPortfolioAmount} type="portfolio" bgColor="bg-purple-400" />
     </>
   );
 }
@@ -43,8 +51,8 @@ export function Card({
 }: {
   title: string;
   value: number | string;
-  type: 'income' | 'expenses' | 'account' | 'budget';
-  bgColor: 'bg-green-600' | 'bg-red-400' | 'bg-blue-400' | 'bg-pink-400';
+  type: 'income' | 'expenses' | 'account' | 'budget' | 'debt' | 'portfolio';
+  bgColor: 'bg-green-600' | 'bg-red-400' | 'bg-blue-400' | 'bg-pink-400' | 'bg-purple-400' | 'bg-orange-400';
 }) {
   const Icon = iconMap[type];
 
