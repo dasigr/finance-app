@@ -651,7 +651,7 @@ export async function fetchFilteredDebt(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    let debts = await sql<DebtTable>`
+    const debts = await sql<DebtTable>`
       SELECT
         debt.id,
         debt.name,
@@ -674,7 +674,7 @@ export async function fetchFilteredPortfolio(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    let debts = await sql<PortfolioTable>`
+    const portfolios = await sql<PortfolioTable>`
       SELECT
         portfolio.id,
         portfolio.name,
@@ -683,7 +683,7 @@ export async function fetchFilteredPortfolio(
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    return debts.rows;
+    return portfolios.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch portfolios.');
