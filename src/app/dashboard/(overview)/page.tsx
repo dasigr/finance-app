@@ -22,31 +22,37 @@ export default async function Page() {
   const totalBudgetAmount = await fetchTotalBudgetAmount()
   const goals:any = [
     {
+      id: '',
       name: 'Retirement',
       amount: '1500000000',
       status: 'In Progress'
     },
     {
+      id: '1',
       name: 'Emergency Fund',
       amount: '30000000',
       status: 'In Progress'
     },
     {
+      id: '2',
       name: 'Debt',
       amount: '0',
       status: 'In Progress'
     },
     {
+      id: '3',
       name: 'Car (Minivan)',
       amount: '24000000',
       status: 'To Do'
     },
     {
+      id: '4',
       name: 'House and Lot',
       amount: '190000000',
       status: 'Completed'
     },
     {
+      id: '5',
       name: 'Motorcycle (XRM 125)',
       amount: '8390000',
       status: 'Completed'
@@ -90,7 +96,10 @@ export default async function Page() {
               </thead>
               <tbody>
                 {goals?.map((goal: any) => (
-                  <tr className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
+                  <tr 
+                    key={goal.id}
+                    className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                  >
                     <td className="whitespace-nowrap p-2">
                       {goal.name}
                     </td>
