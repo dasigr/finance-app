@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Wallet",
+    "type": "cash",
+    "balance": 0,
+    "currency": "PHP",
+    "weight": -50,
+    "status": 1
+  },
+  {
+    "name": "GCash",
+    "type": "e-wallet",
+    "balance": 0,
+    "currency": "PHP",
+    "weight": -49,
+    "status": 1
+  },
+  {
+    "name": "UB",
+    "type": "bank",
+    "balance": 0,
+    "currency": "PHP",
+    "weight": -48,
+    "status": 1
+  }
+]

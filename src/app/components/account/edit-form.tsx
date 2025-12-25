@@ -24,7 +24,7 @@ export default function EditAccountForm({
 
   return (
     <>
-      <form action={updateAccountWithId}>
+      <form action={updateAccountWithId} id="edit-account-form">
         <div className="rounded-md bg-gray-50 p-4 md:p-6">
           {/* Name */}
           <div className="mb-4">

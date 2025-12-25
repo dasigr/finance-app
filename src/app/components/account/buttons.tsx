@@ -18,7 +18,7 @@ export function UpdateAccount({ id }: { id: string }) {
   return (
     <Link
       href={`/dashboard/account/${id}/edit`}
-      className="rounded-md border p-2 bg-white hover:bg-gray-100"
+      className="rounded-md border p-2 bg-white hover:bg-gray-100 action--edit-account"
     >
       <PencilIcon className="w-5" />
     </Link>
@@ -29,7 +29,7 @@ export function DeleteAccount({ id }: { id: string }) {
   const deleteAccountWithId = deleteAccount.bind(null, id);
 
   return (
-    <form action={deleteAccountWithId}>
+    <form action={deleteAccountWithId} id="delete-account-form">
       <button className="rounded-md border p-2 hover:bg-gray-100">
         <span className="sr-only">Delete {id}</span>
         <TrashIcon className="w-5" />

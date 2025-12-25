@@ -19,27 +19,32 @@ export default async function AccountsTable({
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg md:pt-0">
-          <div className="md:hidden">
-            {accounts?.map((account) => (
-              <div
-                key={account.id}
-                className={`mb-2 w-full rounded-md ${account.status ? 'bg-white' : 'bg-gray-200'} p-4`}
-              >
-                <Link href={`/dashboard/account/${account.id}`}>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="mb-2 flex items-center">
-                        <p>{account.name}</p>
+          {accounts.length > 0 ? (
+            <div className="md:hidden">
+              {accounts?.map((account) => (
+                <div
+                  key={account.id}
+                  className={`mb-2 w-full rounded-md ${account.status ? 'bg-white' : 'bg-gray-200'} p-4`}
+                >
+                  <Link href={`/dashboard/account/${account.id}`}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="mb-2 flex items-center">
+                          <p>{account.name}</p>
+                        </div>
                       </div>
+                      <p className={`text-xl font-medium ${account.balance < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                        {formatCurrency(account.balance)}
+                      </p>
                     </div>
-                    <p className={`text-xl font-medium ${account.balance < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                      {formatCurrency(account.balance)}
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No records found.</p>
+          )}
+
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
