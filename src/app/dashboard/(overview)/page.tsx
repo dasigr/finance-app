@@ -8,6 +8,9 @@ import { formatCurrency } from '@/app/lib/utils'
 import { BudgetStatus } from '@/app/components/budget/budget-status'
 import { fetchTotalBudgetAmount } from '@/app/lib/actions/budget'
 
+import { ExampleChart } from '@/app/components/example-chart'
+import { StockDaily } from '@/app/components/stocks/time-series-daily'
+
 import Link from 'next/link'
 import { TrophyIcon } from '@heroicons/react/24/outline'
 import { lusitana } from '@/app/fonts'
@@ -61,6 +64,12 @@ export default async function Page() {
 
   return (
     <div className="pb-4 mb-12">
+      <div className="mb-4 pt-2">
+        <StockDaily />
+      </div>
+      <div className="mb-4 pt-2">
+        <ExampleChart />
+      </div>
       <div className="mb-4 pt-2">
         <p className="mb-4">Budget: {formatCurrency(totalBudgetAmount)}</p>
         <BudgetStatus budgetAmount={totalBudgetAmount} />

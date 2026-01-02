@@ -29,7 +29,7 @@ export default async function AccountsTable({
                   <Link href={`/dashboard/account/${account.id}`}>
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="mb-2 flex items-center">
+                        <div className="flex items-center">
                           <p>{account.name}</p>
                         </div>
                       </div>
