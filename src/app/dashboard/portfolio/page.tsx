@@ -2,12 +2,13 @@ import { Metadata } from 'next';
 import Pagination from '@/app/components/portfolio/pagination';
 import Table from '@/app/components/portfolio/table';
 import { formatCurrency } from '@/app/lib/utils';
-import { CreateExpense } from '@/app/components/portfolio/buttons';
+import { CreatePortfolio } from '@/app/components/portfolio/buttons';
 import { lusitana } from '@/app/fonts';
 import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
 import { fetchPortfolioPages } from '@/app/lib/data';
 import { fetchTotalPorftfolioAmount } from '@/app/lib/actions/portfolio';
+import { StockDaily } from '@/app/components/stocks/time-series-daily'
 
 export const dynamic = 'force-dynamic';
 
@@ -29,14 +30,17 @@ export default async function Page(
 
   const totalPages = await fetchPortfolioPages(query);
 
-  const totalExpenseAmount = await fetchTotalPorftfolioAmount();
+  const totalPortfolioAmount = await fetchTotalPorftfolioAmount();
 
   return (
     <div className="w-full pb-12">
       <div className="flex items-center justify-between gap-2">
         <h1 className={`${lusitana.className} text-2xl`}>Portfolio</h1>
-        <div>{formatCurrency(totalExpenseAmount)}</div>
-        <CreateExpense />
+        <div>{formatCurrency(totalPortfolioAmount)}</div>
+        <CreatePortfolio />
+      </div>
+      <div className="mb-4 pt-2">
+        <StockDaily />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table currentPage={currentPage} />

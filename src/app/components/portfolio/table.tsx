@@ -25,7 +25,7 @@ export default async function PortfolioTable({
                 key={expense.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
-                <Link href={`/dashboard/expenses/${expense.id}/edit`}>
+                <Link href={`/dashboard/portfolio/${expense.id}/edit`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center">

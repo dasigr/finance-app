@@ -7,6 +7,7 @@ import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
 import { fetchIncomesPages } from '@/app/lib/data';
 import { fetchTotalIncomeAmount } from '@/app/lib/actions/income';
+import { ExampleChart } from '@/app/components/example-chart'
 
 export const dynamic = 'force-dynamic';
 
@@ -36,6 +37,9 @@ export default async function Page(
         <h1 className={`${lusitana.className} text-2xl`}>Income</h1>
         <div>{totalIncomeAmount}</div>
         <CreateIncome />
+      </div>
+      <div className="mb-4 pt-2">
+        <ExampleChart />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />

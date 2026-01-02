@@ -39,21 +39,24 @@ const chartConfig = {
 
 export function ExampleChart() {
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-      <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid vertical={false} />
-        <XAxis
-          dataKey="month"
-          tickLine={false}
-          tickMargin={10}
-          axisLine={false}
-          tickFormatter={(value) => value.slice(0, 3)}
-        />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="income" fill="var(--color-income)" radius={4} />
-        <Bar dataKey="expense" fill="var(--color-expense)" radius={4} />
-      </BarChart>
-    </ChartContainer>
+    <>
+      <h4 className="mb-2">Income vs Expenses</h4>
+      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+        <BarChart accessibilityLayer data={chartData}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="month"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={(value) => value.slice(0, 3)}
+          />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <ChartLegend content={<ChartLegendContent />} />
+          <Bar dataKey="income" fill="var(--color-income)" radius={4} />
+          <Bar dataKey="expense" fill="var(--color-expense)" radius={4} />
+        </BarChart>
+      </ChartContainer>
+    </>
   )
 }

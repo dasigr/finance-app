@@ -2,10 +2,10 @@ import { deleteExpense } from '@/app/lib/actions/expense';
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-export function CreateExpense() {
+export function CreatePortfolio() {
   return (
     <Link
-      href="/dashboard/expenses/create"
+      href="/dashboard/portfolio/create"
       className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
       <span className="hidden md:block">Add Expense</span>{' '}

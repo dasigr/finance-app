@@ -8,6 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/app/components/ui/chart"
+import { formatCurrency } from "@/app/lib/utils";
 
 type ChartData = {
   date: string;
@@ -56,9 +57,25 @@ export function StockDaily() {
 
   if (!data) return <p>Loading...</p>;
 
+  const lastClose: any = data.at(-1)
+  const shares = 225.7299
+  const forex = 59.00
+
   return (
     <>
-      <h4 className="mb-4">TSLA - Daily Close</h4>
+      <h4 className="mb-2">TSLA - Daily Close</h4>
+      { lastClose && 
+      <>
+        <p className="mb-2 text-sm">
+          Close: {lastClose["close"]}<br />
+          Date: {lastClose["date"]}
+        </p>
+        <p className="mb-2 text-sm">
+          Shares: {shares}<br />
+          Portfolio: <strong>{formatCurrency(lastClose["close"] * shares * forex * 100)}</strong>
+        </p>
+      </>
+      }
       <ChartContainer config={chartConfig} className="h-[300px] w-full">
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
