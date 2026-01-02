@@ -8,7 +8,7 @@ import { InvoicesTableSkeleton } from '@/app/components/skeletons';
 import { Suspense } from 'react';
 import { fetchPortfolioPages } from '@/app/lib/data';
 import { fetchTotalPorftfolioAmount } from '@/app/lib/actions/portfolio';
-import { StockDaily } from '@/app/components/stocks/time-series-daily'
+import { StockDaily } from '@/app/components/stocks/time-series-daily';
 
 export const dynamic = 'force-dynamic';
 

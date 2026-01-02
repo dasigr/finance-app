@@ -29,37 +29,64 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+const symbol = "TSLA"
+
 export function StockDaily() {
-  const [data, setData] = useState<ChartData[]>([]);
+  const [portfolioData, setPortfolio] = useState<any>(null);
+  const [stocksData, setStocks] = useState<ChartData[]>([]);
+  const [exchangeData, setExchange] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/stocks?symbol=TSLA")
-      .then(res => res.json())
-      .then(json => {
-        const series = json["Time Series (Daily)"];
-        if (!series) return;
+    const fetchData = async () => {
+      try {
+        const [portfolioRes, stocksRes, exchangeRes] = await Promise.all([
+          fetch(`/api/portfolio?symbol=${symbol}`),
+          fetch(`/api/stocks?symbol=${symbol}`),
+          fetch("/api/forex"),
+        ]);
 
-        const parsed = Object.entries(series)
-          .map(([date, values]: any) => ({
-            date,
-            open: parseFloat(values["1. open"]),
-            high: parseFloat(values["2. high"]),
-            low: parseFloat(values["3. low"]),
-            close: parseFloat(values["4. close"]),
-            volume: parseFloat(values["5. volume"]),
-          }))
-          .slice(0, 90) // last 90 days
-          .reverse();
+        const [portfolioData, stocksData, exchangeData] = await Promise.all([
+          portfolioRes.json(),
+          stocksRes.json()
+                   .then(json => {
+                      const series = json["Time Series (Daily)"];
+                      if (!series) return;
 
-        setData(parsed);
-      });
+                      const parsed = Object.entries(series)
+                        .map(([date, values]: any) => ({
+                          date,
+                          open: parseFloat(values["1. open"]),
+                          high: parseFloat(values["2. high"]),
+                          low: parseFloat(values["3. low"]),
+                          close: parseFloat(values["4. close"]),
+                          volume: parseFloat(values["5. volume"]),
+                        }))
+                        .slice(0, 90) // last 90 days
+                        .reverse();
+
+                      setStocks(parsed);
+                    }),
+          exchangeRes.json(),
+        ]);
+
+        setPortfolio(portfolioData);
+        setExchange(exchangeData);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  if (!data) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
 
-  const lastClose: any = data.at(-1)
-  const shares = 225.7299
-  const forex = 59.00
+  const shares = portfolioData[0]["shares"]
+  const lastClose: any = stocksData.at(-1)
+  const forex = exchangeData["result"]["PHP"]
 
   return (
     <>
@@ -72,12 +99,13 @@ export function StockDaily() {
         </p>
         <p className="mb-2 text-sm">
           Shares: {shares}<br />
+          USD to PHP: {forex}<br />
           Portfolio: <strong>{formatCurrency(lastClose["close"] * shares * forex * 100)}</strong>
         </p>
       </>
       }
       <ChartContainer config={chartConfig} className="h-[300px] w-full">
-        <LineChart data={data}>
+        <LineChart data={stocksData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
