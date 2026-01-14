@@ -43,7 +43,7 @@ export type State = {
   message?: string | null;
 };
 
-export async function createIncome(prevState: State, formData: FormData): Promise<State> {
+export async function createIncome(prevState: State, formData: FormData) {
   // Validate form using Zod.
   const validatedFields = CreateIncome.safeParse({
     date: formData.get('date'),
@@ -88,7 +88,7 @@ export async function createIncome(prevState: State, formData: FormData): Promis
     });
   } catch (error) {
     // If a database error occurs, return a more specific error.
-    return { 
+    return {
       message: 'Database Error: Failed to Create Income.'
     };
   }
@@ -128,14 +128,14 @@ export async function updateIncome(prevState: State, formData: FormData) {
 
   // On success: mutate data, redirect, etc.
   // return { values: undefined, errors: undefined }; // Or redirect
-  // return { values: parsed.data };
+  return { values: parsed.data };
 
   // revalidatePath('/dashboard');
   // revalidatePath('/dashboard/income');
   // revalidatePath(`/dashboard/income/${formData.get('id')}/edit`);
   // revalidatePath('/dashboard/account');
   // revalidatePath(`/dashboard/account/${formData.get('id')}/edit`);
-  redirect('/dashboard/income');
+  // redirect('/dashboard/income');
 }
 
 export async function oldUpdateIncome(id: string, formData: FormData) {
