@@ -43,7 +43,7 @@ export type State = {
   message?: string | null;
 };
 
-export async function createIncome(prevState: State, formData: FormData) {
+export async function createIncome(prevState: State, formData: FormData): Promise<State> {
   // Validate form using Zod.
   const validatedFields = CreateIncome.safeParse({
     date: formData.get('date'),
@@ -102,7 +102,43 @@ export async function createIncome(prevState: State, formData: FormData) {
   redirect('/dashboard/income');
 }
 
-export async function updateIncome(id: string, formData: FormData) {
+export async function updateIncome(prevState: State, formData: FormData) {
+  // console.log('prevState', prevState)
+  // console.log('formData', formData)
+
+  const values = {
+    date: formData.get('date') as string,
+    categoryId: formData.get('categoryId') as string,
+    accountId: formData.get('accountId') as string,
+    amount: formData.get('amount') as string,
+    notes: formData.get('notes') as string,
+    status: formData.get('status') as string,
+  };
+
+  const parsed = UpdateIncome.safeParse(values);
+  if (!parsed.success) {
+    console.log('errors', parsed.error.flatten().fieldErrors)
+    return {
+      values, // Preserve entered values
+      errors: parsed.error.flatten().fieldErrors,
+    };
+  }
+
+  console.log('parsed data', parsed)
+
+  // On success: mutate data, redirect, etc.
+  // return { values: undefined, errors: undefined }; // Or redirect
+  // return { values: parsed.data };
+
+  // revalidatePath('/dashboard');
+  // revalidatePath('/dashboard/income');
+  // revalidatePath(`/dashboard/income/${formData.get('id')}/edit`);
+  // revalidatePath('/dashboard/account');
+  // revalidatePath(`/dashboard/account/${formData.get('id')}/edit`);
+  redirect('/dashboard/income');
+}
+
+export async function oldUpdateIncome(id: string, formData: FormData) {
   // Get previous income data.
   const data = await sql`
     SELECT
