@@ -22,37 +22,37 @@ export default async function Page() {
   const totalBudgetAmount = await fetchTotalBudgetAmount()
   const goals:any = [
     {
-      id: '',
-      name: 'Retirement',
-      amount: '1500000000',
+      id: '1',
+      name: 'Debt',
+      amount: '7494218',
       status: 'In Progress'
     },
     {
-      id: '1',
+      id: '2',
       name: 'Emergency Fund',
       amount: '30000000',
       status: 'In Progress'
     },
     {
-      id: '2',
-      name: 'Debt',
-      amount: '0',
+      id: '3',
+      name: 'House and Lot',
+      amount: '190000000',
       status: 'In Progress'
     },
     {
-      id: '3',
+      id: '4',
+      name: 'Retirement',
+      amount: '1500000000',
+      status: 'In Progress'
+    },
+    {
+      id: '5',
       name: 'Car (Minivan)',
       amount: '24000000',
       status: 'To Do'
     },
     {
-      id: '4',
-      name: 'House and Lot',
-      amount: '190000000',
-      status: 'Completed'
-    },
-    {
-      id: '5',
+      id: '6',
       name: 'Motorcycle (XRM 125)',
       amount: '8390000',
       status: 'Completed'
