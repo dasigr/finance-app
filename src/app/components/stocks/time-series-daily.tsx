@@ -30,6 +30,8 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const symbol = "TSLA"
+const from_currency = "USD"
+const to_currency = "PHP"
 
 export function StockDaily() {
   const [portfolioData, setPortfolio] = useState<any>(null);
@@ -43,7 +45,7 @@ export function StockDaily() {
         const [portfolioRes, stocksRes, exchangeRes] = await Promise.all([
           fetch(`/api/portfolio?symbol=${symbol}`),
           fetch(`/api/stocks?symbol=${symbol}`),
-          fetch("/api/forex"),
+          fetch(`/api/forex?from_currency=${from_currency}&to_currency=${to_currency}`),
         ]);
 
         const [portfolioData, stocksData, exchangeData] = await Promise.all([
@@ -86,7 +88,7 @@ export function StockDaily() {
 
   const shares = portfolioData[0]["shares"]
   const lastClose: any = stocksData.at(-1)
-  const forex = exchangeData["result"]["PHP"]
+  const forex = exchangeData["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
 
   return (
     <>
